@@ -1,2 +1,3 @@
-# nestor-assistant
-Nestor Assistant — kitchen Fire-tablet kiosk voice/screen front end for the Nestor household app
+# Nestor Assistant
+
+Kitchen tablet kiosk for the Nestor household app. Phase builds — see README updates per phase.
