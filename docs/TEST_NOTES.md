@@ -1,41 +1,50 @@
 # Test notes
 
-## Phase 2 — idle dashboard
+## Phase 3 — branding + hatch
 
 Confirm on the Fire tablet (or an Android emulator / landscape web preview) after installing a rebuilt APK.
 
-### Feeds used (checked at build time)
+### Config knobs
 
-```sh
-npm run check-feeds
-```
+In `src/config.ts`:
 
-| Feed | URL / coords | Notes |
+| Knob | Default | Notes |
 | --- | --- | --- |
-| Fox News (working) | `https://moxie.foxnews.com/google-publisher/latest.xml` | HTTP 200, RSS 2.0 with `media:content` photos. This is the feed the app uses first. |
-| Fox News (not a feed) | `https://www.foxnews.com/about/rss` | 301 → `https://www.foxnews.com/story/foxnews-com-rss-feeds` (HTML index). |
-| Fox News (fallbacks) | `…/us.xml`, `…/politics.xml` on `moxie.foxnews.com` | Used only if `latest.xml` 404s or has no items. |
-| Weather | Open-Meteo `34.98898, -90.01259` | Southaven, Mississippi (De Soto). Timezone `America/Chicago`. Current + daily high/low. User-approx 34.99°N, 90.00°W. |
-| History | `https://en.wikipedia.org/api/rest_v1/feed/onthisday/selected/{MM}/{DD}` | Chicago calendar date. Free REST, `Api-User-Agent` set. |
-| Verse | `https://beta.ourmanna.com/api/v1/get?format=json` | OurManna verse of the day (NIV). Fallback: `https://bible-api.com/Psalm+118:24`, then a local Psalm 118:24. |
+| `CARD_INTERVAL_MS` | 10000 | Ordinary cards, including simple branding |
+| `BRANDING_SHOWPIECE_EVERY` | **10** | Hatch on the 10th, 20th, … branding pass. Try `5` or `20` if the fridge wants it more or less often |
+| `BRANDING_SHOWPIECE_MS` | 18000 | Showpiece dwell |
+
+Web preview overrides (not used on the APK):
+
+```
+?start=branding
+?start=showpiece
+?showpieceEvery=1
+?showpieceFrame=nest
+?showpieceFrame=egg
+?showpieceFrame=hatch
+?showpieceFrame=house
+```
 
 ### App checks
 
 | Check | Expected |
 | --- | --- |
 | Launcher name | **Nestor** |
-| Identity | Corner wordmark **Nestor**. No model name anywhere |
-| First loop | Weather (Southaven, current + high/low) → Fox headline (photo when present, label “Fox News”) → history and more headlines → verse of the day |
-| Dwell | About 10 seconds per card; tap advances early; soft fade |
+| Identity | Corner wordmark **Nestor** on ordinary cards. No model name anywhere |
+| Loop | Weather → branding still → news/history → branding still → … → verse |
+| Simple branding | House in the nest + a short line (`Nestor here`, `Nestor ready for business`, …). Tasteful, silent |
+| Showpiece | Every 10th branding slot: nest appears, egg appears, egg hatches, house inside, then **Hi, I'm Nestor, your personal assistant**. No TTS |
+| Wordmark | Hidden during the full-screen showpiece |
+| Dwell | ~10s ordinary cards; ~18s showpiece; tap advances early; soft fade |
 | Errors | Calm “Couldn’t load …” card; loop continues; app does not crash |
 | Orientation | Landscape preferred |
 | Sleep | Screen stays on while the app is in the foreground (tablet should stay plugged in) |
-| System UI | Status / navigation bars hidden or overlay-swipe (Fire OS may still show a thin bar) |
-| Out of scope | No mic, wake word, TTS, egg animation, hatch showpiece, overnight dim, Gemini, Firebase |
+| Out of scope | No mic, wake word, TTS, Gemini, Firebase, listening/talking egg, overnight dim |
 
 ### Rebuild APK
 
-Same path as Phase 1. After `npm install`:
+Same path as Phase 1–2. After `npm install`:
 
 - EAS: `npx eas-cli build -p android --profile preview`
 - Local: `npx expo prebuild --platform android` then `cd android && ./gradlew assembleDebug`
@@ -44,11 +53,25 @@ Sideload with `adb install -r`.
 
 `npx tsc --noEmit` should stay clean. `npm run check-feeds` should print `check-feeds: ok`.
 
-Verified in this Phase 2 change: `npx tsc --noEmit` is clean; `npm run check-feeds` uses Fox `latest.xml` (25 items, all with photos), Open-Meteo Southaven **34.98898, -90.01259** (current + high/low), Wikipedia `selected/09/10`, and OurManna VOTD (1 John 4:10). Landscape web preview at 1280×800 showed weather, Fox News with photo, On This Day, and the verse card, with tap-to-advance and the Nestor wordmark. Open-Meteo is fetched without a custom `Api-User-Agent` header so browser CORS preflight does not block weather.
-
 ### Web preview (optional)
 
-`npx expo start --web` is only for a quick look at the cards. It is not the fridge install path. Keep-awake and immersive bars apply on Android.
+`npx expo start --web` is only for a quick look at the cards. It is not the fridge install path.
+
+## Phase 2 — idle dashboard
+
+Still required: weather (Southaven), Fox News, On This Day, verse. Feeds:
+
+```sh
+npm run check-feeds
+```
+
+| Feed | URL / coords | Notes |
+| --- | --- | --- |
+| Fox News (working) | `https://moxie.foxnews.com/google-publisher/latest.xml` | HTTP 200, RSS 2.0 with `media:content` photos |
+| Fox News (not a feed) | `https://www.foxnews.com/about/rss` | HTML index, not used |
+| Weather | Open-Meteo `34.98898, -90.01259` | Southaven, Mississippi. Timezone `America/Chicago` |
+| History | Wikipedia `onthisday/selected/{MM}/{DD}` | Chicago calendar date |
+| Verse | OurManna VOTD | Fallback: bible-api.com Psalm 118:24, then local copy |
 
 ## Phase 1 — kiosk shell
 

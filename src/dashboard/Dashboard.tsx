@@ -1,15 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { HatchShowpiece } from './cards/HatchShowpiece';
 import { PLAYLIST_REFRESH_MS } from '../config';
+import { getShowpieceFrame } from '../preview';
 import { colors } from '../theme';
 import type { DashboardCard } from '../types';
 import { loadPlaylist } from './buildPlaylist';
-import { CardCarousel } from './CardCarousel';
+import { CardCarousel, type ActiveCardInfo } from './CardCarousel';
 import { Wordmark } from './Wordmark';
 
 export function Dashboard() {
   const [cards, setCards] = useState<DashboardCard[]>([]);
   const [ready, setReady] = useState(false);
+  const [active, setActive] = useState<ActiveCardInfo | null>(null);
+  const frozenFrame = getShowpieceFrame();
 
   const refresh = useCallback(async () => {
     try {
@@ -29,18 +33,30 @@ export function Dashboard() {
   }, []);
 
   useEffect(() => {
+    if (frozenFrame) {
+      setReady(true);
+      return;
+    }
     void refresh();
     const timer = setInterval(() => {
       void refresh();
     }, PLAYLIST_REFRESH_MS);
     return () => clearInterval(timer);
-  }, [refresh]);
+  }, [frozenFrame, refresh]);
+
+  if (frozenFrame) {
+    return (
+      <View style={styles.screen}>
+        <HatchShowpiece frame={frozenFrame} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.screen}>
-      <Wordmark />
+      <Wordmark hidden={active?.showpiece === true} />
       {ready ? (
-        <CardCarousel cards={cards} />
+        <CardCarousel cards={cards} onActive={setActive} />
       ) : (
         <View style={styles.loading}>
           <Text style={styles.loadingLabel}>Kitchen board</Text>

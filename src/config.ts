@@ -4,6 +4,15 @@ export const CARD_INTERVAL_MS = 10_000;
 /** Fade in/out between cards. */
 export const CARD_FADE_MS = 520;
 
+/**
+ * Hatch showpiece replaces a simple branding card on every Nth branding pass.
+ * 10 = rare (default). 5 or 20 are the other fridge-friendly choices. 1 = every branding slot.
+ */
+export const BRANDING_SHOWPIECE_EVERY = 10;
+
+/** Unhurried hatch + greeting hold. Simple branding cards still use CARD_INTERVAL_MS. */
+export const BRANDING_SHOWPIECE_MS = 18_000;
+
 /** Reload remote feeds while the kiosk stays up. */
 export const PLAYLIST_REFRESH_MS = 15 * 60 * 1000;
 
@@ -20,7 +29,7 @@ export const SOUTHAVEN = {
 } as const;
 
 export const USER_AGENT =
-  'NestorAssistant/1.1 (https://github.com/shootngo/nestor-assistant; kitchen kiosk)';
+  'NestorAssistant/1.2 (https://github.com/shootngo/nestor-assistant; kitchen kiosk)';
 
 /**
  * Fox News RSS. `https://www.foxnews.com/about/rss` is an HTML page (301 to

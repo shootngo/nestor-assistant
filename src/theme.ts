@@ -18,4 +18,6 @@ export const type = {
   body: 28,
   verse: 32,
   caption: 16,
+  branding: 30,
+  greeting: 26,
 } as const;

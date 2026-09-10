@@ -1,4 +1,5 @@
 import type { DashboardCard } from '../../types';
+import { BrandingCard } from './BrandingCard';
 import { HistoryCard } from './HistoryCard';
 import { NewsCard } from './NewsCard';
 import { UnavailableCard } from './UnavailableCard';
@@ -15,6 +16,8 @@ export function DashboardCardView({ card }: { card: DashboardCard }) {
       return <HistoryCard card={card} />;
     case 'verse':
       return <VerseCard card={card} />;
+    case 'branding':
+      return <BrandingCard card={card} />;
     case 'unavailable':
       return <UnavailableCard card={card} />;
   }
