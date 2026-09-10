@@ -27,16 +27,17 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   art: {
-    width: '44%',
-    maxWidth: 400,
-    aspectRatio: 1,
+    width: 300,
+    height: 300,
+    maxWidth: '30%',
+    maxHeight: '48%',
   },
   rule: {
     width: 48,
     height: 2,
     backgroundColor: colors.gold,
-    marginTop: 22,
-    marginBottom: 18,
+    marginTop: 18,
+    marginBottom: 16,
     borderRadius: 1,
   },
   line: {

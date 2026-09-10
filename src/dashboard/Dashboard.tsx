@@ -2,17 +2,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { HatchShowpiece } from './cards/HatchShowpiece';
 import { PLAYLIST_REFRESH_MS } from '../config';
-import { getShowpieceFrame } from '../preview';
+import { getShowpieceFrame, getStartAtBranding } from '../preview';
 import { colors } from '../theme';
 import type { DashboardCard } from '../types';
 import { loadPlaylist } from './buildPlaylist';
-import { CardCarousel, type ActiveCardInfo } from './CardCarousel';
-import { Wordmark } from './Wordmark';
+import { CardCarousel } from './CardCarousel';
 
 export function Dashboard() {
   const [cards, setCards] = useState<DashboardCard[]>([]);
   const [ready, setReady] = useState(false);
-  const [active, setActive] = useState<ActiveCardInfo | null>(null);
   const frozenFrame = getShowpieceFrame();
 
   const refresh = useCallback(async () => {
@@ -54,12 +52,11 @@ export function Dashboard() {
 
   return (
     <View style={styles.screen}>
-      <Wordmark hidden={active?.showpiece === true} />
       {ready ? (
-        <CardCarousel cards={cards} onActive={setActive} />
+        <CardCarousel cards={cards} />
       ) : (
         <View style={styles.loading}>
-          <Text style={styles.loadingLabel}>Kitchen board</Text>
+          {getStartAtBranding() ? null : <Text style={styles.loadingLabel}>Kitchen board</Text>}
         </View>
       )}
     </View>

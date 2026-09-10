@@ -117,9 +117,10 @@ const styles = StyleSheet.create({
     paddingBottom: 28,
   },
   stage: {
-    width: '46%',
-    maxWidth: 420,
-    aspectRatio: 1,
+    width: 360,
+    height: 360,
+    maxWidth: '34%',
+    maxHeight: '52%',
   },
   art: {
     position: 'absolute',

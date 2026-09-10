@@ -53,6 +53,8 @@ Sideload with `adb install -r`.
 
 `npx tsc --noEmit` should stay clean. `npm run check-feeds` should print `check-feeds: ok`.
 
+Verified in this Phase 3 change: `npx tsc --noEmit` is clean. Landscape web preview at 1280×800 showed the house-in-the-nest still with **Nestor here**, hatch keyframes (nest / egg / opening / house + greeting), and Phase 2 weather + Fox News still advancing after a tap. `?start=showpiece` opens on the hatch (wordmark hidden). `BRANDING_SHOWPIECE_EVERY` defaults to 10.
+
 ### Web preview (optional)
 
 `npx expo start --web` is only for a quick look at the cards. It is not the fridge install path.

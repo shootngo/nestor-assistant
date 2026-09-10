@@ -6,15 +6,10 @@ import { getForceShowpiece, getStartAtBranding } from '../preview';
 import { colors } from '../theme';
 import type { BrandingMode, DashboardCard } from '../types';
 import { DashboardCardView } from './cards/DashboardCardView';
-
-export type ActiveCardInfo = {
-  kind: DashboardCard['kind'];
-  showpiece: boolean;
-};
+import { Wordmark } from './Wordmark';
 
 type Props = {
   cards: DashboardCard[];
-  onActive?: (info: ActiveCardInfo) => void;
 };
 
 function firstIndex(cards: DashboardCard[]): number {
@@ -37,9 +32,17 @@ function resolveBrandingMode(card: DashboardCard | undefined): BrandingMode {
   return consumeBrandingPass();
 }
 
-export function CardCarousel({ cards, onActive }: Props) {
+function startingBrandingMode(cards: DashboardCard[]): BrandingMode {
+  const startCard = cards[firstIndex(cards)];
+  if (startCard?.kind === 'branding' && getForceShowpiece()) {
+    return 'showpiece';
+  }
+  return 'simple';
+}
+
+export function CardCarousel({ cards }: Props) {
   const [index, setIndex] = useState(() => firstIndex(cards));
-  const [brandingMode, setBrandingMode] = useState<BrandingMode>('simple');
+  const [brandingMode, setBrandingMode] = useState<BrandingMode>(() => startingBrandingMode(cards));
   const opacity = useRef(new Animated.Value(1)).current;
   const fading = useRef(false);
   const indexRef = useRef(index);
@@ -110,19 +113,13 @@ export function CardCarousel({ cards, onActive }: Props) {
     return () => clearTimeout(timer);
   }, [advance, cards.length, index, showpiece]);
 
-  useEffect(() => {
-    if (!card) {
-      return;
-    }
-    onActive?.({ kind: card.kind, showpiece });
-  }, [card, onActive, showpiece]);
-
   if (!displayCard) {
     return null;
   }
 
   return (
     <Pressable style={styles.press} onPress={advance} accessibilityRole="button" accessibilityLabel="Show next card">
+      <Wordmark hidden={showpiece} />
       <Animated.View style={[styles.card, { opacity }]}>
         <DashboardCardView card={displayCard} />
       </Animated.View>
