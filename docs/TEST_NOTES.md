@@ -34,7 +34,8 @@ Web preview overrides (not used on the APK):
 | Identity | Corner wordmark **Nestor** on ordinary cards. No model name anywhere |
 | Loop | Weather → branding still → news/history → branding still → … → verse |
 | Simple branding | Official PWA house-in-the-nest icon + a short line (`Nestor here`, `Nestor ready for business`, …). Tasteful, silent |
-| Showpiece | Every 10th branding slot, landscape cream stills from Frank’s reference, ~5s, silent: cracked egg + **Nestor / Home, held gently** → shell opening / zoom → revealed cottage + large serif **Nestor** and **Hi, I'm Nestor, your personal assistant**. No TTS, no music |
+| Showpiece | Every 10th branding slot, landscape cream stills from Frank’s reference, ~5s: cracked egg + **Nestor / Home, held gently** → shell opening / zoom → revealed cottage + large serif **Nestor** and **Hi, I'm Nestor, your personal assistant** |
+| Audio | **None.** Hatch and branding cards are visual only. No music, no TTS, no sound files |
 | Wordmark | Hidden during the full-screen showpiece (serif mark is part of the hatch) |
 | Dwell | ~10s ordinary cards; ~10s showpiece; tap advances early; soft fade |
 | Errors | Calm “Couldn’t load …” card; loop continues; app does not crash |

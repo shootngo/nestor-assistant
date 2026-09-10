@@ -4,6 +4,7 @@ import type { BrandingCardData } from '../../types';
 import { colors, type } from '../../theme';
 import { HatchShowpiece } from './HatchShowpiece';
 
+/** Frequent house-in-the-nest still. Silent — no music or TTS. */
 export function BrandingCard({ card }: { card: BrandingCardData }) {
   if (card.mode === 'showpiece') {
     return <HatchShowpiece />;

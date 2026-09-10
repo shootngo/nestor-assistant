@@ -7,7 +7,7 @@ import { colors, serif, type } from '../../theme';
 
 const nativeDriver = Platform.OS !== 'web';
 
-/** ~5s, matching Frank’s three reference stills. Visual only. */
+/** ~5s, matching Frank’s three reference stills. Visual only — never play music or TTS. */
 const TIMING = {
   openIn: 450,
   openHold: 900,
