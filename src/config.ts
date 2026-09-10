@@ -10,8 +10,11 @@ export const CARD_FADE_MS = 520;
  */
 export const BRANDING_SHOWPIECE_EVERY = 10;
 
-/** Unhurried hatch + greeting hold. Simple branding cards still use CARD_INTERVAL_MS. */
-export const BRANDING_SHOWPIECE_MS = 18_000;
+/**
+ * Showpiece dwell. Hatch motion itself is ~5 seconds (Frank’s reference);
+ * the rest holds the serif mark + greeting. Simple branding still uses CARD_INTERVAL_MS.
+ */
+export const BRANDING_SHOWPIECE_MS = 10_000;
 
 /** Reload remote feeds while the kiosk stays up. */
 export const PLAYLIST_REFRESH_MS = 15 * 60 * 1000;

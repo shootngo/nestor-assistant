@@ -7,6 +7,9 @@ export const colors = {
   gold: '#C9A46C',
   overlay: 'rgba(16, 16, 16, 0.52)',
   overlayDeep: 'rgba(12, 12, 12, 0.72)',
+  cream: '#F4EEE3',
+  bark: '#3F2A1D',
+  mutedNest: '#7A6E62',
 } as const;
 
 export const type = {
@@ -19,5 +22,10 @@ export const type = {
   verse: 32,
   caption: 16,
   branding: 30,
-  greeting: 26,
+  greeting: 24,
+  serifMark: 56,
+} as const;
+
+export const serif = {
+  fontFamily: 'Georgia',
 } as const;

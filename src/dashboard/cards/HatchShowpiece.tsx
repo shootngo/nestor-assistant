@@ -1,21 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing, Platform, StyleSheet, View } from 'react-native';
 import { brandingImages } from '../../branding/assets';
-import { SHOWPIECE_GREETING } from '../../branding/copy';
+import { SHOWPIECE_GREETING, SHOWPIECE_MARK, SHOWPIECE_TAGLINE } from '../../branding/copy';
 import type { ShowpieceFrame } from '../../preview';
-import { colors, type } from '../../theme';
+import { colors, serif, type } from '../../theme';
 
 const nativeDriver = Platform.OS !== 'web';
 
+/** Motion follows Frank’s ~5s reference; dwell after that is BRANDING_SHOWPIECE_MS. */
 const TIMING = {
-  nestIn: 1600,
-  nestHold: 800,
-  eggIn: 1700,
-  eggHold: 900,
-  hatchIn: 2200,
-  hatchHold: 700,
-  houseIn: 2000,
-  greetingIn: 1400,
+  startIn: 600,
+  startHold: 700,
+  shatterIn: 1200,
+  revealedIn: 1200,
+  markIn: 800,
+  greetingIn: 700,
 } as const;
 
 function fade(value: Animated.Value, toValue: number, duration: number) {
@@ -32,22 +31,22 @@ type Props = {
 };
 
 export function HatchShowpiece({ frame = null }: Props) {
-  const nest = useRef(new Animated.Value(0)).current;
-  const egg = useRef(new Animated.Value(0)).current;
-  const hatch = useRef(new Animated.Value(0)).current;
-  const house = useRef(new Animated.Value(0)).current;
+  const start = useRef(new Animated.Value(0)).current;
+  const shatter = useRef(new Animated.Value(0)).current;
+  const revealed = useRef(new Animated.Value(0)).current;
+  const zoom = useRef(new Animated.Value(1)).current;
+  const tagline = useRef(new Animated.Value(0)).current;
+  const mark = useRef(new Animated.Value(0)).current;
   const greeting = useRef(new Animated.Value(0)).current;
-  const nestScale = useRef(new Animated.Value(0.94)).current;
-  const eggY = useRef(new Animated.Value(16)).current;
 
   useEffect(() => {
     const freeze = (stage: ShowpieceFrame) => {
-      nest.setValue(1);
-      nestScale.setValue(1);
-      eggY.setValue(0);
-      egg.setValue(stage === 'nest' ? 0 : 1);
-      hatch.setValue(stage === 'hatch' || stage === 'house' ? 1 : 0);
-      house.setValue(stage === 'house' ? 1 : 0);
+      start.setValue(1);
+      shatter.setValue(stage === 'hatch' || stage === 'house' ? 1 : 0);
+      revealed.setValue(stage === 'house' ? 1 : 0);
+      zoom.setValue(stage === 'hatch' ? 1.06 : stage === 'house' ? 1.12 : 1);
+      tagline.setValue(stage === 'egg' ? 1 : 0);
+      mark.setValue(stage === 'house' ? 1 : 0);
       greeting.setValue(stage === 'house' ? 1 : 0);
     };
 
@@ -56,54 +55,51 @@ export function HatchShowpiece({ frame = null }: Props) {
       return;
     }
 
-    nest.setValue(0);
-    egg.setValue(0);
-    hatch.setValue(0);
-    house.setValue(0);
+    start.setValue(0);
+    shatter.setValue(0);
+    revealed.setValue(0);
+    zoom.setValue(1);
+    tagline.setValue(0);
+    mark.setValue(0);
     greeting.setValue(0);
-    nestScale.setValue(0.94);
-    eggY.setValue(16);
 
     const animation = Animated.sequence([
-      Animated.parallel([fade(nest, 1, TIMING.nestIn), fade(nestScale, 1, TIMING.nestIn)]),
-      Animated.delay(TIMING.nestHold),
-      Animated.parallel([fade(egg, 1, TIMING.eggIn), fade(eggY, 0, TIMING.eggIn)]),
-      Animated.delay(TIMING.eggHold),
-      fade(hatch, 1, TIMING.hatchIn),
-      Animated.delay(TIMING.hatchHold),
-      fade(house, 1, TIMING.houseIn),
+      Animated.parallel([fade(start, 1, TIMING.startIn), fade(tagline, 1, TIMING.startIn)]),
+      Animated.delay(TIMING.startHold),
+      Animated.parallel([fade(shatter, 1, TIMING.shatterIn), fade(zoom, 1.06, TIMING.shatterIn)]),
+      Animated.parallel([
+        fade(revealed, 1, TIMING.revealedIn),
+        fade(zoom, 1.12, TIMING.revealedIn),
+        fade(tagline, 0, TIMING.markIn),
+        fade(mark, 1, TIMING.markIn),
+      ]),
       fade(greeting, 1, TIMING.greetingIn),
     ]);
 
     animation.start();
     return () => animation.stop();
-  }, [egg, eggY, frame, greeting, hatch, house, nest, nestScale]);
+  }, [frame, greeting, mark, revealed, shatter, start, tagline, zoom]);
 
   return (
     <View style={styles.wrap} testID="nestor-card-showpiece" accessibilityLabel={SHOWPIECE_GREETING}>
-      <View style={styles.stage}>
+      <Animated.Text style={[styles.mark, { opacity: mark }]}>{SHOWPIECE_MARK}</Animated.Text>
+      <Animated.View style={[styles.stage, { transform: [{ scale: zoom }] }]}>
+        <Animated.Image source={brandingImages.hatchStart} style={[styles.art, { opacity: start }]} resizeMode="contain" />
         <Animated.Image
-          source={brandingImages.nest}
-          style={[styles.art, { opacity: nest, transform: [{ scale: nestScale }] }]}
+          source={brandingImages.hatchShatter}
+          style={[styles.art, { opacity: shatter }]}
           resizeMode="contain"
         />
         <Animated.Image
-          source={brandingImages.egg}
-          style={[styles.art, { opacity: egg, transform: [{ translateY: eggY }] }]}
+          source={brandingImages.hatchRevealed}
+          style={[styles.art, { opacity: revealed }]}
           resizeMode="contain"
         />
-        <Animated.Image
-          source={brandingImages.hatch}
-          style={[styles.art, { opacity: hatch }]}
-          resizeMode="contain"
-        />
-        <Animated.Image
-          source={brandingImages.house}
-          style={[styles.art, { opacity: house }]}
-          resizeMode="contain"
-        />
+      </Animated.View>
+      <View style={styles.footer}>
+        <Animated.Text style={[styles.tagline, { opacity: tagline }]}>{SHOWPIECE_TAGLINE}</Animated.Text>
+        <Animated.Text style={[styles.greeting, { opacity: greeting }]}>{SHOWPIECE_GREETING}</Animated.Text>
       </View>
-      <Animated.Text style={[styles.greeting, { opacity: greeting }]}>{SHOWPIECE_GREETING}</Animated.Text>
     </View>
   );
 }
@@ -113,14 +109,26 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 48,
-    paddingBottom: 28,
+    backgroundColor: colors.cream,
+    paddingHorizontal: 36,
+  },
+  mark: {
+    position: 'absolute',
+    top: 28,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    color: colors.bark,
+    fontSize: type.serifMark,
+    fontWeight: '700',
+    letterSpacing: 0.4,
+    ...serif,
   },
   stage: {
-    width: 360,
-    height: 360,
-    maxWidth: '34%',
-    maxHeight: '52%',
+    width: 420,
+    height: 420,
+    maxWidth: '46%',
+    maxHeight: '62%',
   },
   art: {
     position: 'absolute',
@@ -131,13 +139,29 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  greeting: {
-    color: colors.ivory,
-    fontSize: type.greeting,
-    fontWeight: '300',
-    letterSpacing: 0.4,
+  footer: {
+    height: 72,
+    width: '100%',
+    maxWidth: 760,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+  },
+  tagline: {
+    position: 'absolute',
+    color: colors.mutedNest,
+    fontSize: 20,
+    fontWeight: '600',
+    letterSpacing: 0.3,
     textAlign: 'center',
-    marginTop: 28,
-    maxWidth: 720,
+  },
+  greeting: {
+    position: 'absolute',
+    color: colors.bark,
+    fontSize: type.greeting,
+    fontWeight: '400',
+    letterSpacing: 0.3,
+    textAlign: 'center',
+    ...serif,
   },
 });

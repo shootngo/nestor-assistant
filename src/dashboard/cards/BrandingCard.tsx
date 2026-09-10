@@ -27,10 +27,11 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   art: {
-    width: 300,
-    height: 300,
-    maxWidth: '30%',
-    maxHeight: '48%',
+    width: 240,
+    height: 240,
+    maxWidth: '28%',
+    maxHeight: '44%',
+    borderRadius: 36,
   },
   rule: {
     width: 48,

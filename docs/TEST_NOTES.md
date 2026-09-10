@@ -12,7 +12,7 @@ In `src/config.ts`:
 | --- | --- | --- |
 | `CARD_INTERVAL_MS` | 10000 | Ordinary cards, including simple branding |
 | `BRANDING_SHOWPIECE_EVERY` | **10** | Hatch on the 10th, 20th, … branding pass. Try `5` or `20` if the fridge wants it more or less often |
-| `BRANDING_SHOWPIECE_MS` | 18000 | Showpiece dwell |
+| `BRANDING_SHOWPIECE_MS` | 10000 | ~5s hatch motion + hold |
 
 Web preview overrides (not used on the APK):
 
@@ -33,10 +33,10 @@ Web preview overrides (not used on the APK):
 | Launcher name | **Nestor** |
 | Identity | Corner wordmark **Nestor** on ordinary cards. No model name anywhere |
 | Loop | Weather → branding still → news/history → branding still → … → verse |
-| Simple branding | House in the nest + a short line (`Nestor here`, `Nestor ready for business`, …). Tasteful, silent |
-| Showpiece | Every 10th branding slot: nest appears, egg appears, egg hatches, house inside, then **Hi, I'm Nestor, your personal assistant**. No TTS |
-| Wordmark | Hidden during the full-screen showpiece |
-| Dwell | ~10s ordinary cards; ~18s showpiece; tap advances early; soft fade |
+| Simple branding | Official PWA house-in-the-nest icon + a short line (`Nestor here`, `Nestor ready for business`, …). Tasteful, silent |
+| Showpiece | Every 10th branding slot, cream splash look: cracked egg + cottage → shell fragments float out + zoom → large serif **Nestor** → **Hi, I'm Nestor, your personal assistant**. Brief **Home, held gently** at the start. No TTS, no music |
+| Wordmark | Hidden during the full-screen showpiece (serif mark is part of the hatch) |
+| Dwell | ~10s ordinary cards; ~10s showpiece; tap advances early; soft fade |
 | Errors | Calm “Couldn’t load …” card; loop continues; app does not crash |
 | Orientation | Landscape preferred |
 | Sleep | Screen stays on while the app is in the foreground (tablet should stay plugged in) |
@@ -53,7 +53,7 @@ Sideload with `adb install -r`.
 
 `npx tsc --noEmit` should stay clean. `npm run check-feeds` should print `check-feeds: ok`.
 
-Verified in this Phase 3 change: `npx tsc --noEmit` is clean. Landscape web preview at 1280×800 showed the house-in-the-nest still with **Nestor here**, hatch keyframes (nest / egg / opening / house + greeting), and Phase 2 weather + Fox News still advancing after a tap. `?start=showpiece` opens on the hatch (wordmark hidden). `BRANDING_SHOWPIECE_EVERY` defaults to 10.
+Verified in this Phase 3 change: `npx tsc --noEmit` is clean. Landscape web preview at 1280×800 showed the official house-in-the-nest icon with **Nestor here**, hatch keyframes (splash start, shatter, revealed + serif Nestor + greeting), and Phase 2 weather still advancing after a tap. Showpiece is silent. `BRANDING_SHOWPIECE_EVERY` defaults to 10.
 
 ### Web preview (optional)
 

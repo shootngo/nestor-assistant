@@ -19,9 +19,9 @@ Cycling charcoal cards (~10 seconds each) for fridge viewing:
 
 House-in-the-nest stills in the same carousel, plus a rare silent hatch showpiece.
 
-- Frequent cards: nest + house still and a short rotating line (“Nestor here”, “Nestor ready for business”, …)
-- Every `BRANDING_SHOWPIECE_EVERY` branding pass (default **10**; 5 or 20 are the other usual settings): nest appears → egg appears → egg hatches → house inside → **Hi, I'm Nestor, your personal assistant**
-- No TTS, no wake word, no listening/talking egg face
+- Frequent cards: official PWA house-in-the-nest icon and a short rotating line (“Nestor here”, “Nestor ready for business”, …)
+- Every `BRANDING_SHOWPIECE_EVERY` branding pass (default **10**; 5 or 20 are the other usual settings): official splash (cracked egg + cottage) → shell fragments float out with a slow zoom → large serif **Nestor** → **Hi, I'm Nestor, your personal assistant**
+- Visual only. No TTS, no music, no wake word, no listening/talking egg face
 
 ## 4. Wake / sleep
 
