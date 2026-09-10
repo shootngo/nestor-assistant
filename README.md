@@ -61,9 +61,8 @@ Landscape web preview (fridge install path is still the Android APK):
 
 - [Simple branding — house in the nest](./docs/phase-3-branding.png)
 - [Hatch — cracked egg + Nestor / Home, held gently](./docs/phase-3-hatch-nest.png)
-- [Hatch — opening still](./docs/phase-3-hatch-egg.png)
-- [Hatch — shell fragments](./docs/phase-3-hatch-open.png)
-- [Hatch — serif Nestor lockup + greeting](./docs/phase-3-hatch-house.png)
+- [Hatch — shell opening / zoom](./docs/phase-3-hatch-open.png)
+- [Hatch — house revealed + serif Nestor](./docs/phase-3-hatch-house.png)
 
 Phase 2 cards (still in the loop): [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-news.png), [history](./docs/phase-2-history.png), [verse](./docs/phase-2-verse.png).
 
