@@ -20,15 +20,30 @@ export async function loadPlaylist(): Promise<DashboardCard[]> {
   const [weather, news, history, verse] = await Promise.all([
     fetchSouthavenWeather().then(
       (card) => card,
-      () => unavailable('weather'),
+      (error) => {
+        if (__DEV__) {
+          console.warn('Nestor weather feed failed', error);
+        }
+        return unavailable('weather');
+      },
     ),
     fetchFoxHeadlines().then(
       (result) => result.items,
-      () => [unavailable('news')],
+      (error) => {
+        if (__DEV__) {
+          console.warn('Nestor news feed failed', error);
+        }
+        return [unavailable('news')];
+      },
     ),
     fetchOnThisDay().then(
       (cards) => cards,
-      () => [unavailable('history')],
+      (error) => {
+        if (__DEV__) {
+          console.warn('Nestor history feed failed', error);
+        }
+        return [unavailable('history')];
+      },
     ),
     fetchVerseOfTheDay(),
   ]);

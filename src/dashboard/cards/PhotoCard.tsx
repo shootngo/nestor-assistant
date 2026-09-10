@@ -7,14 +7,15 @@ type PhotoCardProps = {
   kicker: string;
   title: string;
   meta?: string | null;
+  testID?: string;
 };
 
-export function PhotoCard({ imageUrl, kicker, title, meta }: PhotoCardProps) {
+export function PhotoCard({ imageUrl, kicker, title, meta, testID }: PhotoCardProps) {
   const [imageFailed, setImageFailed] = useState(false);
 
   if (!imageUrl || imageFailed) {
     return (
-      <View style={styles.plain}>
+      <View style={styles.plain} testID={testID}>
         <Text style={styles.kicker}>{kicker}</Text>
         {meta ? <Text style={styles.meta}>{meta}</Text> : null}
         <View style={styles.rule} />
@@ -24,7 +25,7 @@ export function PhotoCard({ imageUrl, kicker, title, meta }: PhotoCardProps) {
   }
 
   return (
-    <View style={styles.photoWrap}>
+    <View style={styles.photoWrap} testID={testID}>
       <Image
         source={{ uri: imageUrl }}
         style={styles.photo}
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   caption: {
     paddingHorizontal: 56,
     paddingBottom: 64,
-    paddingTop: 72,
+    paddingTop: 28,
     backgroundColor: colors.overlayDeep,
   },
   kicker: {
@@ -97,7 +98,6 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     lineHeight: 48,
     marginTop: 12,
-    maxWidth: 980,
   },
   plain: {
     flex: 1,

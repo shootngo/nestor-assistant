@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Animated, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { CARD_FADE_MS, CARD_INTERVAL_MS } from '../config';
 import { colors } from '../theme';
 import type { DashboardCard } from '../types';
@@ -24,7 +24,7 @@ export function CardCarousel({ cards }: Props) {
       Animated.timing(opacity, {
         toValue: 0,
         duration: CARD_FADE_MS,
-        useNativeDriver: true,
+        useNativeDriver: Platform.OS !== 'web',
       }).start(({ finished }) => {
         if (!finished) {
           fading.current = false;
@@ -35,7 +35,7 @@ export function CardCarousel({ cards }: Props) {
         Animated.timing(opacity, {
           toValue: 1,
           duration: CARD_FADE_MS,
-          useNativeDriver: true,
+          useNativeDriver: Platform.OS !== 'web',
         }).start(() => {
           fading.current = false;
         });
@@ -78,7 +78,7 @@ export function CardCarousel({ cards }: Props) {
         <DashboardCardView card={card} />
       </Animated.View>
       {cards.length > 1 ? (
-        <View style={styles.dots} pointerEvents="none">
+        <View style={styles.dots}>
           {cards.map((entry, dotIndex) => (
             <View
               key={entry.id}
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
+    pointerEvents: 'none',
   },
   dot: {
     width: 7,

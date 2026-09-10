@@ -27,6 +27,15 @@ Wake/sleep word, Porcupine, SpeechRecognizer, TTS, Gemini, Firebase/Firestore, s
 
 Future work is listed as stubs only in [PHASES.md](./PHASES.md).
 
+## Screenshots
+
+Landscape web preview of the four card types (fridge install path is still the Android APK):
+
+- [Weather — Southaven](./docs/phase-2-weather.png)
+- [Fox News](./docs/phase-2-news.png)
+- [This day in history](./docs/phase-2-history.png)
+- [Verse of the day](./docs/phase-2-verse.png)
+
 ## Requirements
 
 - Node.js 22.13+ (SDK 57)

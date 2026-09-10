@@ -4,7 +4,7 @@ import { colors, type } from '../../theme';
 
 export function VerseCard({ card }: { card: VerseCardData }) {
   return (
-    <View style={styles.wrap} accessibilityLabel={`${card.reference}. ${card.text}`}>
+    <View style={styles.wrap} testID="nestor-card-verse" accessibilityLabel={`${card.reference}. ${card.text}`}>
       <Text style={styles.kicker}>Verse of the day</Text>
       <View style={styles.rule} />
       <Text style={styles.verse}>“{card.text}”</Text>

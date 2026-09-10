@@ -44,6 +44,8 @@ Sideload with `adb install -r`.
 
 `npx tsc --noEmit` should stay clean. `npm run check-feeds` should print `check-feeds: ok`.
 
+Verified in this Phase 2 change: `npx tsc --noEmit` is clean; `npm run check-feeds` uses Fox `latest.xml` (25 items, all with photos), Open-Meteo Southaven **34.98898, -90.01259** (current + high/low), Wikipedia `selected/09/10`, and OurManna VOTD (1 John 4:10). Landscape web preview at 1280×800 showed weather, Fox News with photo, On This Day, and the verse card, with tap-to-advance and the Nestor wordmark. Open-Meteo is fetched without a custom `Api-User-Agent` header so browser CORS preflight does not block weather.
+
 ### Web preview (optional)
 
 `npx expo start --web` is only for a quick look at the cards. It is not the fridge install path. Keep-awake and immersive bars apply on Android.

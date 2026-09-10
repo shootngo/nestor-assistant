@@ -42,7 +42,7 @@ export async function fetchFoxHeadlines(): Promise<FoxFeedResult> {
 
   for (const feedUrl of FOX_RSS_CANDIDATES) {
     try {
-      const xml = await fetchText(feedUrl, { Accept: 'application/rss+xml, text/xml, */*' });
+      const xml = await fetchText(feedUrl);
       const items = parseItems(xml, feedUrl).slice(0, MAX_NEWS_CARDS);
       if (items.length > 0) {
         return { feedUrl, items };

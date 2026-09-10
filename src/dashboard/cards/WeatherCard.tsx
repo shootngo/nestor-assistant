@@ -4,7 +4,7 @@ import { colors, type } from '../../theme';
 
 export function WeatherCard({ card }: { card: WeatherCardData }) {
   return (
-    <View style={styles.wrap} accessibilityLabel={`${card.location}, ${card.temperatureF} degrees, ${card.condition}`}>
+    <View style={styles.wrap} testID="nestor-card-weather" accessibilityLabel={`${card.location}, ${card.temperatureF} degrees, ${card.condition}`}>
       <Text style={styles.kicker}>{card.location}</Text>
       <Text style={styles.temp}>{card.temperatureF}°</Text>
       <Text style={styles.condition}>{card.condition}</Text>

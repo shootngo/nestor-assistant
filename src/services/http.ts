@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { FETCH_TIMEOUT_MS, USER_AGENT } from '../config';
 
 export class FetchError extends Error {
@@ -15,13 +16,17 @@ export async function fetchText(
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
   try {
+    const headers: Record<string, string> = { ...extraHeaders };
+    // Browsers forbid User-Agent and strip unknown headers via CORS preflight.
+    // Open-Meteo does not allow Api-User-Agent; only send identity headers on native.
+    if (Platform.OS !== 'web') {
+      headers['User-Agent'] = USER_AGENT;
+      headers['Api-User-Agent'] = USER_AGENT;
+    }
+
     const response = await fetch(url, {
       signal: controller.signal,
-      headers: {
-        Accept: '*/*',
-        'Api-User-Agent': USER_AGENT,
-        ...extraHeaders,
-      },
+      headers,
     });
 
     if (!response.ok) {

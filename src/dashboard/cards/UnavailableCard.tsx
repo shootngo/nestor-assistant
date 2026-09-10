@@ -13,7 +13,7 @@ export function UnavailableCard({ card }: { card: UnavailableCardData }) {
   const message = COPY[card.topic] ?? "Couldn't load this card.";
 
   return (
-    <View style={styles.wrap} accessibilityLabel={message}>
+    <View style={styles.wrap} testID={`nestor-card-unavailable-${card.topic}`} accessibilityLabel={message}>
       <Text style={styles.kicker}>Nestor</Text>
       <View style={styles.rule} />
       <Text style={styles.message}>{message}</Text>
