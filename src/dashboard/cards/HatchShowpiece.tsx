@@ -7,14 +7,14 @@ import { colors, serif, type } from '../../theme';
 
 const nativeDriver = Platform.OS !== 'web';
 
-/** Motion follows Frank’s ~5s reference; dwell after that is BRANDING_SHOWPIECE_MS. */
+/** ~5s motion, matching Frank’s reference clip. Visual only — no audio. */
 const TIMING = {
-  startIn: 600,
-  startHold: 700,
-  shatterIn: 1200,
-  revealedIn: 1200,
-  markIn: 800,
-  greetingIn: 700,
+  openIn: 500,
+  openHold: 700,
+  crackIn: 900,
+  shatterIn: 1100,
+  revealIn: 1000,
+  lockupIn: 700,
 } as const;
 
 function fade(value: Animated.Value, toValue: number, duration: number) {
@@ -32,22 +32,22 @@ type Props = {
 
 export function HatchShowpiece({ frame = null }: Props) {
   const start = useRef(new Animated.Value(0)).current;
+  const crack = useRef(new Animated.Value(0)).current;
   const shatter = useRef(new Animated.Value(0)).current;
   const revealed = useRef(new Animated.Value(0)).current;
   const zoom = useRef(new Animated.Value(1)).current;
-  const tagline = useRef(new Animated.Value(0)).current;
-  const mark = useRef(new Animated.Value(0)).current;
-  const greeting = useRef(new Animated.Value(0)).current;
+  const openingCopy = useRef(new Animated.Value(0)).current;
+  const lockup = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const freeze = (stage: ShowpieceFrame) => {
       start.setValue(1);
+      crack.setValue(stage === 'hatch' || stage === 'house' ? 1 : 0);
       shatter.setValue(stage === 'hatch' || stage === 'house' ? 1 : 0);
       revealed.setValue(stage === 'house' ? 1 : 0);
       zoom.setValue(stage === 'hatch' ? 1.04 : stage === 'house' ? 1.08 : 1);
-      tagline.setValue(stage === 'egg' ? 1 : 0);
-      mark.setValue(stage === 'house' ? 1 : 0);
-      greeting.setValue(stage === 'house' ? 1 : 0);
+      openingCopy.setValue(stage === 'nest' || stage === 'egg' ? 1 : 0);
+      lockup.setValue(stage === 'house' ? 1 : 0);
     };
 
     if (frame) {
@@ -56,36 +56,40 @@ export function HatchShowpiece({ frame = null }: Props) {
     }
 
     start.setValue(0);
+    crack.setValue(0);
     shatter.setValue(0);
     revealed.setValue(0);
     zoom.setValue(1);
-    tagline.setValue(0);
-    mark.setValue(0);
-    greeting.setValue(0);
+    openingCopy.setValue(0);
+    lockup.setValue(0);
 
     const animation = Animated.sequence([
-      Animated.parallel([fade(start, 1, TIMING.startIn), fade(tagline, 1, TIMING.startIn)]),
-      Animated.delay(TIMING.startHold),
-      Animated.parallel([fade(shatter, 1, TIMING.shatterIn), fade(zoom, 1.04, TIMING.shatterIn)]),
+      Animated.parallel([fade(start, 1, TIMING.openIn), fade(openingCopy, 1, TIMING.openIn)]),
+      Animated.delay(TIMING.openHold),
+      Animated.parallel([fade(crack, 1, TIMING.crackIn), fade(zoom, 1.03, TIMING.crackIn)]),
+      Animated.parallel([fade(shatter, 1, TIMING.shatterIn), fade(zoom, 1.06, TIMING.shatterIn)]),
       Animated.parallel([
-        fade(revealed, 1, TIMING.revealedIn),
-        fade(zoom, 1.08, TIMING.revealedIn),
-        fade(tagline, 0, TIMING.markIn),
-        fade(mark, 1, TIMING.markIn),
+        fade(revealed, 1, TIMING.revealIn),
+        fade(zoom, 1.08, TIMING.revealIn),
+        fade(openingCopy, 0, TIMING.lockupIn),
+        fade(lockup, 1, TIMING.lockupIn),
       ]),
-      fade(greeting, 1, TIMING.greetingIn),
     ]);
 
     animation.start();
     return () => animation.stop();
-  }, [frame, greeting, mark, revealed, shatter, start, tagline, zoom]);
+  }, [crack, frame, lockup, openingCopy, revealed, shatter, start, zoom]);
 
   return (
     <View style={styles.wrap} testID="nestor-card-showpiece" accessibilityLabel={SHOWPIECE_GREETING}>
-      <Animated.Text style={[styles.mark, { opacity: mark }]}>{SHOWPIECE_MARK}</Animated.Text>
+      <Animated.View style={[styles.lockup, { opacity: lockup }]} pointerEvents="none">
+        <Animated.Text style={styles.mark}>{SHOWPIECE_MARK}</Animated.Text>
+        <Animated.Text style={styles.greeting}>{SHOWPIECE_GREETING}</Animated.Text>
+      </Animated.View>
       <View style={styles.stageClip}>
         <Animated.View style={[styles.stage, { transform: [{ scale: zoom }] }]}>
           <Animated.Image source={brandingImages.hatchStart} style={[styles.art, { opacity: start }]} resizeMode="contain" />
+          <Animated.Image source={brandingImages.hatchCrack} style={[styles.art, { opacity: crack }]} resizeMode="contain" />
           <Animated.Image
             source={brandingImages.hatchShatter}
             style={[styles.art, { opacity: shatter }]}
@@ -98,10 +102,10 @@ export function HatchShowpiece({ frame = null }: Props) {
           />
         </Animated.View>
       </View>
-      <View style={styles.footer}>
-        <Animated.Text style={[styles.tagline, { opacity: tagline }]}>{SHOWPIECE_TAGLINE}</Animated.Text>
-        <Animated.Text style={[styles.greeting, { opacity: greeting }]}>{SHOWPIECE_GREETING}</Animated.Text>
-      </View>
+      <Animated.View style={[styles.opening, { opacity: openingCopy }]} pointerEvents="none">
+        <Animated.Text style={styles.smallMark}>{SHOWPIECE_MARK}</Animated.Text>
+        <Animated.Text style={styles.tagline}>{SHOWPIECE_TAGLINE}</Animated.Text>
+      </Animated.View>
     </View>
   );
 }
@@ -114,24 +118,36 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cream,
     paddingHorizontal: 36,
   },
-  mark: {
+  lockup: {
     position: 'absolute',
-    top: 18,
-    left: 0,
-    right: 0,
+    top: 16,
+    left: 24,
+    right: 24,
     zIndex: 2,
-    textAlign: 'center',
+    alignItems: 'center',
+  },
+  mark: {
     color: colors.bark,
     fontSize: type.serifMark,
     fontWeight: '700',
     letterSpacing: 0.4,
+    textAlign: 'center',
+    ...serif,
+  },
+  greeting: {
+    color: colors.bark,
+    fontSize: type.greeting,
+    fontWeight: '400',
+    letterSpacing: 0.2,
+    textAlign: 'center',
+    marginTop: 4,
     ...serif,
   },
   stageClip: {
-    width: 500,
-    height: 500,
-    maxWidth: '52%',
-    maxHeight: '64%',
+    width: 520,
+    height: 520,
+    maxWidth: '54%',
+    maxHeight: '66%',
     overflow: 'hidden',
   },
   stage: {
@@ -147,29 +163,27 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  footer: {
-    height: 72,
-    width: '100%',
-    maxWidth: 760,
+  opening: {
+    position: 'absolute',
+    bottom: 22,
+    left: 24,
+    right: 24,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 8,
   },
-  tagline: {
-    position: 'absolute',
-    color: colors.mutedNest,
-    fontSize: 20,
-    fontWeight: '600',
-    letterSpacing: 0.3,
-    textAlign: 'center',
-  },
-  greeting: {
-    position: 'absolute',
+  smallMark: {
     color: colors.bark,
-    fontSize: type.greeting,
-    fontWeight: '400',
+    fontSize: 28,
+    fontWeight: '700',
     letterSpacing: 0.3,
     textAlign: 'center',
     ...serif,
+  },
+  tagline: {
+    color: colors.mutedNest,
+    fontSize: 18,
+    fontWeight: '600',
+    letterSpacing: 0.3,
+    textAlign: 'center',
+    marginTop: 2,
   },
 });

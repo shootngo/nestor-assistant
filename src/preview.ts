@@ -9,10 +9,10 @@ import { BRANDING_SHOWPIECE_EVERY } from './config';
  *   ?start=showpiece         jump to branding and force the hatch showpiece
  *   ?showpieceEvery=1        hatch on every branding slot (also ?showpiece=1)
  *   ?showpieceFrame=nest|egg|hatch|house   freeze one showpiece keyframe
- *     nest  = official splash (cracked egg + cottage)
- *     egg   = splash + “Home, held gently”
+ *     nest  = official splash + small Nestor / Home, held gently
+ *     egg   = same opening still
  *     hatch = shell fragments + zoom
- *     house = revealed cottage + serif Nestor + greeting
+ *     house = revealed cottage + serif Nestor lockup + greeting
  */
 
 export type ShowpieceFrame = 'nest' | 'egg' | 'hatch' | 'house';
