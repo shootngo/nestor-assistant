@@ -1,19 +1,53 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Platform, Pressable, StyleSheet, View } from 'react-native';
-import { CARD_FADE_MS, CARD_INTERVAL_MS } from '../config';
+import { consumeBrandingPass } from '../branding/gate';
+import { BRANDING_SHOWPIECE_MS, CARD_FADE_MS, CARD_INTERVAL_MS } from '../config';
+import { getForceShowpiece, getStartAtBranding } from '../preview';
 import { colors } from '../theme';
-import type { DashboardCard } from '../types';
+import type { BrandingMode, DashboardCard } from '../types';
 import { DashboardCardView } from './cards/DashboardCardView';
+import { Wordmark } from './Wordmark';
 
 type Props = {
   cards: DashboardCard[];
 };
 
+function firstIndex(cards: DashboardCard[]): number {
+  if (getStartAtBranding()) {
+    const brandingAt = cards.findIndex((card) => card.kind === 'branding');
+    if (brandingAt >= 0) {
+      return brandingAt;
+    }
+  }
+  return 0;
+}
+
+function resolveBrandingMode(card: DashboardCard | undefined): BrandingMode {
+  if (card?.kind !== 'branding') {
+    return 'simple';
+  }
+  if (getForceShowpiece()) {
+    return 'showpiece';
+  }
+  return consumeBrandingPass();
+}
+
+function startingBrandingMode(cards: DashboardCard[]): BrandingMode {
+  const startCard = cards[firstIndex(cards)];
+  if (startCard?.kind === 'branding' && getForceShowpiece()) {
+    return 'showpiece';
+  }
+  return 'simple';
+}
+
 export function CardCarousel({ cards }: Props) {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(() => firstIndex(cards));
+  const [brandingMode, setBrandingMode] = useState<BrandingMode>(() => startingBrandingMode(cards));
   const opacity = useRef(new Animated.Value(1)).current;
   const fading = useRef(false);
-  const indexRef = useRef(0);
+  const indexRef = useRef(index);
+  const cardsRef = useRef(cards);
+  cardsRef.current = cards;
 
   const goTo = useCallback(
     (nextIndex: number) => {
@@ -29,6 +63,10 @@ export function CardCarousel({ cards }: Props) {
         if (!finished) {
           fading.current = false;
           return;
+        }
+        const nextCard = cardsRef.current[nextIndex];
+        if (nextCard?.kind === 'branding') {
+          setBrandingMode(resolveBrandingMode(nextCard));
         }
         indexRef.current = nextIndex;
         setIndex(nextIndex);
@@ -53,31 +91,39 @@ export function CardCarousel({ cards }: Props) {
   }, [cards.length, goTo]);
 
   useEffect(() => {
-    indexRef.current = 0;
-    setIndex(0);
+    const start = firstIndex(cards);
+    indexRef.current = start;
+    setIndex(start);
     opacity.setValue(1);
     fading.current = false;
+    setBrandingMode(resolveBrandingMode(cards[start]));
   }, [cards, opacity]);
+
+  const card = cards[index] ?? cards[0];
+  const showpiece = card?.kind === 'branding' && brandingMode === 'showpiece';
+  const displayCard =
+    card?.kind === 'branding' ? { ...card, mode: brandingMode } : card;
 
   useEffect(() => {
     if (cards.length < 2) {
       return;
     }
-    const timer = setInterval(advance, CARD_INTERVAL_MS);
-    return () => clearInterval(timer);
-  }, [advance, cards.length, index]);
+    const dwell = showpiece ? BRANDING_SHOWPIECE_MS : CARD_INTERVAL_MS;
+    const timer = setTimeout(advance, dwell);
+    return () => clearTimeout(timer);
+  }, [advance, cards.length, index, showpiece]);
 
-  const card = cards[index] ?? cards[0];
-  if (!card) {
+  if (!displayCard) {
     return null;
   }
 
   return (
     <Pressable style={styles.press} onPress={advance} accessibilityRole="button" accessibilityLabel="Show next card">
+      <Wordmark hidden={showpiece} />
       <Animated.View style={[styles.card, { opacity }]}>
-        <DashboardCardView card={card} />
+        <DashboardCardView card={displayCard} />
       </Animated.View>
-      {cards.length > 1 ? (
+      {cards.length > 1 && !showpiece ? (
         <View style={styles.dots}>
           {cards.map((entry, dotIndex) => (
             <View

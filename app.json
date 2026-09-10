@@ -3,7 +3,7 @@
     "name": "Nestor",
     "slug": "nestor-assistant",
     "scheme": "nestor",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -44,7 +44,7 @@
     },
     "android": {
       "package": "com.shootngo.nestorassistant",
-      "versionCode": 2,
+      "versionCode": 3,
       "softwareKeyboardLayoutMode": "pan",
       "predictiveBackGestureEnabled": false,
       "adaptiveIcon": {
@@ -63,7 +63,7 @@
       "themeColor": "#161616"
     },
     "extra": {
-      "phase": 2
+      "phase": 3
     }
   }
 }

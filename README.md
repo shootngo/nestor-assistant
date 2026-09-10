@@ -4,37 +4,67 @@ Kitchen Fire-tablet kiosk for Frank Mulkey’s Nestor household app. The on-scre
 
 This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules arrive in later phases, so builds use `expo-dev-client` and prebuild.
 
-## Phase 2 (this PR)
+## Phase 3 (this PR)
 
-Replace the Phase 1 static placeholder with a **cycling idle dashboard**. Landscape charcoal cards, large type for fridge viewing, ~10 seconds per card (see `CARD_INTERVAL_MS` in `src/config.ts`). Tap the screen to advance early.
+Branding sits in the Phase 2 idle loop. Landscape charcoal cards still cycle weather / Fox News / On This Day / verse. Two **house-in-the-nest** stills join each pass, with a short silent line. Every Nth branding slot (default **every 10th**) is replaced by the hatch showpiece, matched to the household PWA splash and Frank’s reference clip: cracked egg + cottage, shell fragments floating out, slow zoom, serif **Nestor**, then **Hi, I'm Nestor, your personal assistant**. Visual only — no TTS, no music.
 
-| Card | Source (no paid keys) |
+| Card | What you see |
 | --- | --- |
-| Weather — Southaven, Mississippi | [Open-Meteo](https://open-meteo.com/) forecast API. Coords **34.98898°N, 90.01259°W** (Open-Meteo geocode; about 34.99°N, 90.00°W). Timezone `America/Chicago`. Current temperature + today’s high/low. |
-| News headlines | Fox News RSS, **one headline per turn**, photo when the feed includes `media:content`. Source label **Fox News**. Working feed: `https://moxie.foxnews.com/google-publisher/latest.xml`. `https://www.foxnews.com/about/rss` is an HTML index (301 to the RSS story page), not a feed. Fallbacks: `us.xml`, then `politics.xml` on the same moxie host. |
-| This day in history | Wikipedia REST `GET /api/rest_v1/feed/onthisday/selected/{MM}/{DD}` for the Chicago calendar date. |
-| Verse of the day | **OurManna** `https://beta.ourmanna.com/api/v1/get?format=json` (NIV, no key). If that fails: [bible-api.com](https://bible-api.com/) Psalm 118:24, then a local copy of that verse so the kiosk never blanks. |
+| Weather — Southaven, Mississippi | Open-Meteo current + today’s high/low |
+| News headlines | Fox News RSS, one headline per turn, photo when present |
+| This day in history | Wikipedia On This Day for the Chicago calendar date |
+| Branding (frequent) | Official PWA house-in-the-nest icon + a rotating line (`Nestor here`, `Nestor ready for business`, …) |
+| Hatch showpiece (rare) | Silent RN Animated sequence (~5s motion); dwell `BRANDING_SHOWPIECE_MS` (10s) |
+| Verse of the day | OurManna, then bible-api.com, then a local Psalm 118:24 |
 
-Phase 1 kiosk behavior is unchanged: keep-awake, landscape lock, immersive system bars, launcher name **Nestor**. A small **Nestor** wordmark stays in the corner on every card. There is no hatch animation or branding showpiece (Phase 7).
+Art is under `assets/branding/`. Official PWA files (also in `assets/branding/source/`):
 
-Offline / fetch errors show a calm “Couldn’t load …” card and the loop continues. The app must not crash the kiosk.
+- [splash.png](https://raw.githubusercontent.com/shootngo/Nestor/main/assets/splash.png) — hatch start still
+- [splash.jpg](https://raw.githubusercontent.com/shootngo/Nestor/main/assets/splash.jpg)
+- [icon-512.png](https://raw.githubusercontent.com/shootngo/Nestor/main/icon-512.png)
+- [icon-source.png](https://raw.githubusercontent.com/shootngo/Nestor/main/assets/icon-source.png) — simple branding still
 
-Confirm Phase 2 on the tablet before any later phase (wake word, speech, Gemini, Firebase, egg face, overnight dim).
+Mid/end hatch stills (shatter + revealed cottage) were composed to match that splash. Live PWA: https://shootngo.github.io/Nestor/
 
-## Not in Phase 2
+There is no listening blink, talking mouth, or walk-off — those wait for listen → answer.
 
-Wake/sleep word, Porcupine, SpeechRecognizer, TTS, Gemini, Firebase/Firestore, shopping/calendar, egg face, hatch branding showpiece, overnight dimming, traffic, fuel, sunrise/sunset, moon, Dollar Tree.
+Phase 1–2 kiosk behavior is unchanged: keep-awake, landscape lock, immersive system bars, launcher name **Nestor**. The corner wordmark stays on ordinary cards and yields during the full-screen showpiece.
+
+Offline / fetch errors still show a calm “Couldn’t load …” card. The app must not crash the kiosk.
+
+### Config knobs (`src/config.ts`)
+
+| Knob | Default | Meaning |
+| --- | --- | --- |
+| `CARD_INTERVAL_MS` | `10000` | Dwell for weather, news, history, verse, and simple branding |
+| `CARD_FADE_MS` | `520` | Fade between cards |
+| `BRANDING_SHOWPIECE_EVERY` | `10` | Hatch replaces a branding still on every Nth branding pass. Use `5` or `20` if you want it more or less often. `1` = every branding slot |
+| `BRANDING_SHOWPIECE_MS` | `10000` | Showpiece dwell (~5s hatch + mark/greeting hold) |
+| `PLAYLIST_REFRESH_MS` | 15 minutes | Reload remote feeds |
+
+Web preview only (ignored on the APK):
+
+- `?start=branding` — open on the first house-in-the-nest card
+- `?start=showpiece` — open on the hatch
+- `?showpieceEvery=1` or `?showpiece=1` — hatch every branding slot
+- `?showpieceFrame=nest\|egg\|hatch\|house` — freeze one showpiece keyframe
+
+## Not in Phase 3
+
+Wake/sleep word, Porcupine, SpeechRecognizer, TTS, Gemini, Firebase/Firestore, shopping/calendar, listening/talking egg face, overnight dimming, traffic, fuel, sunrise/sunset, moon, Dollar Tree.
 
 Future work is listed as stubs only in [PHASES.md](./PHASES.md).
 
 ## Screenshots
 
-Landscape web preview of the four card types (fridge install path is still the Android APK):
+Landscape web preview (fridge install path is still the Android APK):
 
-- [Weather — Southaven](./docs/phase-2-weather.png)
-- [Fox News](./docs/phase-2-news.png)
-- [This day in history](./docs/phase-2-history.png)
-- [Verse of the day](./docs/phase-2-verse.png)
+- [Simple branding — house in the nest](./docs/phase-3-branding.png)
+- [Hatch — cracked egg + Nestor / Home, held gently](./docs/phase-3-hatch-nest.png)
+- [Hatch — shell opening / zoom](./docs/phase-3-hatch-open.png)
+- [Hatch — house revealed + serif Nestor](./docs/phase-3-hatch-house.png)
+
+Phase 2 cards (still in the loop): [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-news.png), [history](./docs/phase-2-history.png), [verse](./docs/phase-2-verse.png).
 
 ## Requirements
 
@@ -81,7 +111,7 @@ Web preview (`npx expo start --web`) is only for a quick look at the dashboard. 
 
 ## APK for the fridge tablet (no Metro)
 
-Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 2:
+Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 3:
 
 ### Option A — EAS Build (recommended)
 
@@ -110,7 +140,7 @@ Profiles in `eas.json`:
 
 | Profile | What you get |
 | --- | --- |
-| `preview` | Standalone APK for the fridge (use this for Phase 2 sign-off) |
+| `preview` | Standalone APK for the fridge (use this for Phase 3 sign-off) |
 | `development` | Debug APK with the dev-client launcher (needs Metro) |
 | `production` | Standalone APK (same install path as preview for this household app) |
 
@@ -175,7 +205,7 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 
 1. Open **Nestor**.
 2. Rotate the tablet to landscape (or mount it on the fridge).
-3. Confirm the charcoal dashboard: **Nestor** wordmark, weather for Southaven, Fox headlines, this-day history, and the daily verse. Cards should advance about every 10 seconds. The screen stays on.
+3. Confirm the charcoal dashboard: weather, Fox headlines, history, verse, and the house-in-the-nest branding cards. About every tenth branding card should run the silent hatch (serif **Nestor**, then the greeting). Cards advance about every 10 seconds. The screen stays on. No sound.
 4. Keep the tablet plugged in.
 
 ## Identity

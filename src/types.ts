@@ -39,9 +39,19 @@ export type UnavailableCardData = {
   topic: string;
 };
 
+export type BrandingMode = 'simple' | 'showpiece';
+
+export type BrandingCardData = {
+  kind: 'branding';
+  id: string;
+  line: string;
+  mode: BrandingMode;
+};
+
 export type DashboardCard =
   | WeatherCardData
   | NewsCardData
   | HistoryCardData
   | VerseCardData
-  | UnavailableCardData;
+  | UnavailableCardData
+  | BrandingCardData;
