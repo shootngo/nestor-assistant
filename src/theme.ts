@@ -23,7 +23,7 @@ export const type = {
   caption: 16,
   branding: 30,
   greeting: 24,
-  serifMark: 56,
+  serifMark: 64,
 } as const;
 
 export const serif = {

@@ -44,7 +44,7 @@ export function HatchShowpiece({ frame = null }: Props) {
       start.setValue(1);
       shatter.setValue(stage === 'hatch' || stage === 'house' ? 1 : 0);
       revealed.setValue(stage === 'house' ? 1 : 0);
-      zoom.setValue(stage === 'hatch' ? 1.06 : stage === 'house' ? 1.12 : 1);
+      zoom.setValue(stage === 'hatch' ? 1.04 : stage === 'house' ? 1.08 : 1);
       tagline.setValue(stage === 'egg' ? 1 : 0);
       mark.setValue(stage === 'house' ? 1 : 0);
       greeting.setValue(stage === 'house' ? 1 : 0);
@@ -66,10 +66,10 @@ export function HatchShowpiece({ frame = null }: Props) {
     const animation = Animated.sequence([
       Animated.parallel([fade(start, 1, TIMING.startIn), fade(tagline, 1, TIMING.startIn)]),
       Animated.delay(TIMING.startHold),
-      Animated.parallel([fade(shatter, 1, TIMING.shatterIn), fade(zoom, 1.06, TIMING.shatterIn)]),
+      Animated.parallel([fade(shatter, 1, TIMING.shatterIn), fade(zoom, 1.04, TIMING.shatterIn)]),
       Animated.parallel([
         fade(revealed, 1, TIMING.revealedIn),
-        fade(zoom, 1.12, TIMING.revealedIn),
+        fade(zoom, 1.08, TIMING.revealedIn),
         fade(tagline, 0, TIMING.markIn),
         fade(mark, 1, TIMING.markIn),
       ]),
@@ -83,19 +83,21 @@ export function HatchShowpiece({ frame = null }: Props) {
   return (
     <View style={styles.wrap} testID="nestor-card-showpiece" accessibilityLabel={SHOWPIECE_GREETING}>
       <Animated.Text style={[styles.mark, { opacity: mark }]}>{SHOWPIECE_MARK}</Animated.Text>
-      <Animated.View style={[styles.stage, { transform: [{ scale: zoom }] }]}>
-        <Animated.Image source={brandingImages.hatchStart} style={[styles.art, { opacity: start }]} resizeMode="contain" />
-        <Animated.Image
-          source={brandingImages.hatchShatter}
-          style={[styles.art, { opacity: shatter }]}
-          resizeMode="contain"
-        />
-        <Animated.Image
-          source={brandingImages.hatchRevealed}
-          style={[styles.art, { opacity: revealed }]}
-          resizeMode="contain"
-        />
-      </Animated.View>
+      <View style={styles.stageClip}>
+        <Animated.View style={[styles.stage, { transform: [{ scale: zoom }] }]}>
+          <Animated.Image source={brandingImages.hatchStart} style={[styles.art, { opacity: start }]} resizeMode="contain" />
+          <Animated.Image
+            source={brandingImages.hatchShatter}
+            style={[styles.art, { opacity: shatter }]}
+            resizeMode="contain"
+          />
+          <Animated.Image
+            source={brandingImages.hatchRevealed}
+            style={[styles.art, { opacity: revealed }]}
+            resizeMode="contain"
+          />
+        </Animated.View>
+      </View>
       <View style={styles.footer}>
         <Animated.Text style={[styles.tagline, { opacity: tagline }]}>{SHOWPIECE_TAGLINE}</Animated.Text>
         <Animated.Text style={[styles.greeting, { opacity: greeting }]}>{SHOWPIECE_GREETING}</Animated.Text>
@@ -114,9 +116,10 @@ const styles = StyleSheet.create({
   },
   mark: {
     position: 'absolute',
-    top: 28,
+    top: 18,
     left: 0,
     right: 0,
+    zIndex: 2,
     textAlign: 'center',
     color: colors.bark,
     fontSize: type.serifMark,
@@ -124,11 +127,16 @@ const styles = StyleSheet.create({
     letterSpacing: 0.4,
     ...serif,
   },
+  stageClip: {
+    width: 500,
+    height: 500,
+    maxWidth: '52%',
+    maxHeight: '64%',
+    overflow: 'hidden',
+  },
   stage: {
-    width: 420,
-    height: 420,
-    maxWidth: '46%',
-    maxHeight: '62%',
+    width: '100%',
+    height: '100%',
   },
   art: {
     position: 'absolute',
