@@ -1,0 +1,69 @@
+{
+  "expo": {
+    "name": "Nestor",
+    "slug": "nestor-assistant",
+    "scheme": "nestor",
+    "version": "1.0.0",
+    "orientation": "landscape",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#161616",
+    "primaryColor": "#161616",
+    "plugins": [
+      "expo-dev-client",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#161616",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 180,
+          "resizeMode": "contain"
+        }
+      ],
+      "expo-screen-orientation",
+      [
+        "expo-navigation-bar",
+        {
+          "hidden": true,
+          "enforceContrast": false,
+          "style": "dark"
+        }
+      ],
+      [
+        "expo-status-bar",
+        {
+          "hidden": true,
+          "style": "light"
+        }
+      ],
+      "./plugins/withAndroidKiosk.js"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.shootngo.nestorassistant",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.shootngo.nestorassistant",
+      "versionCode": 1,
+      "softwareKeyboardLayoutMode": "pan",
+      "predictiveBackGestureEnabled": false,
+      "adaptiveIcon": {
+        "backgroundColor": "#161616",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "backgroundColor": "#161616",
+      "orientation": "landscape",
+      "name": "Nestor",
+      "shortName": "Nestor",
+      "themeColor": "#161616"
+    },
+    "extra": {
+      "phase": 1
+    }
+  }
+}
