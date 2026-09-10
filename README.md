@@ -4,23 +4,37 @@ Kitchen Fire-tablet kiosk for Frank Mulkey’s Nestor household app. The on-scre
 
 This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules arrive in later phases, so builds use `expo-dev-client` and prebuild.
 
-## Phase 1 (this PR)
+## Phase 2 (this PR)
 
-A sideloadable landscape kiosk shell so the fridge tablet can run Nestor at all:
+Replace the Phase 1 static placeholder with a **cycling idle dashboard**. Landscape charcoal cards, large type for fridge viewing, ~10 seconds per card (see `CARD_INTERVAL_MS` in `src/config.ts`). Tap the screen to advance early.
 
-- Expo SDK 57 + `expo-dev-client` + Android prebuild
-- Display name **Nestor**, package id `com.shootngo.nestorassistant`
-- Full-screen charcoal placeholder: title **Nestor**, subtitle **Kitchen assistant — Phase 1**, fridge-tablet shell line
-- Screen stays on (`FLAG_KEEP_SCREEN_ON` / `expo-keep-awake`)
-- Landscape preferred; system bars hidden as much as Android allows (immersive sticky)
+| Card | Source (no paid keys) |
+| --- | --- |
+| Weather — Southaven, Mississippi | [Open-Meteo](https://open-meteo.com/) forecast API. Coords **34.98898°N, 90.01259°W** (Open-Meteo geocode; about 34.99°N, 90.00°W). Timezone `America/Chicago`. Current temperature + today’s high/low. |
+| News headlines | Fox News RSS, **one headline per turn**, photo when the feed includes `media:content`. Source label **Fox News**. Working feed: `https://moxie.foxnews.com/google-publisher/latest.xml`. `https://www.foxnews.com/about/rss` is an HTML index (301 to the RSS story page), not a feed. Fallbacks: `us.xml`, then `politics.xml` on the same moxie host. |
+| This day in history | Wikipedia REST `GET /api/rest_v1/feed/onthisday/selected/{MM}/{DD}` for the Chicago calendar date. |
+| Verse of the day | **OurManna** `https://beta.ourmanna.com/api/v1/get?format=json` (NIV, no key). If that fails: [bible-api.com](https://bible-api.com/) Psalm 118:24, then a local copy of that verse so the kiosk never blanks. |
 
-Confirm Phase 1 on the tablet before any later phase.
+Phase 1 kiosk behavior is unchanged: keep-awake, landscape lock, immersive system bars, launcher name **Nestor**. A small **Nestor** wordmark stays in the corner on every card. There is no hatch animation or branding showpiece (Phase 7).
 
-## Not in Phase 1
+Offline / fetch errors show a calm “Couldn’t load …” card and the loop continues. The app must not crash the kiosk.
 
-Wake/sleep word, Porcupine, SpeechRecognizer, TTS, Gemini, Firebase/Firestore, shopping/calendar, egg face, dashboard cards, news/weather, overnight dimming.
+Confirm Phase 2 on the tablet before any later phase (wake word, speech, Gemini, Firebase, egg face, overnight dim).
+
+## Not in Phase 2
+
+Wake/sleep word, Porcupine, SpeechRecognizer, TTS, Gemini, Firebase/Firestore, shopping/calendar, egg face, hatch branding showpiece, overnight dimming, traffic, fuel, sunrise/sunset, moon, Dollar Tree.
 
 Future work is listed as stubs only in [PHASES.md](./PHASES.md).
+
+## Screenshots
+
+Landscape web preview of the four card types (fridge install path is still the Android APK):
+
+- [Weather — Southaven](./docs/phase-2-weather.png)
+- [Fox News](./docs/phase-2-news.png)
+- [This day in history](./docs/phase-2-history.png)
+- [Verse of the day](./docs/phase-2-verse.png)
 
 ## Requirements
 
@@ -45,6 +59,12 @@ npx expo prebuild --platform android
 
 `--clean` regenerates from `app.json` if native folders already exist (`npx expo prebuild --platform android --clean`).
 
+Optional feed check (documents which Fox RSS URL works):
+
+```sh
+npm run check-feeds
+```
+
 ## Development build (USB tablet + Metro)
 
 Use this when iterating on JS. The tablet must reach the machine running Metro (same Wi-Fi, or USB).
@@ -57,9 +77,11 @@ npx expo start --dev-client
 
 `expo-dev-client` is required. Do not use Expo Go.
 
+Web preview (`npx expo start --web`) is only for a quick look at the dashboard. Keep-awake and immersive bars apply on Android.
+
 ## APK for the fridge tablet (no Metro)
 
-Phase 1 is a static shell. Install a **preview APK** so the tablet does not need a computer.
+Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 2:
 
 ### Option A — EAS Build (recommended)
 
@@ -88,7 +110,7 @@ Profiles in `eas.json`:
 
 | Profile | What you get |
 | --- | --- |
-| `preview` | Standalone APK for the fridge (use this for Phase 1 sign-off) |
+| `preview` | Standalone APK for the fridge (use this for Phase 2 sign-off) |
 | `development` | Debug APK with the dev-client launcher (needs Metro) |
 | `production` | Standalone APK (same install path as preview for this household app) |
 
@@ -153,7 +175,7 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 
 1. Open **Nestor**.
 2. Rotate the tablet to landscape (or mount it on the fridge).
-3. Confirm the charcoal **Nestor** placeholder, the Phase 1 subtitle, and that the screen stays on.
+3. Confirm the charcoal dashboard: **Nestor** wordmark, weather for Southaven, Fox headlines, this-day history, and the daily verse. Cards should advance about every 10 seconds. The screen stays on.
 4. Keep the tablet plugged in.
 
 ## Identity
@@ -162,4 +184,4 @@ On screen and in later voice copy, the assistant is **Nestor**. Never show a mod
 
 ## Test notes
 
-See [docs/TEST_NOTES.md](./docs/TEST_NOTES.md). Placeholder UI: [docs/phase-1-placeholder.png](./docs/phase-1-placeholder.png).
+See [docs/TEST_NOTES.md](./docs/TEST_NOTES.md).
