@@ -48,9 +48,9 @@ After wake, one spoken request at a time, then a spoken + on-screen reply. Follo
 
 Firestore tools on the existing **nestor-c2ae8** project (same as the Nestor PWA). Email/Password kiosk sign-in with `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD`; session persists on the tablet.
 
-- `add_shopping_item` / `get_shopping_list` → `shopping` (PWA write shape)
-- `get_calendar` → `events` plus home/vehicle task titles that already appear on the PWA calendar. Bills and amounts stay off voice
-- `add_calendar_note` → `events` the phone app will show
+- `add_shopping_item` / `get_shopping_list` → `shopping` (exact PWA `saveShopping` fields; actor is the signed-in email)
+- `get_calendar` → `events` titles/dates for today or this week. Optional clean `maintenance` / `vehicleTasks` `nextDue` reminders. Skip bills/payments entirely
+- `add_calendar_note` → `events` with exact PWA `saveEvent` fields (`billId` "")
 - Voice refuses private notes, passwords, the safe, emergency info, and bill secrets
 - Mute / volume unchanged. If shopping hits permission-denied, publish `firestore.rules` from shootngo/Nestor as owner
 

@@ -34,7 +34,7 @@ export const HOUSEHOLD_FUNCTION_DECLARATIONS = [
   {
     name: 'get_calendar',
     description:
-      'Read household calendar titles for today or this week. Uses events plus home and vehicle tasks. Does not include bills or amounts.',
+      'Read calendar event titles and dates for today or this week. Optional clean home/vehicle nextDue reminders only. Never bills, payments, amounts, or private notes.',
     parameters: {
       type: 'object',
       properties: {

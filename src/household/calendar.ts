@@ -11,40 +11,48 @@ import type {
   Actor,
   CalendarItem,
   HouseholdStore,
+  MaintenanceRecord,
   ToolResult,
   VehicleRecord,
+  VehicleTaskRecord,
 } from './types';
 
 /**
- * Voice calendar scope (same day-fill sources as the PWA, minus bills):
- * - events (titles + dates; this is what add_calendar_note writes)
- * - maintenance nextDue / lastCompleted (task name only)
- * - vehicleTasks nextDue / lastCompleted (vehicle label + task name)
- *
- * Not read by voice: bills, payments, amounts, private notes, passwords, safe, emergency.
+ * Voice calendar:
+ * - Main path: `events` titles + YYYY-MM-DD dates (what add_calendar_note writes)
+ * - Optional: `maintenance` / `vehicleTasks` `nextDue` as short reminders, only if the title is clean
+ * - Never: bills, payments, amounts, event notes, lastCompleted, private data
  */
-export const CALENDAR_VOICE_SCOPE = [
-  'events',
-  'maintenance',
-  'vehicleTasks',
-] as const;
+export const CALENDAR_VOICE_SCOPE = ['events'] as const;
+
+export const CALENDAR_REMINDER_SCOPE = ['maintenance', 'vehicleTasks'] as const;
+
+const UNCLEAN_REMINDER =
+  /\b(password|passcode|safe|combo|combination|emergency|bill|bills|payment|amount|secret|pin)\b/i;
 
 function vehicleLabel(vehicle: VehicleRecord | undefined): string {
   if (!vehicle) {
-    return 'Vehicle';
+    return '';
   }
   const name = String(vehicle.name || '').trim();
   if (name) {
     return name;
   }
-  const bits = [vehicle.year, vehicle.make, vehicle.model]
+  return [vehicle.year, vehicle.make, vehicle.model]
     .map((part) => String(part || '').trim())
     .filter(Boolean)
     .join(' ');
-  return bits || 'Vehicle';
 }
 
-function pushIfDue(
+export function isCleanReminderTitle(title: string): boolean {
+  const text = title.trim();
+  if (!text || text.length > 80) {
+    return false;
+  }
+  return !UNCLEAN_REMINDER.test(text);
+}
+
+function pushDated(
   items: CalendarItem[],
   date: string | undefined,
   start: string,
@@ -53,55 +61,84 @@ function pushIfDue(
   kind: CalendarItem['kind'],
 ): void {
   const ymd = String(date || '').trim();
-  if (!ymdInRange(ymd, start, end) || !title.trim()) {
+  const label = title.trim();
+  if (!ymdInRange(ymd, start, end) || !label) {
     return;
   }
-  items.push({ date: ymd, title: title.trim(), kind });
+  if (kind === 'reminder' && !isCleanReminderTitle(label)) {
+    return;
+  }
+  items.push({ date: ymd, title: label, kind });
+}
+
+async function settledList<T>(load: () => Promise<T[]>): Promise<T[]> {
+  try {
+    return await load();
+  } catch {
+    return [];
+  }
+}
+
+function reminderTitle(task: MaintenanceRecord | VehicleTaskRecord, vehicles: VehicleRecord[]): string {
+  if ('vehicleId' in task) {
+    const vehicle = vehicles.find((entry) => entry.id === task.vehicleId);
+    const label = vehicleLabel(vehicle);
+    if (!label || !String(task.name || '').trim()) {
+      return '';
+    }
+    return `${label} · ${task.name}`.trim();
+  }
+  return String(task.name || '').trim();
 }
 
 export async function collectCalendarItems(
   store: HouseholdStore,
   range: CalendarRange,
   now = new Date(),
-): Promise<{ start: string; end: string; items: CalendarItem[] }> {
+): Promise<{ start: string; end: string; events: CalendarItem[]; reminders: CalendarItem[] }> {
   const { start, end } = calendarBounds(range, now);
-  const [events, maintenance, vehicles, vehicleTasks] = await Promise.all([
-    store.listEvents(),
-    store.listMaintenance(),
-    store.listVehicles(),
-    store.listVehicleTasks(),
+  const eventsRaw = await store.listEvents();
+  const events: CalendarItem[] = [];
+  for (const event of eventsRaw) {
+    pushDated(events, event.date, start, end, event.title, 'event');
+  }
+  events.sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
+
+  const [maintenance, vehicles, vehicleTasks] = await Promise.all([
+    settledList(() => store.listMaintenance()),
+    settledList(() => store.listVehicles()),
+    settledList(() => store.listVehicleTasks()),
   ]);
-
-  const items: CalendarItem[] = [];
-  for (const event of events) {
-    pushIfDue(items, event.date, start, end, event.title, 'event');
-  }
+  const reminders: CalendarItem[] = [];
   for (const task of maintenance) {
-    pushIfDue(items, task.nextDue, start, end, task.name, 'maintenance');
-    if (task.lastCompleted && task.lastCompleted !== task.nextDue) {
-      pushIfDue(items, task.lastCompleted, start, end, `${task.name} (done)`, 'maintenance');
-    }
+    pushDated(reminders, task.nextDue, start, end, reminderTitle(task, vehicles), 'reminder');
   }
-  const vehicleById = new Map(vehicles.map((vehicle) => [vehicle.id, vehicle]));
   for (const task of vehicleTasks) {
-    const title = `${vehicleLabel(vehicleById.get(task.vehicleId))} · ${task.name}`;
-    pushIfDue(items, task.nextDue, start, end, title, 'vehicle');
-    if (task.lastCompleted && task.lastCompleted !== task.nextDue) {
-      pushIfDue(items, task.lastCompleted, start, end, `${title} (done)`, 'vehicle');
-    }
+    pushDated(reminders, task.nextDue, start, end, reminderTitle(task, vehicles), 'reminder');
   }
+  reminders.sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
 
-  items.sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
-  return { start, end, items };
+  return { start, end, events, reminders };
 }
 
-export function speakCalendar(range: CalendarRange, items: CalendarItem[]): string {
-  if (items.length === 0) {
+export function speakCalendar(
+  range: CalendarRange,
+  events: CalendarItem[],
+  reminders: CalendarItem[] = [],
+): string {
+  const eventLines = events.slice(0, 8).map((item) => `${item.date}: ${item.title}`);
+  const reminderNames = reminders.slice(0, 6).map((item) => item.title);
+  const parts: string[] = [];
+  if (eventLines.length) {
+    parts.push(eventLines.join('. ') + (events.length > 8 ? `, and ${events.length - 8} more` : ''));
+  }
+  if (reminderNames.length) {
+    parts.push(`Reminders: ${reminderNames.join(', ')}`);
+  }
+  if (parts.length === 0) {
     return range === 'this_week' ? EMPTY_CALENDAR_WEEK_REPLY : EMPTY_CALENDAR_TODAY_REPLY;
   }
-  const lines = items.slice(0, 10).map((item) => `${item.date}: ${item.title}`);
-  const extra = items.length > 10 ? `, and ${items.length - 10} more` : '';
-  return `${lines.join('. ')}${extra}.`;
+  return `${parts.join('. ')}.`;
 }
 
 export async function getCalendar(
@@ -110,8 +147,8 @@ export async function getCalendar(
   now = new Date(),
 ): Promise<ToolResult> {
   const range = normalizeCalendarRange(rangeRaw);
-  const { start, end, items } = await collectCalendarItems(store, range, now);
-  const spoken = speakCalendar(range, items);
+  const { start, end, events, reminders } = await collectCalendarItems(store, range, now);
+  const spoken = speakCalendar(range, events, reminders);
   return {
     ok: true,
     spoken,
@@ -120,7 +157,9 @@ export async function getCalendar(
       start,
       end,
       scope: [...CALENDAR_VOICE_SCOPE],
-      items: items.map((item) => ({ date: item.date, title: item.title, kind: item.kind })),
+      remindersScope: [...CALENDAR_REMINDER_SCOPE],
+      items: events.map((item) => ({ date: item.date, title: item.title })),
+      reminders: reminders.map((item) => ({ date: item.date, title: item.title })),
     },
   };
 }

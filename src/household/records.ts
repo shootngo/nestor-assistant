@@ -2,6 +2,32 @@ import { addedCalendarLine, addedShoppingLine } from './copy';
 import { stampNew, uid } from './ids';
 import type { Actor, EventRecord, ShoppingRecord } from './types';
 
+/** Exact `saveShopping` keys from shootngo/Nestor `js/store.js`. */
+export const SHOPPING_FIELDS = [
+  'id',
+  'text',
+  'aisle',
+  'notes',
+  'checked',
+  'createdBy',
+  'createdAt',
+  'updatedBy',
+  'updatedAt',
+] as const;
+
+/** Exact `saveEvent` keys from shootngo/Nestor `js/store.js`. */
+export const EVENT_FIELDS = [
+  'id',
+  'title',
+  'date',
+  'notes',
+  'billId',
+  'createdBy',
+  'createdAt',
+  'updatedBy',
+  'updatedAt',
+] as const;
+
 export function buildShoppingRecord(
   actor: Actor,
   item: string,

@@ -51,16 +51,22 @@ Public web keys are already embedded (from shootngo/Nestor `js/config.js`). Over
 | --- | --- | --- |
 | `add_shopping_item(item, aisle?)` | `shopping` | “Added milk to the list” |
 | `get_shopping_list()` | `shopping` (unchecked only) | Brief list |
-| `get_calendar(range)` | `events`, plus `maintenance` / `vehicleTasks` titles | Today or this week (Sun–Sat, America/Chicago) |
+| `get_calendar(range)` | `events` (main). Optional clean `maintenance` / `vehicleTasks` `nextDue` reminders | Today or this week (Sun–Sat, America/Chicago) |
 | `add_calendar_note(text, date)` | `events` (title/date; empty notes, no bill link) | Confirms the title and date |
 
-Shopping writes match the PWA (`js/store.js` `saveShopping`): `text`, `aisle`, `notes`, `checked`, `createdAt`, `updatedAt`, `createdBy` / `updatedBy`.
+Shopping writes match the PWA (`js/store.js` `saveShopping`):
 
-Calendar notes match `saveEvent`: `title`, `date`, `notes`, `billId`, plus the same stamps. The phone app shows them on that day.
+`{ id, text, aisle, notes, checked, createdBy, createdAt, updatedBy, updatedAt }`
+
+Calendar notes match `saveEvent`:
+
+`{ id, title, date (YYYY-MM-DD), notes, billId (optional ""), createdBy, createdAt, updatedBy, updatedAt }`
+
+`createdBy` / `updatedBy` are the PWA `actor()` object (`uid`, `email`, `displayName`). The actor identity is the **signed-in household email**.
 
 ### Calendar scope
 
-The PWA calendar day-fill also paints **bills**. Voice does **not** read `bills` or `payments` and never speaks amounts. Overview of non-sensitive **event** titles (and home/vehicle task names that already appear on the calendar) is OK.
+Main path: **event** titles and dates for today / this week. Optional **reminders** from `maintenance` and `vehicleTasks` `nextDue` only when the title is clean (no bills, amounts, secrets). Voice never reads `bills` or `payments`, never speaks amounts, and never reads `lastCompleted` or event notes.
 
 Voice must never read or write: private notes, passwords, the safe, emergency information, or bill payment secrets. Nestor refuses those politely and points Frank to the phone app.
 

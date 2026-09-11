@@ -55,7 +55,7 @@ export type VehicleTaskRecord = {
 export type CalendarItem = {
   date: string;
   title: string;
-  kind: 'event' | 'maintenance' | 'vehicle';
+  kind: 'event' | 'reminder';
 };
 
 export type ToolResult = {

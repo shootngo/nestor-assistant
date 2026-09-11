@@ -14,7 +14,7 @@ One-time secrets and rules publish: [HOUSEHOLD.md](./HOUSEHOLD.md).
 | Brain | Gemini `generateContent` with household **function tools** plus Google Search grounding (search is dropped automatically if the API rejects the combination) |
 | Auth | Firebase Email/Password, session persisted with AsyncStorage |
 | Shopping | `shopping` collection — same write shape as shootngo/Nestor `saveShopping` |
-| Calendar read | `events` + `maintenance` / `vehicleTasks` titles. **Not** `bills` / `payments` / amounts |
+| Calendar read | `events` titles/dates. Optional clean `maintenance` / `vehicleTasks` `nextDue` reminders. **Not** `bills` / `payments` / amounts / lastCompleted |
 | Calendar write | `events` (`add_calendar_note`) |
 | Abandoned | Picovoice; naming the model; voice access to private notes / passwords / safe / emergency / bills |
 
@@ -25,7 +25,7 @@ One-time secrets and rules publish: [HOUSEHOLD.md](./HOUSEHOLD.md).
 | Identity | **Nestor** only. No model name |
 | Add item | “Add milk to the list” → “Added milk to the list.” (aisle optional) |
 | Read list | “What's on the shopping list?” → open (unchecked) items, spoken briefly |
-| Calendar | “What's on the calendar today?” / “this week” → titles and dates, no amounts |
+| Calendar | “What's on the calendar today?” / “this week” → event titles and dates; optional clean reminders; no amounts |
 | Calendar note | “Add a note on the calendar: take out recycling tomorrow” → event the PWA will show |
 | Privacy | Passwords, private notes, safe, emergency, bill amounts → polite refusal, phone app |
 | Mute | Unchanged |
