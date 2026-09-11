@@ -38,7 +38,7 @@ Wake / sleep:
 | `LISTENING_SILENCE_MS` | `300000` | ~5 minutes of quiet → exit |
 | `LISTENING_VOICE_RMS` | `0.018` | Mic energy that resets the silence timer (raise if the fridge hum keeps him up) |
 | `EGG_EXIT_MS` | `2800` | Unhurried walk-off |
-| `ALLOW_WAKE_SIMULATE` | `true` | Long-press the wordmark / egg to preview without speaking |
+| `ALLOW_WAKE_SIMULATE` | `true` | Tap or long-press the wordmark / egg to preview without speaking |
 
 Dashboard (unchanged from Phase 3):
 
@@ -107,6 +107,7 @@ Landscape web preview of the wake/sleep path (fridge install path is still the A
 - [Idle dashboard](./docs/phase-4-dashboard.png)
 - [Egg listening](./docs/phase-4-listening.png)
 - [Egg exit](./docs/phase-4-exit.png)
+- [Mic needed](./docs/phase-4-mic.png)
 
 Phase 3 branding stills: [house in the nest](./docs/phase-3-branding.png), [hatch nest](./docs/phase-3-hatch-nest.png), [hatch open](./docs/phase-3-hatch-open.png), [hatch house](./docs/phase-3-hatch-house.png).
 

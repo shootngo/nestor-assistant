@@ -16,6 +16,7 @@ export function EggListening({ onSimulateSleep }: Props) {
   return (
     <Pressable
       style={styles.screen}
+      onPress={ALLOW_WAKE_SIMULATE ? onSimulateSleep : undefined}
       onLongPress={ALLOW_WAKE_SIMULATE ? onSimulateSleep : undefined}
       delayLongPress={700}
       accessibilityRole="button"

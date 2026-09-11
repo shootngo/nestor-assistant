@@ -24,7 +24,7 @@ Confirm on the Fire tablet after installing a rebuilt APK. Web preview can show 
 | `LISTENING_SILENCE_MS` | `300000` | 5 minutes |
 | `LISTENING_VOICE_RMS` | `0.018` | Fridge-hum filter for the silence timer |
 | `EGG_EXIT_MS` | `2800` | Unhurried walk-off |
-| `ALLOW_WAKE_SIMULATE` | `true` | Long-press the wordmark / listening egg to preview without speaking |
+| `ALLOW_WAKE_SIMULATE` | `true` | Tap or long-press the wordmark / listening egg to preview without speaking |
 
 Per-keyword thresholds already shipped:
 
@@ -71,7 +71,7 @@ If the tablet never wakes on voice but long-press still shows the egg, the UI pa
 ?wakeTap=1
 ```
 
-`npx expo start --web` then open those query strings at 1280×800. Long-press the **Nestor** wordmark to wake when `ALLOW_WAKE_SIMULATE` is true.
+Verified in this Phase 4 change: `npx tsc --noEmit` is clean. Landscape web preview at 1280×800 showed the idle dashboard, cream egg listening face (`?session=listen` stays put), chicken-legs exit (`?session=exit&hold=1`), and the mic-needed card. `?wakeTap=1` click woke the egg; a second click walked it off and returned to the same weather card. Identity stayed **Nestor**. Full Fire-tablet mic spotting is documented above and still needs a sideloaded APK.
 
 ### Rebuild APK
 

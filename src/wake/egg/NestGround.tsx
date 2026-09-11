@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
   },
   twig: {
     position: 'absolute',
-    height: 4,
-    borderRadius: 2,
+    height: 7,
+    borderRadius: 4,
     backgroundColor: colors.twig,
-    opacity: 0.55,
+    opacity: 0.7,
   },
   t1: {
     width: 210,

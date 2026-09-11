@@ -201,11 +201,7 @@ const styles = StyleSheet.create({
     borderColor: colors.creamDeep,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: colors.bark,
-    shadowOpacity: 0.12,
-    shadowRadius: 18,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 6,
+    boxShadow: '0 8px 18px rgba(63, 42, 29, 0.14)',
   },
   shine: {
     position: 'absolute',

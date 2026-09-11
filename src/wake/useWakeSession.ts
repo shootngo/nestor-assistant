@@ -19,7 +19,7 @@ export function useWakeSession() {
   const [permission, setPermission] = useState<MicPermission>('unknown');
   const phaseRef = useRef(phase);
   phaseRef.current = phase;
-  const silenceAt = useRef<number>(0);
+  const silenceAt = useRef(preview === 'listening' ? Number.POSITIVE_INFINITY : 0);
   const engineReady = useRef(false);
   const starting = useRef(false);
 
@@ -111,7 +111,7 @@ export function useWakeSession() {
   }, [preview, startEngine]);
 
   useEffect(() => {
-    if (phase !== 'listening') {
+    if (preview || phase !== 'listening') {
       return;
     }
     const timer = setInterval(() => {
@@ -120,7 +120,7 @@ export function useWakeSession() {
       }
     }, 1000);
     return () => clearInterval(timer);
-  }, [goExiting, phase]);
+  }, [goExiting, phase, preview]);
 
   const simulateWake = useCallback(() => {
     if (!ALLOW_WAKE_SIMULATE && !getWakeTapEnabled()) {

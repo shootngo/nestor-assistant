@@ -7,6 +7,6 @@ for (const ext of ['onnx', 'txt']) {
     config.resolver.assetExts.push(ext);
   }
 }
-config.resolver.sourceExts = config.resolver.sourceExts.filter((ext: string) => ext !== 'txt');
+config.resolver.sourceExts = config.resolver.sourceExts.filter((ext) => ext !== 'txt');
 
 module.exports = config;
