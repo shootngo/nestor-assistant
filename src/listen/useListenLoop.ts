@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
+import { PRIVATE_REPLY } from '../household/copy';
+import { isPrivateHouseholdAsk } from '../household/privacy';
 import { askNestor } from './brain';
 import {
   PREVIEW_ANSWER,
@@ -34,6 +36,7 @@ type Options = {
   preview?: boolean;
   previewTalking?: boolean;
   previewMuted?: boolean;
+  previewAnswer?: string;
   onSleep: () => void;
   onHeard: () => void;
   onBusy: (busy: boolean) => void;
@@ -45,12 +48,14 @@ export function useListenLoop({
   preview = false,
   previewTalking = false,
   previewMuted = false,
+  previewAnswer: previewAnswerProp,
   onSleep,
   onHeard,
   onBusy,
   onSpeechUnavailable,
 }: Options) {
-  const previewAnswer = previewTalking || previewMuted ? PREVIEW_ANSWER : '';
+  const previewAnswer =
+    previewAnswerProp || (previewTalking || previewMuted ? PREVIEW_ANSWER : '');
   const [mode, setMode] = useState<ListenMode>(previewAnswer ? 'talking' : 'listening');
   const [answer, setAnswer] = useState(previewAnswer);
   const [muted, setMuted] = useState(previewMuted || getSessionMuted());
@@ -162,6 +167,17 @@ export function useListenLoop({
 
       if (isSleepUtterance(text)) {
         onSleepRef.current();
+        return;
+      }
+      if (isPrivateHouseholdAsk(text)) {
+        const myTurn = ++turnRef.current;
+        setMode('thinking');
+        onBusyRef.current(true);
+        await stopUtteranceCapture();
+        if (myTurn !== turnRef.current || !enabledRef.current) {
+          return;
+        }
+        await presentAnswer(PRIVATE_REPLY);
         return;
       }
       if (!looksLikeRequest(text)) {

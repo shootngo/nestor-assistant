@@ -4,6 +4,7 @@ import { useKeepAwake } from 'expo-keep-awake';
 import { NavigationBar } from 'expo-navigation-bar';
 import { StatusBar } from 'expo-status-bar';
 import { Dashboard } from './src/dashboard/Dashboard';
+import { ensureTabletAuth } from './src/household/auth';
 import { applyKioskChrome } from './src/kiosk';
 import { EggSession } from './src/listen/EggSession';
 import { colors } from './src/theme';
@@ -17,6 +18,10 @@ export default function App() {
 
   useEffect(() => {
     void applyKioskChrome();
+  }, []);
+
+  useEffect(() => {
+    void ensureTabletAuth();
   }, []);
 
   return (

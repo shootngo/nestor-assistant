@@ -1,6 +1,6 @@
 # Phases
 
-Frank’s kitchen-tablet build order. Phase 5 (this PR) is listen → answer. Later phases stay stubs.
+Frank’s kitchen-tablet build order. Phase 6 (this PR) is household shopping and calendar tools. Later phases stay stubs.
 
 ## 1. Tablet shell — done
 
@@ -33,7 +33,7 @@ Always-listening on-device keyword spotting. Picovoice / Porcupine is **abandone
 - On sleep: unhurried chicken-legs exit, then the idle loop resumes
 - `RECORD_AUDIO` + a calm “mic needed” card if permission is denied (kiosk does not brick)
 
-## 5. Listen → answer — **this repo, now**
+## 5. Listen → answer — done
 
 After wake, one spoken request at a time, then a spoken + on-screen reply. Follow-ups stay in the same session (no wake word again) until **Goodbye Nestor** or ~5 minutes of silence.
 
@@ -42,12 +42,19 @@ After wake, one spoken request at a time, then a spoken + on-screen reply. Follo
 - Kitchen brain: Gemini API with Google Search grounding for current facts. Key is `EXPO_PUBLIC_GEMINI_API_KEY` or `GEMINI_API_KEY` (`.env` or EAS secret) — never hardcoded, never committed, never named on screen
 - Speech out: Android TTS plus large on-screen text. Mute / quieter / louder on the egg screen
 - Talking egg: mouth motion while TTS plays (Phase 4 listen/blink/exit still there)
-- General questions only: recipes, news, knowledge, cooking times. No Firestore / shopping / calendar tools yet
 - On-screen identity stays **Nestor**. Do not name the model
 
-## 6. Household data
+## 6. Household data — **this repo, now**
 
-Firestore / existing Nestor PWA data: shopping, calendar, and related household state. Not started.
+Firestore tools on the existing **nestor-c2ae8** project (same as the Nestor PWA). Email/Password kiosk sign-in with `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD`; session persists on the tablet.
+
+- `add_shopping_item` / `get_shopping_list` → `shopping` (PWA write shape)
+- `get_calendar` → `events` plus home/vehicle task titles that already appear on the PWA calendar. Bills and amounts stay off voice
+- `add_calendar_note` → `events` the phone app will show
+- Voice refuses private notes, passwords, the safe, emergency info, and bill secrets
+- Mute / volume unchanged. If shopping hits permission-denied, publish `firestore.rules` from shootngo/Nestor as owner
+
+Details: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md).
 
 ## 7. Overnight presence
 

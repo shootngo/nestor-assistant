@@ -1,6 +1,6 @@
 {
   "name": "nestor-assistant",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "main": "index.ts",
   "scripts": {
@@ -12,9 +12,11 @@
     "typecheck": "tsc --noEmit",
     "check-feeds": "node scripts/check-feeds.mjs",
     "check-listen": "node --experimental-strip-types --no-warnings scripts/check-listen.ts",
+    "check-household": "tsx scripts/check-household.ts",
     "fetch-kws-model": "node scripts/fetch-kws-model.mjs"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~57.0.21",
     "expo-asset": "~57.0.16",
     "expo-audio": "~57.0.4",
@@ -28,6 +30,7 @@
     "expo-splash-screen": "~57.0.8",
     "expo-status-bar": "~57.0.1",
     "expo-system-ui": "~57.0.3",
+    "firebase": "^12.19.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
@@ -35,6 +38,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "tsx": "^4.23.13",
     "typescript": "~6.0.3"
   },
   "engines": {
