@@ -1,4 +1,6 @@
+import Constants from 'expo-constants';
 import { FETCH_TIMEOUT_MS } from '../config';
+import { extraGeminiApiKey, resolveKitchenBrainKey } from './apiKey';
 import {
   BUSY_REPLY,
   EMPTY_REPLY,
@@ -18,7 +20,8 @@ export const GEMINI_MAX_OUTPUT_TOKENS = 280;
 const GENERATE_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 export function getGeminiApiKey(): string {
-  return (process.env.EXPO_PUBLIC_GEMINI_API_KEY ?? '').trim();
+  const extra = extraGeminiApiKey(Constants.expoConfig?.extra);
+  return resolveKitchenBrainKey(process.env, extra);
 }
 
 type GeminiPart = { text?: string };

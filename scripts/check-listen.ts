@@ -1,3 +1,4 @@
+import { extraGeminiApiKey, resolveKitchenBrainKey } from '../src/listen/apiKey.ts';
 import { isSleepUtterance, looksLikeRequest } from '../src/listen/request.ts';
 
 const requests = [
@@ -35,6 +36,24 @@ for (const line of sleep) {
   expect(`sleep: ${line}`, isSleepUtterance(line), true);
   expect(`sleep not request: ${line}`, looksLikeRequest(line), false);
 }
+
+function expectKey(label: string, actual: string, wanted: string) {
+  if (actual !== wanted) {
+    failed += 1;
+    console.error(`fail: ${label} → ${JSON.stringify(actual)} (wanted ${JSON.stringify(wanted)})`);
+  }
+}
+
+expectKey('plain GEMINI_API_KEY', resolveKitchenBrainKey({ GEMINI_API_KEY: 'plain-key' }), 'plain-key');
+expectKey(
+  'EXPO_PUBLIC wins',
+  resolveKitchenBrainKey({ EXPO_PUBLIC_GEMINI_API_KEY: 'public-key', GEMINI_API_KEY: 'plain-key' }),
+  'public-key',
+);
+expectKey('extra fallback', resolveKitchenBrainKey({}, 'extra-key'), 'extra-key');
+expectKey('empty', resolveKitchenBrainKey({}), '');
+expectKey('extra helper', extraGeminiApiKey({ geminiApiKey: 'from-extra' }), 'from-extra');
+expectKey('extra empty', extraGeminiApiKey({ phase: 5 }), '');
 
 if (failed > 0) {
   console.error(`check-listen: ${failed} failed`);

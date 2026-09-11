@@ -2,7 +2,7 @@
 
 ## Phase 5 — listen → answer
 
-Confirm on the Fire tablet after installing a rebuilt APK with `EXPO_PUBLIC_GEMINI_API_KEY` baked in. Web preview can show the egg UI, mute control, and talking mouth but **cannot** run SpeechRecognizer, TTS, or the kitchen brain.
+Confirm on the Fire tablet after installing a rebuilt APK with `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` baked in. Web preview can show the egg UI, mute control, and talking mouth but **cannot** run SpeechRecognizer, TTS, or the kitchen brain.
 
 ### Engine
 
@@ -10,7 +10,7 @@ Confirm on the Fire tablet after installing a rebuilt APK with `EXPO_PUBLIC_GEMI
 | --- | --- |
 | Wake / sleep | Unchanged from Phase 4: `expo-sherpa-onnx` + `modules/nestor-mic` |
 | Speech in | `modules/nestor-voice` → Android `SpeechRecognizer` (prefer on-device / offline, then OS recognizer) |
-| Brain | Gemini API `generateContent` + `tools: [{ google_search: {} }]`. Key: `EXPO_PUBLIC_GEMINI_API_KEY` |
+| Brain | Gemini API `generateContent` + `tools: [{ google_search: {} }]`. Key: `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` |
 | Speech out | Android `TextToSpeech` in `nestor-voice`, plus large on-screen text |
 | Mute / volume | On-screen **Mute** / **–** / **+** |
 | Abandoned | Picovoice / Porcupine; naming the model on UI; Firestore tools |
@@ -47,12 +47,13 @@ This environment has no Fire tablet microphone. On the fridge tablet, after side
 
 ```
 cp .env.example .env
-# EXPO_PUBLIC_GEMINI_API_KEY=...
+# GEMINI_API_KEY=...
+# or EXPO_PUBLIC_GEMINI_API_KEY=...
 ```
 
-EAS: `npx eas-cli secret:create --name EXPO_PUBLIC_GEMINI_API_KEY --value "..." --scope project`
+EAS (either name): `npx eas-cli secret:create --name GEMINI_API_KEY --value "..." --scope project`
 
-Rebuild the APK after setting the key. `EXPO_PUBLIC_` values are inlined at bundle time.
+Rebuild the APK after setting the key. Never commit `.env`. `app.config.js` maps `GEMINI_API_KEY` onto Expo’s public slot at bundle time.
 
 ### Web preview (UI only)
 

@@ -39,7 +39,7 @@ After wake, one spoken request at a time, then a spoken + on-screen reply. Follo
 
 - Speech in: Android `SpeechRecognizer` (on-device when the tablet has it, otherwise the free OS recognizer). Prefers offline.
 - Ignores short ambient chatter; acts on things that read like a request
-- Kitchen brain: Gemini API with Google Search grounding for current facts. Key is `EXPO_PUBLIC_GEMINI_API_KEY` (`.env` or EAS secret) — never hardcoded, never named on screen
+- Kitchen brain: Gemini API with Google Search grounding for current facts. Key is `EXPO_PUBLIC_GEMINI_API_KEY` or `GEMINI_API_KEY` (`.env` or EAS secret) — never hardcoded, never committed, never named on screen
 - Speech out: Android TTS plus large on-screen text. Mute / quieter / louder on the egg screen
 - Talking egg: mouth motion while TTS plays (Phase 4 listen/blink/exit still there)
 - General questions only: recipes, news, knowledge, cooking times. No Firestore / shopping / calendar tools yet

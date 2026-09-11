@@ -27,7 +27,7 @@ The Phase 4 `AudioRecord` mic is released while SpeechRecognizer owns the microp
 
 Answers go through the Gemini API with **Google Search grounding** so current facts (news, today’s weather elsewhere, a recipe detail) are not frozen training data. The on-screen name is still **Nestor**. Never show a model name.
 
-The key is **not** in source. Expo inlines `EXPO_PUBLIC_` values at bundle time, so you must rebuild the APK after setting or rotating it.
+The key is **not** in source and must never be committed. Builds read **either** `EXPO_PUBLIC_GEMINI_API_KEY` or `GEMINI_API_KEY` (Frank’s Grok box / EAS secret / `.env`). `app.config.js` copies the plain name into Expo’s public slot and `extra` so Metro and the APK both see it. Rebuild after setting or rotating it.
 
 #### Local `.env`
 
@@ -35,25 +35,33 @@ The key is **not** in source. Expo inlines `EXPO_PUBLIC_` values at bundle time,
 cp .env.example .env
 ```
 
-Put your key in `.env`:
+Put the key in `.env` under **one** of these names (both are gitignored):
+
+```
+GEMINI_API_KEY=your-key-here
+```
+
+or:
 
 ```
 EXPO_PUBLIC_GEMINI_API_KEY=your-key-here
 ```
 
-Get a key from [Google AI Studio](https://aistudio.google.com/apikey). `.env` is gitignored. Do not commit it.
+Get a key from [Google AI Studio](https://aistudio.google.com/apikey). Do not commit `.env`. Do not paste the key into the README, issues, or chat logs.
 
 Then rebuild (Metro / EAS / Gradle) so the bundle picks it up.
 
 #### EAS secret (cloud APK)
 
-Same name, so EAS Build injects it while bundling:
+Create a project secret with **either** name. EAS injects it as an env var while bundling; `app.config.js` accepts both:
 
 ```sh
+npx eas-cli secret:create --name GEMINI_API_KEY --value "your-key-here" --scope project
+# or
 npx eas-cli secret:create --name EXPO_PUBLIC_GEMINI_API_KEY --value "your-key-here" --scope project
 ```
 
-Newer Expo accounts can use EAS Environment variables instead; the name must still be `EXPO_PUBLIC_GEMINI_API_KEY`. After the secret exists:
+Newer Expo accounts can use EAS Environment variables instead; the name can be `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY`. After the secret exists:
 
 ```sh
 npx eas-cli build -p android --profile preview
@@ -145,7 +153,7 @@ Phase 2 cards: [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-
 - For **EAS cloud builds**: an Expo account (`npx eas-cli login`)
 - For **local APKs**: Android Studio / Android SDK + JDK 17 or 21
 - NDK is pulled in by `expo-sherpa-onnx` on Android prebuild
-- A Gemini API key for answers (`EXPO_PUBLIC_GEMINI_API_KEY`)
+- A Gemini API key for answers (`GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY`)
 
 ## Setup
 
@@ -153,7 +161,7 @@ Phase 2 cards: [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-
 git clone https://github.com/shootngo/nestor-assistant.git
 cd nestor-assistant
 npm install
-cp .env.example .env   # then paste EXPO_PUBLIC_GEMINI_API_KEY
+cp .env.example .env   # then paste GEMINI_API_KEY or EXPO_PUBLIC_GEMINI_API_KEY
 ```
 
 Native `android/` is generated, not committed:
@@ -197,7 +205,7 @@ One-time:
 ```sh
 npx eas-cli login
 npx eas-cli init    # creates the Expo project; accept the slug nestor-assistant
-npx eas-cli secret:create --name EXPO_PUBLIC_GEMINI_API_KEY --value "your-key-here" --scope project
+npx eas-cli secret:create --name GEMINI_API_KEY --value "your-key-here" --scope project
 ```
 
 Cloud (no local Android SDK):
@@ -252,7 +260,7 @@ cd android
 
 Expo’s prebuild debug keystore is enough to sideload a debug APK. `assembleRelease` needs a signing key; EAS preview handles that for you.
 
-If you use a local `.env`, Gradle/Metro must see `EXPO_PUBLIC_GEMINI_API_KEY` at bundle time. EAS preview should use the EAS secret instead.
+If you use a local `.env`, Gradle/Metro must see `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` at bundle time. EAS preview should use an EAS secret of either name. Never commit the key.
 
 ## Install on a Fire tablet (Play Store already installed)
 
