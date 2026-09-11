@@ -3,7 +3,7 @@
     "name": "Nestor",
     "slug": "nestor-assistant",
     "scheme": "nestor",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -18,6 +18,14 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 180,
           "resizeMode": "contain"
+        }
+      ],
+      "expo-asset",
+      "expo-file-system",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Nestor listens for his name so the kitchen board can wake."
         }
       ],
       "expo-screen-orientation",
@@ -44,7 +52,8 @@
     },
     "android": {
       "package": "com.shootngo.nestorassistant",
-      "versionCode": 3,
+      "versionCode": 4,
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "softwareKeyboardLayoutMode": "pan",
       "predictiveBackGestureEnabled": false,
       "adaptiveIcon": {
@@ -63,7 +72,7 @@
       "themeColor": "#161616"
     },
     "extra": {
-      "phase": 3
+      "phase": 4
     }
   }
 }

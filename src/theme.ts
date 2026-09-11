@@ -8,8 +8,13 @@ export const colors = {
   overlay: 'rgba(16, 16, 16, 0.52)',
   overlayDeep: 'rgba(12, 12, 12, 0.72)',
   cream: '#F4EEE3',
+  creamDeep: '#E7DFD0',
   bark: '#3F2A1D',
   mutedNest: '#7A6E62',
+  sage: '#8A9A7B',
+  sageDeep: '#6F7D62',
+  shell: '#FBF6EC',
+  twig: '#6B5344',
 } as const;
 
 export const type = {

@@ -1,15 +1,27 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
+import { ALLOW_WAKE_SIMULATE } from '../config';
 import { colors, type } from '../theme';
 
-export function Wordmark({ hidden = false }: { hidden?: boolean }) {
+export function Wordmark({
+  hidden = false,
+  onLongPress,
+}: {
+  hidden?: boolean;
+  onLongPress?: () => void;
+}) {
   if (hidden) {
     return null;
   }
 
   return (
-    <View style={styles.wrap} accessibilityRole="header">
+    <Pressable
+      style={styles.wrap}
+      accessibilityRole="header"
+      onLongPress={ALLOW_WAKE_SIMULATE ? onLongPress : undefined}
+      delayLongPress={800}
+    >
       <Text style={styles.mark}>Nestor</Text>
-    </View>
+    </Pressable>
   );
 }
 
@@ -19,7 +31,6 @@ const styles = StyleSheet.create({
     top: 22,
     left: 28,
     zIndex: 4,
-    pointerEvents: 'none',
   },
   mark: {
     color: colors.ivoryMuted,

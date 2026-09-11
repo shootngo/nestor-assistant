@@ -8,7 +8,12 @@ import type { DashboardCard } from '../types';
 import { loadPlaylist } from './buildPlaylist';
 import { CardCarousel } from './CardCarousel';
 
-export function Dashboard() {
+type Props = {
+  paused?: boolean;
+  onSimulateWake?: () => void;
+};
+
+export function Dashboard({ paused = false, onSimulateWake }: Props) {
   const [cards, setCards] = useState<DashboardCard[]>([]);
   const [ready, setReady] = useState(false);
   const frozenFrame = getShowpieceFrame();
@@ -53,7 +58,7 @@ export function Dashboard() {
   return (
     <View style={styles.screen}>
       {ready ? (
-        <CardCarousel cards={cards} />
+        <CardCarousel cards={cards} paused={paused} onSimulateWake={onSimulateWake} />
       ) : (
         <View style={styles.loading}>
           {getStartAtBranding() ? null : <Text style={styles.loadingLabel}>Kitchen board</Text>}
