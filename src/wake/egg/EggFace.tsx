@@ -6,12 +6,15 @@ const nativeDriver = Platform.OS !== 'web';
 
 type Props = {
   walking?: boolean;
+  talking?: boolean;
+  holdTalking?: boolean;
   walk: Animated.Value;
 };
 
-export function EggFace({ walking = false, walk }: Props) {
+export function EggFace({ walking = false, talking = false, holdTalking = false, walk }: Props) {
   const blink = useRef(new Animated.Value(1)).current;
   const breath = useRef(new Animated.Value(0)).current;
+  const mouth = useRef(new Animated.Value(0)).current;
   const leftStep = useRef(new Animated.Value(0)).current;
   const rightStep = useRef(new Animated.Value(0)).current;
 
@@ -69,6 +72,45 @@ export function EggFace({ walking = false, walk }: Props) {
     inhale.start();
     return () => inhale.stop();
   }, [breath]);
+
+  useEffect(() => {
+    if (holdTalking) {
+      mouth.setValue(1);
+      return;
+    }
+    if (!talking) {
+      mouth.setValue(0);
+      return;
+    }
+    const chatter = Animated.loop(
+      Animated.sequence([
+        Animated.timing(mouth, {
+          toValue: 1,
+          duration: 110,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: nativeDriver,
+        }),
+        Animated.timing(mouth, {
+          toValue: 0.15,
+          duration: 80,
+          useNativeDriver: nativeDriver,
+        }),
+        Animated.timing(mouth, {
+          toValue: 0.85,
+          duration: 90,
+          easing: Easing.inOut(Easing.quad),
+          useNativeDriver: nativeDriver,
+        }),
+        Animated.timing(mouth, {
+          toValue: 0.05,
+          duration: 70,
+          useNativeDriver: nativeDriver,
+        }),
+      ]),
+    );
+    chatter.start();
+    return () => chatter.stop();
+  }, [holdTalking, mouth, talking]);
 
   useEffect(() => {
     if (!walking) {
@@ -139,6 +181,27 @@ export function EggFace({ walking = false, walk }: Props) {
           <Animated.View style={[styles.eye, { transform: [{ scaleY: blink }] }]} />
           <Animated.View style={[styles.eye, { transform: [{ scaleY: blink }] }]} />
         </View>
+        <Animated.View
+          style={[
+            styles.mouth,
+            {
+              transform: [
+                {
+                  scaleY: mouth.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0.22, 1],
+                  }),
+                },
+                {
+                  scaleX: mouth.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0.85, 1.08],
+                  }),
+                },
+              ],
+            },
+          ]}
+        />
       </View>
       {walking ? (
         <View style={styles.legs}>
@@ -223,6 +286,14 @@ const styles = StyleSheet.create({
     height: 18,
     borderRadius: 8,
     backgroundColor: colors.bark,
+  },
+  mouth: {
+    marginTop: 18,
+    width: 28,
+    height: 18,
+    borderRadius: 12,
+    backgroundColor: colors.bark,
+    opacity: 0.85,
   },
   rest: {
     width: 36,

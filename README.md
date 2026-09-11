@@ -2,41 +2,83 @@
 
 Kitchen Fire-tablet kiosk for Frank Mulkey’s Nestor household app. The on-screen and spoken identity is **Nestor**. Do not name or show the underlying AI model.
 
-This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules (keyword spotting + microphone) require `expo-dev-client` and prebuild.
+This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules (keyword spotting, microphone, speech in/out) require `expo-dev-client` and prebuild.
 
-## Phase 4 (this PR)
+## Phase 5 (this PR)
 
-Always-listening wake and sleep on the fridge tablet. The idle dashboard from Phase 2–3 keeps cycling until someone says **Nestor**. Then the board pauses and a cream/sage egg listening face sits there — calm blink, restful, no talking mouth yet. **Goodbye Nestor**, or about five minutes of quiet, and the egg grows little chicken legs and walks off. The dashboard resumes.
+After **Nestor** wakes the egg (Phase 4), the kitchen can ask a question. Android speech-to-text captures one utterance. If it reads like a request, Nestor answers out loud and in large type on the cream screen. The mouth moves while he talks. Then he keeps listening for follow-ups — no wake word again — until **Goodbye Nestor** or about five quiet minutes.
 
-Picovoice / Porcupine is **out**. Their console rejects personal Gmail, and free-tier AccessKeys are discontinued. Phase 4 uses **on-device open-source keyword spotting** instead.
+Chatter like “yeah” or “hmm” is ignored. Shopping lists and the calendar wait for Phase 6.
 
-### Why `expo-sherpa-onnx`
+The idle dashboard from Phase 2–3 still cycles until wake. Picovoice stays out; wake/sleep is still on-device **sherpa-onnx**.
 
-Evaluated against this Expo SDK 57 + `expo-dev-client` Android prebuild stack:
+### Speech in / speech out
 
-| Package | Decision |
+| Piece | What we use |
 | --- | --- |
-| **`expo-sherpa-onnx`** | **Chosen.** Real Expo module (`expo-module.config.json`), ships `libsherpa-onnx-jni.so`, and exposes `createKeywordSpotter` / streaming `acceptWaveform`. Autolinks with `npx expo prebuild`. |
-| `@siteed/sherpa-onnx.rn` | Mature RN wrapper (listed upstream by sherpa-onnx) with a high-level KWS helper, but it is a 100MB+ TurboModule plus an Expo config plugin pinned to `@expo/config-plugins` 56. Heavier than we need for wake/sleep only. |
-| `react-native-sherpa-onnx` | Extra FS / downloader peers; KWS is not the focus. |
+| Speech in | Local Expo module `modules/nestor-voice` wrapping Android `SpeechRecognizer`. Prefers on-device / `EXTRA_PREFER_OFFLINE`, then the free OS recognizer. No paid STT. |
+| Speech out | Same module, Android `TextToSpeech`, plus large on-screen text |
+| Mute / volume | **Mute** toggle and **–** / **+** on the egg screen (TTS volume and the tablet media stream) |
+| Talking egg | Mouth animation while TTS plays. Phase 4 blink / rest / chicken-legs exit unchanged |
 
-Microphone capture is a small **local Expo module** (`modules/nestor-mic`): Android `AudioRecord` at 16 kHz mono. Expo’s own recorder writes files and does not stream PCM, which sherpa-onnx needs. No Picovoice AccessKey, no `.ppn`, no network wake service.
+The Phase 4 `AudioRecord` mic is released while SpeechRecognizer owns the microphone, then restored for wake spotting after the egg walks off. If this tablet has no recognizer, Nestor says so (without naming vendors) and keeps the Phase 4 mic so **Goodbye Nestor** still works.
 
-The English KWS graph is **shipped in-repo** under `assets/kws/` (int8 zipformer, ~5 MB). On first run it is copied to the app document directory so the native spotter can open real files.
+### Kitchen brain
 
-Phase 4 may show **Listening…** / **Say Goodbye Nestor to dismiss**. It does **not** call Gemini or SpeechRecognizer for Q&A.
+Answers go through the Gemini API with **Google Search grounding** so current facts (news, today’s weather elsewhere, a recipe detail) are not frozen training data. The on-screen name is still **Nestor**. Never show a model name.
+
+The key is **not** in source and must never be committed. Builds read **either** `EXPO_PUBLIC_GEMINI_API_KEY` or `GEMINI_API_KEY` (Frank’s Grok box / EAS secret / `.env`). `app.config.js` copies the plain name into Expo’s public slot and `extra` so Metro and the APK both see it. Rebuild after setting or rotating it.
+
+#### Local `.env`
+
+```sh
+cp .env.example .env
+```
+
+Put the key in `.env` under **one** of these names (both are gitignored):
+
+```
+GEMINI_API_KEY=your-key-here
+```
+
+or:
+
+```
+EXPO_PUBLIC_GEMINI_API_KEY=your-key-here
+```
+
+Get a key from [Google AI Studio](https://aistudio.google.com/apikey). Do not commit `.env`. Do not paste the key into the README, issues, or chat logs.
+
+Then rebuild (Metro / EAS / Gradle) so the bundle picks it up.
+
+#### EAS secret (cloud APK)
+
+Create a project secret with **either** name. EAS injects it as an env var while bundling; `app.config.js` accepts both:
+
+```sh
+npx eas-cli secret:create --name GEMINI_API_KEY --value "your-key-here" --scope project
+# or
+npx eas-cli secret:create --name EXPO_PUBLIC_GEMINI_API_KEY --value "your-key-here" --scope project
+```
+
+Newer Expo accounts can use EAS Environment variables instead; the name can be `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY`. After the secret exists:
+
+```sh
+npx eas-cli build -p android --profile preview
+```
+
+If the key is missing, Nestor still wakes and listens. He will say he needs the kitchen key set — he will not name the vendor on screen.
 
 ### Config knobs (`src/config.ts`)
 
-Wake / sleep:
+Wake / sleep (Phase 4, still in force):
 
 | Knob | Default | Meaning |
 | --- | --- | --- |
-| `WAKE_PHRASE` | `nestor` | `nestor` or `hey_nestor`. Switch to `hey_nestor` if “Nestor” alone is jumpy — same phase, no redesign |
-| `KWS_KEYWORDS_THRESHOLD` | `0.32` | Global sherpa-onnx threshold. **Higher = less sensitive.** Per-keyword `#` in the keywords file wins |
-| `KWS_KEYWORDS_SCORE` | `1.2` | Boost. Prefer retuning `#threshold` first |
-| `LISTENING_SILENCE_MS` | `300000` | ~5 minutes of quiet → exit |
-| `LISTENING_VOICE_RMS` | `0.018` | Mic energy that resets the silence timer (raise if the fridge hum keeps him up) |
+| `WAKE_PHRASE` | `nestor` | `nestor` or `hey_nestor` |
+| `KWS_KEYWORDS_THRESHOLD` | `0.32` | Global sherpa-onnx threshold. **Higher = less sensitive.** |
+| `LISTENING_SILENCE_MS` | `300000` | ~5 minutes of quiet → exit (resets on speech in, thinking, or talking) |
+| `LISTENING_VOICE_RMS` | `0.018` | Mic energy that resets the silence timer when the KWS mic is running |
 | `EGG_EXIT_MS` | `2800` | Unhurried walk-off |
 | `ALLOW_WAKE_SIMULATE` | `true` | Tap or long-press the wordmark / egg to preview without speaking |
 
@@ -70,44 +112,35 @@ Fallback (`assets/kws/keywords.hey_nestor.txt`) when `WAKE_PHRASE = 'hey_nestor'
 
 The active file is written to disk at first run from `src/wake/keywords.ts`, so changing `WAKE_PHRASE` or the `#threshold` numbers and rebuilding JS/APK is enough.
 
-To encode a new phrase (UPPERCASE):
-
-```sh
-pip install sentencepiece
-python3 -c "import sentencepiece as spm; sp=spm.SentencePieceProcessor(model_file='assets/kws/bpe.model'); print(' '.join(sp.encode('HEY NESTOR', out_type=str)))"
-```
-
 More detail: [assets/kws/README.md](./assets/kws/README.md).
-
-If you ever need to re-download the upstream graph:
-
-```sh
-npm run fetch-kws-model
-```
 
 Web preview only (ignored on the APK):
 
-- `?session=listen` — egg listening face
+- `?session=listen` — egg listening face, mute controls visible
+- `?session=talk` — talking egg + sample on-screen answer
+- `?session=talk&hold=1` — freeze the mouth open for a still
+- `?session=mute` — same answer with **Muted**
 - `?session=exit` — chicken-legs walk-off, then the dashboard
-- `?session=exit&hold=1` — freeze mid-walk for a still
+- `?session=exit&hold=1` — freeze mid-walk
 - `?session=mic` — calm “mic needed” card
 - `?wakeTap=1` — tap the dashboard to wake
 - Phase 3 stills: `?start=branding`, `?start=showpiece`, `?showpieceFrame=nest\|egg\|hatch\|house`
 
-## Not in Phase 4
+## Not in Phase 5
 
-SpeechRecognizer capture of utterances, Gemini answers, TTS, Firebase/Firestore shopping/calendar, talking-mouth egg, overnight dimming, traffic, fuel, sunrise/sunset, moon, Dollar Tree.
+Firebase/Firestore shopping/calendar, overnight dimming, Picovoice, naming the model on the UI, traffic, fuel, sunrise/sunset, moon, Dollar Tree.
 
 Future work is listed as stubs only in [PHASES.md](./PHASES.md).
 
 ## Screenshots
 
-Landscape web preview of the wake/sleep path (fridge install path is still the Android APK):
+Landscape web preview of the listen → answer path (fridge install path is still the Android APK):
 
-- [Idle dashboard](./docs/phase-4-dashboard.png)
-- [Egg listening](./docs/phase-4-listening.png)
-- [Egg exit](./docs/phase-4-exit.png)
-- [Mic needed](./docs/phase-4-mic.png)
+- [Egg listening](./docs/phase-5-listening.png)
+- [Talking egg + answer](./docs/phase-5-talking.png)
+- [Muted](./docs/phase-5-mute.png)
+
+Phase 4 wake/sleep: [idle dashboard](./docs/phase-4-dashboard.png), [listening](./docs/phase-4-listening.png), [exit](./docs/phase-4-exit.png), [mic needed](./docs/phase-4-mic.png).
 
 Phase 3 branding stills: [house in the nest](./docs/phase-3-branding.png), [hatch nest](./docs/phase-3-hatch-nest.png), [hatch open](./docs/phase-3-hatch-open.png), [hatch house](./docs/phase-3-hatch-house.png).
 
@@ -120,6 +153,7 @@ Phase 2 cards: [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-
 - For **EAS cloud builds**: an Expo account (`npx eas-cli login`)
 - For **local APKs**: Android Studio / Android SDK + JDK 17 or 21
 - NDK is pulled in by `expo-sherpa-onnx` on Android prebuild
+- A Gemini API key for answers (`GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY`)
 
 ## Setup
 
@@ -127,6 +161,7 @@ Phase 2 cards: [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-
 git clone https://github.com/shootngo/nestor-assistant.git
 cd nestor-assistant
 npm install
+cp .env.example .env   # then paste GEMINI_API_KEY or EXPO_PUBLIC_GEMINI_API_KEY
 ```
 
 Native `android/` is generated, not committed:
@@ -137,10 +172,12 @@ npx expo prebuild --platform android
 
 `--clean` regenerates from `app.json` if native folders already exist (`npx expo prebuild --platform android --clean`).
 
-Optional feed check (documents which Fox RSS URL works):
+Optional checks:
 
 ```sh
 npm run check-feeds
+npm run check-listen
+npm run typecheck
 ```
 
 ## Development build (USB tablet + Metro)
@@ -153,13 +190,13 @@ npx expo run:android --device
 npx expo start --dev-client
 ```
 
-`expo-dev-client` is required. Do not use Expo Go — sherpa-onnx and the kitchen mic module will not be there.
+`expo-dev-client` is required. Do not use Expo Go — sherpa-onnx, `nestor-mic`, and `nestor-voice` will not be there.
 
-Web preview (`npx expo start --web`) is only for a quick look at the dashboard and egg UI. Keep-awake, immersive bars, and keyword spotting apply on Android.
+Web preview (`npx expo start --web`) is only for a quick look at the dashboard and egg UI. Keep-awake, immersive bars, keyword spotting, SpeechRecognizer, and TTS apply on Android.
 
 ## APK for the fridge tablet (no Metro)
 
-Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 4 — native KWS changed.
+Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 5 — speech in/out is native, and the Gemini key is baked in at bundle time.
 
 ### Option A — EAS Build (recommended)
 
@@ -168,6 +205,7 @@ One-time:
 ```sh
 npx eas-cli login
 npx eas-cli init    # creates the Expo project; accept the slug nestor-assistant
+npx eas-cli secret:create --name GEMINI_API_KEY --value "your-key-here" --scope project
 ```
 
 Cloud (no local Android SDK):
@@ -188,7 +226,7 @@ Profiles in `eas.json`:
 
 | Profile | What you get |
 | --- | --- |
-| `preview` | Standalone APK for the fridge (use this for Phase 4 sign-off) |
+| `preview` | Standalone APK for the fridge (use this for Phase 5 sign-off) |
 | `development` | Debug APK with the dev-client launcher (needs Metro) |
 | `production` | Standalone APK (same install path as preview for this household app) |
 
@@ -222,6 +260,8 @@ cd android
 
 Expo’s prebuild debug keystore is enough to sideload a debug APK. `assembleRelease` needs a signing key; EAS preview handles that for you.
 
+If you use a local `.env`, Gradle/Metro must see `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` at bundle time. EAS preview should use an EAS secret of either name. Never commit the key.
+
 ## Install on a Fire tablet (Play Store already installed)
 
 Treat the device as plain Android.
@@ -254,12 +294,17 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 1. Open **Nestor**.
 2. Allow the microphone when Android asks. If you deny it, a cream card explains why; **Continue to the kitchen board** keeps the dashboard running.
 3. Rotate the tablet to landscape (or mount it on the fridge).
-4. Confirm the charcoal dashboard still cycles. Say **Nestor**. The egg should appear. Say **Goodbye Nestor** (or wait five quiet minutes). The egg should walk off.
-5. Keep the tablet plugged in.
+4. Confirm the charcoal dashboard still cycles. Say **Nestor**. The egg should appear.
+5. Ask a general question (“How long should I rest a roast?”). Nestor should speak the answer and show it in large type. The mouth should move unless **Mute** is on.
+6. Ask a follow-up without saying **Nestor** again. Then say **Goodbye Nestor** (or wait five quiet minutes). The egg should walk off.
+7. Use **Mute** / **–** / **+** on the egg screen if the kitchen is too loud or too quiet.
+8. Keep the tablet plugged in.
+
+Speech-to-text uses whatever recognizer the Fire tablet already has (Play Store / Google speech, or Amazon’s). It is free OS STT, not a paid cloud SKU.
 
 ## Identity
 
-On screen and in later voice copy, the assistant is **Nestor**. Never show a model name in the UI.
+On screen and in spoken copy, the assistant is **Nestor**. Never show a model name in the UI.
 
 ## Test notes
 

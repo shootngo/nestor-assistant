@@ -6,7 +6,8 @@ import {
   LISTENING_VOICE_RMS,
   WAKE_PHRASE,
 } from '../config';
-import { getPreviewSession, getWakeTapEnabled } from '../preview';
+import { useListenLoop } from '../listen/useListenLoop';
+import { getPreviewMuted, getPreviewSession, getPreviewTalking, getWakeTapEnabled } from '../preview';
 import { acceptKwsSamples, startKeywordSpotter, stopKeywordSpotter } from './kwsEngine';
 import { pcmRms, startMicrophone, stopMicrophone } from './microphone';
 import { getMicPermission, requestMicPermission } from './permissions';
@@ -15,25 +16,42 @@ import type { MicPermission, WakeKeywordId, WakePhase } from './types';
 
 export function useWakeSession() {
   const preview = getPreviewSession();
+  const previewTalking = getPreviewTalking();
+  const previewMuted = getPreviewMuted();
   const [phase, setPhase] = useState<WakePhase>(preview ?? 'idle');
   const [permission, setPermission] = useState<MicPermission>('unknown');
+  const [kwsReady, setKwsReady] = useState(false);
+  const [keepKwsMic, setKeepKwsMic] = useState(false);
   const phaseRef = useRef(phase);
   phaseRef.current = phase;
   const silenceAt = useRef(preview === 'listening' ? Number.POSITIVE_INFINITY : 0);
   const engineReady = useRef(false);
   const starting = useRef(false);
+  const keepKwsMicRef = useRef(false);
+  keepKwsMicRef.current = keepKwsMic;
 
   const goIdle = useCallback(() => {
+    setKeepKwsMic(false);
     setPhase('idle');
   }, []);
 
   const goListening = useCallback(() => {
     silenceAt.current = Date.now() + LISTENING_SILENCE_MS;
+    setKeepKwsMic(false);
     setPhase('listening');
   }, []);
 
   const goExiting = useCallback(() => {
+    setKeepKwsMic(false);
     setPhase('exiting');
+  }, []);
+
+  const bumpIdleTimer = useCallback(() => {
+    silenceAt.current = Date.now() + LISTENING_SILENCE_MS;
+  }, []);
+
+  const holdIdleTimer = useCallback(() => {
+    silenceAt.current = Number.POSITIVE_INFINITY;
   }, []);
 
   const handleKeyword = useCallback(
@@ -53,10 +71,14 @@ export function useWakeSession() {
 
   const onAudio = useCallback(
     (samples: number[], sampleRate: number) => {
-      if (phaseRef.current === 'listening' && pcmRms(samples) >= LISTENING_VOICE_RMS) {
+      const current = phaseRef.current;
+      if (current === 'listening' && pcmRms(samples) >= LISTENING_VOICE_RMS) {
         silenceAt.current = Date.now() + LISTENING_SILENCE_MS;
       }
       if (!engineReady.current) {
+        return;
+      }
+      if (current !== 'idle' && !(current === 'listening' && keepKwsMicRef.current)) {
         return;
       }
       void acceptKwsSamples(samples, sampleRate).then((keyword) => {
@@ -89,14 +111,11 @@ export function useWakeSession() {
       }
       const kws = await startKeywordSpotter(model);
       engineReady.current = kws;
-      const mic = await startMicrophone(onAudio);
-      if (!mic && current === 'granted' && phaseRef.current === 'idle') {
-        setPhase('mic-needed');
-      }
+      setKwsReady(kws);
     } finally {
       starting.current = false;
     }
-  }, [onAudio]);
+  }, []);
 
   useEffect(() => {
     if (preview) {
@@ -105,10 +124,37 @@ export function useWakeSession() {
     void startEngine(true);
     return () => {
       engineReady.current = false;
+      setKwsReady(false);
       void stopMicrophone();
       void stopKeywordSpotter();
     };
   }, [preview, startEngine]);
+
+  const wantKwsMic = phase === 'idle' || (phase === 'listening' && keepKwsMic);
+
+  useEffect(() => {
+    if (preview || Platform.OS !== 'android' || permission !== 'granted' || !kwsReady) {
+      return;
+    }
+    if (!wantKwsMic) {
+      void stopMicrophone();
+      return;
+    }
+    let cancelled = false;
+    void startMicrophone(onAudio).then((ok) => {
+      if (cancelled) {
+        void stopMicrophone();
+        return;
+      }
+      if (!ok && phaseRef.current === 'idle') {
+        setPhase('mic-needed');
+      }
+    });
+    return () => {
+      cancelled = true;
+      void stopMicrophone();
+    };
+  }, [kwsReady, onAudio, permission, preview, wantKwsMic]);
 
   useEffect(() => {
     if (preview || phase !== 'listening') {
@@ -121,6 +167,25 @@ export function useWakeSession() {
     }, 1000);
     return () => clearInterval(timer);
   }, [goExiting, phase, preview]);
+
+  const listen = useListenLoop({
+    enabled: phase === 'listening',
+    preview: Boolean(preview),
+    previewTalking,
+    previewMuted,
+    onSleep: goExiting,
+    onHeard: bumpIdleTimer,
+    onBusy: (busy) => {
+      if (busy) {
+        holdIdleTimer();
+      } else if (phaseRef.current === 'listening') {
+        bumpIdleTimer();
+      }
+    },
+    onSpeechUnavailable: () => {
+      setKeepKwsMic(true);
+    },
+  });
 
   const simulateWake = useCallback(() => {
     if (!ALLOW_WAKE_SIMULATE && !getWakeTapEnabled()) {
@@ -157,5 +222,11 @@ export function useWakeSession() {
     finishExit: goIdle,
     retryMic,
     dismissMicCard,
+    mode: listen.mode,
+    answer: listen.answer,
+    muted: listen.muted,
+    toggleMute: listen.toggleMute,
+    volumeUp: listen.volumeUp,
+    volumeDown: listen.volumeDown,
   };
 }

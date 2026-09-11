@@ -1,8 +1,87 @@
 # Test notes
 
+## Phase 5 — listen → answer
+
+Confirm on the Fire tablet after installing a rebuilt APK with `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` baked in. Web preview can show the egg UI, mute control, and talking mouth but **cannot** run SpeechRecognizer, TTS, or the kitchen brain.
+
+### Engine
+
+| Piece | What we use |
+| --- | --- |
+| Wake / sleep | Unchanged from Phase 4: `expo-sherpa-onnx` + `modules/nestor-mic` |
+| Speech in | `modules/nestor-voice` → Android `SpeechRecognizer` (prefer on-device / offline, then OS recognizer) |
+| Brain | Gemini API `generateContent` + `tools: [{ google_search: {} }]`. Key: `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` |
+| Speech out | Android `TextToSpeech` in `nestor-voice`, plus large on-screen text |
+| Mute / volume | On-screen **Mute** / **–** / **+** |
+| Abandoned | Picovoice / Porcupine; naming the model on UI; Firestore tools |
+
+### App checks
+
+| Check | Expected |
+| --- | --- |
+| Launcher name | **Nestor** |
+| Identity | No model name anywhere. Egg never says Gemini / Google / sherpa / Picovoice |
+| Idle | Phase 3 dashboard still cycles |
+| Wake | Say **Nestor** → egg, **Listening…**, mute controls visible |
+| Request | “How long should I rest a roast?” → thinking → spoken answer + large text + talking mouth |
+| Chatter | “yeah” / “hmm” → stay listening, no answer |
+| Follow-up | Next question without the wake word still answers |
+| Sleep | **Goodbye Nestor** (spoken) or ~5 minutes quiet → chicken-legs exit → dashboard |
+| Mute | **Mute** stops TTS; answer still on screen; mouth rests. **+** unmutes |
+| Missing key | Wakes and listens; spoken/on-screen line about the kitchen key — no vendor name |
+| Keep-awake | Screen stays on; landscape; immersive bars |
+| Out of scope | No Firestore / shopping / calendar, no overnight dim |
+
+### Expected Fire-tablet conversation test (not runnable in CI)
+
+This environment has no Fire tablet microphone. On the fridge tablet, after sideloading the Phase 5 APK:
+
+1. Open **Nestor**, allow the microphone.
+2. Say **Nestor**. Egg appears. Ask **How long should I rest a roast?** He should talk and show the answer. Mouth moves.
+3. Ask a follow-up (**What about chicken?**) without saying Nestor again.
+4. Tap **Mute** and ask again. Text still appears; no voice.
+5. Say **Goodbye Nestor**. Egg walks off.
+6. If STT never hears you but wake still works, the tablet’s recognizer may be missing. Nestor should say speech-to-text isn’t on this tablet and **Goodbye Nestor** should still work via the Phase 4 spotter.
+
+### Gemini key
+
+```
+cp .env.example .env
+# GEMINI_API_KEY=...
+# or EXPO_PUBLIC_GEMINI_API_KEY=...
+```
+
+EAS (either name): `npx eas-cli secret:create --name GEMINI_API_KEY --value "..." --scope project`
+
+Rebuild the APK after setting the key. Never commit `.env`. `app.config.js` maps `GEMINI_API_KEY` onto Expo’s public slot at bundle time.
+
+### Web preview (UI only)
+
+```
+?session=listen
+?session=talk
+?session=talk&hold=1
+?session=mute
+?session=exit
+?session=exit&hold=1
+?session=mic
+?wakeTap=1
+```
+
+Verified in this Phase 5 change: `npx tsc --noEmit` and `npm run check-listen` are clean. Landscape web preview at 1280×800 shows listening, talking egg + answer, and mute. Identity stayed **Nestor**. Full Fire-tablet STT / TTS / grounded answers still need a sideloaded APK with a key.
+
+### Rebuild APK
+
+After `npm install` and setting the Gemini key:
+
+- EAS: `npx eas-cli build -p android --profile preview`
+- Local: `npx expo prebuild --platform android` then `cd android && ./gradlew assembleDebug`
+
+Sideload with `adb install -r`. `expo-sherpa-onnx`, `nestor-mic`, and `nestor-voice` are native — Expo Go will not work.
+
 ## Phase 4 — wake / sleep
 
-Confirm on the Fire tablet after installing a rebuilt APK. Web preview can show the egg UI but **cannot** run on-device KWS (no Android mic module).
+Still required. Web preview can show the egg UI but **cannot** run on-device KWS (no Android mic module).
 
 ### Engine
 
@@ -39,50 +118,12 @@ Per-keyword thresholds already shipped:
 | Check | Expected |
 | --- | --- |
 | Launcher name | **Nestor** |
-| Identity | No model name anywhere. Egg face never says Gemini / sherpa / Picovoice |
+| Identity | No model name anywhere |
 | Idle | Phase 3 dashboard still cycles (weather, Fox, history, verse, nest, rare hatch) |
-| Mic prompt | First launch asks for the microphone. Deny → cream “mic needed” card. **Continue to the kitchen board** leaves the dashboard running |
-| Wake | Say **Nestor** (or long-press the wordmark) → dashboard pauses → cream egg, slow blink, “Listening…”, “Say Goodbye Nestor to dismiss” |
-| Sleep | Say **Goodbye Nestor** (or long-press the egg) → little legs, unhurried run off screen → dashboard resumes mid-loop |
-| Silence | After ~5 minutes with no speech-level mic energy, same exit as Goodbye |
+| Mic prompt | First launch asks for the microphone. Deny → cream “mic needed” card |
+| Wake | Say **Nestor** → dashboard pauses → cream egg |
+| Sleep | Say **Goodbye Nestor** → little legs, unhurried run off screen → dashboard resumes |
 | Keep-awake | Screen stays on; landscape; immersive bars |
-| Out of scope | No SpeechRecognizer Q&A, no Gemini, no TTS, no Firestore, no overnight dim |
-
-### Expected Fire-tablet mic test (not runnable in CI)
-
-This environment has no Fire tablet microphone. On the fridge tablet, after sideloading the Phase 4 APK:
-
-1. Open **Nestor**, allow the microphone. If you deny it once, use **Try the microphone again** or Android app settings.
-2. Let the dashboard cycle once so you can see weather / nest cards still work.
-3. From across the kitchen, say **Nestor** in a normal voice. The egg should appear within about a second. The board should freeze (not keep flipping cards behind the egg).
-4. Say **Goodbye Nestor**. The egg should grow little legs and walk off, then the board should continue.
-5. Wake again, then stay quiet. After about five minutes the egg should leave on its own.
-6. If **Nestor** alone fires on TV / talk radio, set `WAKE_PHRASE` to `hey_nestor` in `src/config.ts`, rebuild the APK, and use **Hey Nestor** instead. Do not start a new phase for that.
-
-If the tablet never wakes on voice but long-press still shows the egg, the UI path is fine and the mic / KWS path needs a look (permission, `assets/kws` copy, or threshold).
-
-### Web preview (UI only)
-
-```
-?session=listen
-?session=exit
-?session=exit&hold=1
-?session=mic
-?wakeTap=1
-```
-
-Verified in this Phase 4 change: `npx tsc --noEmit` is clean. Landscape web preview at 1280×800 showed the idle dashboard, cream egg listening face (`?session=listen` stays put), chicken-legs exit (`?session=exit&hold=1`), and the mic-needed card. `?wakeTap=1` click woke the egg; a second click walked it off and returned to the same weather card. Identity stayed **Nestor**. Full Fire-tablet mic spotting is documented above and still needs a sideloaded APK.
-
-### Rebuild APK
-
-After `npm install`:
-
-- EAS: `npx eas-cli build -p android --profile preview`
-- Local: `npx expo prebuild --platform android` then `cd android && ./gradlew assembleDebug`
-
-Sideload with `adb install -r`. `expo-sherpa-onnx` and `nestor-mic` are native — Expo Go will not work.
-
-`npx tsc --noEmit` should stay clean. `npm run check-feeds` should print `check-feeds: ok`.
 
 ## Phase 3 — branding + hatch
 
