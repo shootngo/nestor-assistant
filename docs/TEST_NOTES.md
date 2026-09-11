@@ -43,7 +43,11 @@ npm run check-listen
 npx tsc --noEmit
 ```
 
-Sample spoken lines from that run are recorded in the PR. Web preview stills:
+Sample spoken lines from that run are recorded in the PR. Landscape web preview stills (1280×800):
+
+- [Added milk to the list](./phase-6-added.png)
+- [Open shopping list](./phase-6-list.png)
+- [Calendar today](./phase-6-calendar.png)
 
 ```
 ?session=talk&demo=add
