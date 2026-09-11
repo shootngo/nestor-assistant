@@ -32,7 +32,10 @@ yarn-error.*
 .DS_Store
 *.pem
 
-# local env files
+# local env files (Gemini key lives here locally; never commit it)
+.env
+.env.*
+!.env.example
 .env*.local
 
 # typescript

@@ -1,0 +1,24 @@
+let muted = false;
+let volume = 1;
+
+export function getSessionMuted(): boolean {
+  return muted;
+}
+
+export function getSessionVolume(): number {
+  return volume;
+}
+
+export function persistMuted(next: boolean): void {
+  muted = next;
+}
+
+export function persistVolume(next: number): void {
+  volume = Math.min(1, Math.max(0.05, next));
+}
+
+export const TTS_VOLUME_STEP = 0.15;
+
+export const STT_RESTART_MS = 320;
+
+export const MIC_HANDOFF_MS = 220;

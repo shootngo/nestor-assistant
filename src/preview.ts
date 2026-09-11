@@ -14,8 +14,9 @@ import type { WakePhase } from './wake/types';
  *     egg   = same opening still
  *     hatch = mid still (shell cracking, zoom)
  *     house = revealed cottage + large serif Nestor + greeting
- *   ?session=listen|exit|mic   Phase 4 wake/sleep preview (web)
- *   ?wakeTap=1                 tap the dashboard to wake (web)
+ *   ?session=listen|exit|mic|talk|mute   Phase 4–5 preview (web)
+ *   ?session=talk&hold=1                 freeze the talking mouth open
+ *   ?wakeTap=1                           tap the dashboard to wake (web)
  */
 
 export type ShowpieceFrame = 'nest' | 'egg' | 'hatch' | 'house';
@@ -85,6 +86,9 @@ export function getPreviewSession(): WakePhase | null {
   if (value === 'listen' || value === 'listening') {
     return 'listening';
   }
+  if (value === 'talk' || value === 'talking' || value === 'answer' || value === 'mute' || value === 'muted') {
+    return 'listening';
+  }
   if (value === 'exit' || value === 'exiting') {
     return 'exiting';
   }
@@ -95,6 +99,24 @@ export function getPreviewSession(): WakePhase | null {
     return 'idle';
   }
   return null;
+}
+
+export function getPreviewTalking(): boolean {
+  const value = query()?.get('session');
+  return value === 'talk' || value === 'talking' || value === 'answer' || value === 'mute' || value === 'muted';
+}
+
+export function getPreviewMuted(): boolean {
+  const value = query()?.get('session');
+  if (value === 'mute' || value === 'muted') {
+    return true;
+  }
+  const raw = query()?.get('mute');
+  return raw === '1' || raw === 'true';
+}
+
+export function getHoldTalking(): boolean {
+  return getPreviewTalking() && getHoldExit();
 }
 
 export function getHoldExit(): boolean {
