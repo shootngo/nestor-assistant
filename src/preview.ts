@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import { BRANDING_SHOWPIECE_EVERY } from './config';
+import type { WakePhase } from './wake/types';
 
 /**
  * Web-only query helpers for screenshots and kitchen-side preview.
@@ -13,6 +14,8 @@ import { BRANDING_SHOWPIECE_EVERY } from './config';
  *     egg   = same opening still
  *     hatch = mid still (shell cracking, zoom)
  *     house = revealed cottage + large serif Nestor + greeting
+ *   ?session=listen|exit|mic   Phase 4 wake/sleep preview (web)
+ *   ?wakeTap=1                 tap the dashboard to wake (web)
  */
 
 export type ShowpieceFrame = 'nest' | 'egg' | 'hatch' | 'house';
@@ -75,4 +78,35 @@ export function getForceShowpiece(): boolean {
     return true;
   }
   return query()?.get('start') === 'showpiece';
+}
+
+export function getPreviewSession(): WakePhase | null {
+  const value = query()?.get('session');
+  if (value === 'listen' || value === 'listening') {
+    return 'listening';
+  }
+  if (value === 'exit' || value === 'exiting') {
+    return 'exiting';
+  }
+  if (value === 'mic' || value === 'mic-needed') {
+    return 'mic-needed';
+  }
+  if (value === 'idle') {
+    return 'idle';
+  }
+  return null;
+}
+
+export function getHoldExit(): boolean {
+  const raw = query()?.get('hold');
+  return raw === '1' || raw === 'true';
+}
+
+export function getWakeTapEnabled(): boolean {
+  const params = query();
+  if (!params) {
+    return false;
+  }
+  const raw = params.get('wakeTap') ?? params.get('wake');
+  return raw === '1' || raw === 'true';
 }

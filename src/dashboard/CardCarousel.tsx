@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { consumeBrandingPass } from '../branding/gate';
 import { BRANDING_SHOWPIECE_MS, CARD_FADE_MS, CARD_INTERVAL_MS } from '../config';
-import { getForceShowpiece, getStartAtBranding } from '../preview';
+import { getForceShowpiece, getStartAtBranding, getWakeTapEnabled } from '../preview';
 import { colors } from '../theme';
 import type { BrandingMode, DashboardCard } from '../types';
 import { DashboardCardView } from './cards/DashboardCardView';
@@ -10,6 +10,8 @@ import { Wordmark } from './Wordmark';
 
 type Props = {
   cards: DashboardCard[];
+  paused?: boolean;
+  onSimulateWake?: () => void;
 };
 
 function firstIndex(cards: DashboardCard[]): number {
@@ -40,7 +42,7 @@ function startingBrandingMode(cards: DashboardCard[]): BrandingMode {
   return 'simple';
 }
 
-export function CardCarousel({ cards }: Props) {
+export function CardCarousel({ cards, paused = false, onSimulateWake }: Props) {
   const [index, setIndex] = useState(() => firstIndex(cards));
   const [brandingMode, setBrandingMode] = useState<BrandingMode>(() => startingBrandingMode(cards));
   const opacity = useRef(new Animated.Value(1)).current;
@@ -105,21 +107,34 @@ export function CardCarousel({ cards }: Props) {
     card?.kind === 'branding' ? { ...card, mode: brandingMode } : card;
 
   useEffect(() => {
-    if (cards.length < 2) {
+    if (paused || cards.length < 2) {
       return;
     }
     const dwell = showpiece ? BRANDING_SHOWPIECE_MS : CARD_INTERVAL_MS;
     const timer = setTimeout(advance, dwell);
     return () => clearTimeout(timer);
-  }, [advance, cards.length, index, showpiece]);
+  }, [advance, cards.length, index, paused, showpiece]);
 
   if (!displayCard) {
     return null;
   }
 
   return (
-    <Pressable style={styles.press} onPress={advance} accessibilityRole="button" accessibilityLabel="Show next card">
-      <Wordmark hidden={showpiece} />
+    <Pressable
+      style={styles.press}
+      onPress={() => {
+        if (getWakeTapEnabled() && onSimulateWake) {
+          onSimulateWake();
+          return;
+        }
+        if (!paused) {
+          advance();
+        }
+      }}
+      accessibilityRole="button"
+      accessibilityLabel="Show next card"
+    >
+      <Wordmark hidden={showpiece} onLongPress={onSimulateWake} />
       <Animated.View style={[styles.card, { opacity }]}>
         <DashboardCardView card={displayCard} />
       </Animated.View>

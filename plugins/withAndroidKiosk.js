@@ -3,7 +3,7 @@
  * FLAG_KEEP_SCREEN_ON before JS loads, immersive-sticky system bars,
  * and a charcoal fullscreen window theme.
  */
-const { withAndroidStyles, withMainActivity } = require('@expo/config-plugins');
+const { withAndroidManifest, withAndroidStyles, withMainActivity } = require('@expo/config-plugins');
 const { mergeContents } = require('@expo/config-plugins/build/utils/generateCode');
 
 const IMPORTS = [
@@ -108,8 +108,27 @@ function withKioskStyles(config) {
   });
 }
 
+function hasPermission(modResults, name) {
+  const permissions = modResults.manifest['uses-permission'] || [];
+  return permissions.some((entry) => entry.$?.['android:name'] === name);
+}
+
+function withRecordAudio(config) {
+  return withAndroidManifest(config, (modConfig) => {
+    const manifest = modConfig.modResults.manifest;
+    manifest['uses-permission'] = manifest['uses-permission'] || [];
+    if (!hasPermission(modConfig.modResults, 'android.permission.RECORD_AUDIO')) {
+      manifest['uses-permission'].push({
+        $: { 'android:name': 'android.permission.RECORD_AUDIO' },
+      });
+    }
+    return modConfig;
+  });
+}
+
 module.exports = function withAndroidKiosk(config) {
   config = withKioskStyles(config);
   config = withKioskMainActivity(config);
+  config = withRecordAudio(config);
   return config;
 };

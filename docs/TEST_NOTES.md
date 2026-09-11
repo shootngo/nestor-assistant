@@ -1,64 +1,100 @@
 # Test notes
 
-## Phase 3 — branding + hatch
+## Phase 4 — wake / sleep
 
-Confirm on the Fire tablet (or an Android emulator / landscape web preview) after installing a rebuilt APK.
+Confirm on the Fire tablet after installing a rebuilt APK. Web preview can show the egg UI but **cannot** run on-device KWS (no Android mic module).
 
-### Config knobs
+### Engine
 
-In `src/config.ts`:
+| Piece | What we use |
+| --- | --- |
+| KWS | `expo-sherpa-onnx` + bundled English zipformer (GigaSpeech int8) |
+| Mic | local Expo module `modules/nestor-mic` (`AudioRecord` 16 kHz mono) |
+| Wake | `Nestor` (`WAKE_PHRASE = 'nestor'`) |
+| Sleep | `Goodbye Nestor`, or ~5 minutes without speech |
+| Abandoned | Picovoice / Porcupine (no AccessKey, no `.ppn`) |
+
+### Config knobs (`src/config.ts`)
 
 | Knob | Default | Notes |
 | --- | --- | --- |
-| `CARD_INTERVAL_MS` | 10000 | Ordinary cards, including simple branding |
-| `BRANDING_SHOWPIECE_EVERY` | **10** | Hatch on the 10th, 20th, … branding pass. Try `5` or `20` if the fridge wants it more or less often |
-| `BRANDING_SHOWPIECE_MS` | 10000 | ~5s hatch motion + hold |
+| `WAKE_PHRASE` | `nestor` | Switch to `hey_nestor` if the single word false-triggers |
+| `KWS_KEYWORDS_THRESHOLD` | `0.32` | Global default. Per-keyword `#` in `assets/kws/keywords.*.txt` wins |
+| `KWS_KEYWORDS_SCORE` | `1.2` | Boost. Prefer raising `#threshold` to quiet false wakes |
+| `LISTENING_SILENCE_MS` | `300000` | 5 minutes |
+| `LISTENING_VOICE_RMS` | `0.018` | Fridge-hum filter for the silence timer |
+| `EGG_EXIT_MS` | `2800` | Unhurried walk-off |
+| `ALLOW_WAKE_SIMULATE` | `true` | Long-press the wordmark / listening egg to preview without speaking |
 
-Web preview overrides (not used on the APK):
+Per-keyword thresholds already shipped:
 
-```
-?start=branding
-?start=showpiece
-?showpieceEvery=1
-?showpieceFrame=nest
-?showpieceFrame=egg
-?showpieceFrame=hatch
-?showpieceFrame=house
-```
+| Phrase | `#threshold` | Why |
+| --- | --- | --- |
+| `nestor` | `0.42` | Short word — higher bar |
+| `hey_nestor` | `0.28` | Two-word fallback |
+| `goodbye_nestor` | `0.22` | Longer dismiss phrase |
 
 ### App checks
 
 | Check | Expected |
 | --- | --- |
 | Launcher name | **Nestor** |
-| Identity | Corner wordmark **Nestor** on ordinary cards. No model name anywhere |
-| Loop | Weather → branding still → news/history → branding still → … → verse |
-| Simple branding | Official PWA house-in-the-nest icon + a short line (`Nestor here`, `Nestor ready for business`, …). Tasteful, silent |
-| Showpiece | Every 10th branding slot, landscape cream stills from Frank’s reference, ~5s: cracked egg + **Nestor / Home, held gently** → shell opening / zoom → revealed cottage + large serif **Nestor** and **Hi, I'm Nestor, your personal assistant** |
-| Audio | **None.** Hatch and branding cards are visual only. No music, no TTS, no sound files |
-| Wordmark | Hidden during the full-screen showpiece (serif mark is part of the hatch) |
-| Dwell | ~10s ordinary cards; ~10s showpiece; tap advances early; soft fade |
-| Errors | Calm “Couldn’t load …” card; loop continues; app does not crash |
-| Orientation | Landscape preferred |
-| Sleep | Screen stays on while the app is in the foreground (tablet should stay plugged in) |
-| Out of scope | No mic, wake word, TTS, Gemini, Firebase, listening/talking egg, overnight dim |
+| Identity | No model name anywhere. Egg face never says Gemini / sherpa / Picovoice |
+| Idle | Phase 3 dashboard still cycles (weather, Fox, history, verse, nest, rare hatch) |
+| Mic prompt | First launch asks for the microphone. Deny → cream “mic needed” card. **Continue to the kitchen board** leaves the dashboard running |
+| Wake | Say **Nestor** (or long-press the wordmark) → dashboard pauses → cream egg, slow blink, “Listening…”, “Say Goodbye Nestor to dismiss” |
+| Sleep | Say **Goodbye Nestor** (or long-press the egg) → little legs, unhurried run off screen → dashboard resumes mid-loop |
+| Silence | After ~5 minutes with no speech-level mic energy, same exit as Goodbye |
+| Keep-awake | Screen stays on; landscape; immersive bars |
+| Out of scope | No SpeechRecognizer Q&A, no Gemini, no TTS, no Firestore, no overnight dim |
+
+### Expected Fire-tablet mic test (not runnable in CI)
+
+This environment has no Fire tablet microphone. On the fridge tablet, after sideloading the Phase 4 APK:
+
+1. Open **Nestor**, allow the microphone. If you deny it once, use **Try the microphone again** or Android app settings.
+2. Let the dashboard cycle once so you can see weather / nest cards still work.
+3. From across the kitchen, say **Nestor** in a normal voice. The egg should appear within about a second. The board should freeze (not keep flipping cards behind the egg).
+4. Say **Goodbye Nestor**. The egg should grow little legs and walk off, then the board should continue.
+5. Wake again, then stay quiet. After about five minutes the egg should leave on its own.
+6. If **Nestor** alone fires on TV / talk radio, set `WAKE_PHRASE` to `hey_nestor` in `src/config.ts`, rebuild the APK, and use **Hey Nestor** instead. Do not start a new phase for that.
+
+If the tablet never wakes on voice but long-press still shows the egg, the UI path is fine and the mic / KWS path needs a look (permission, `assets/kws` copy, or threshold).
+
+### Web preview (UI only)
+
+```
+?session=listen
+?session=exit
+?session=exit&hold=1
+?session=mic
+?wakeTap=1
+```
+
+`npx expo start --web` then open those query strings at 1280×800. Long-press the **Nestor** wordmark to wake when `ALLOW_WAKE_SIMULATE` is true.
 
 ### Rebuild APK
 
-Same path as Phase 1–2. After `npm install`:
+After `npm install`:
 
 - EAS: `npx eas-cli build -p android --profile preview`
 - Local: `npx expo prebuild --platform android` then `cd android && ./gradlew assembleDebug`
 
-Sideload with `adb install -r`.
+Sideload with `adb install -r`. `expo-sherpa-onnx` and `nestor-mic` are native — Expo Go will not work.
 
 `npx tsc --noEmit` should stay clean. `npm run check-feeds` should print `check-feeds: ok`.
 
-Verified in this Phase 3 change: `npx tsc --noEmit` is clean. Landscape web preview at 1280×800 showed the official house-in-the-nest icon with **Nestor here**, hatch keyframes (splash start, shatter, revealed + serif Nestor + greeting), and Phase 2 weather still advancing after a tap. Showpiece is silent. `BRANDING_SHOWPIECE_EVERY` defaults to 10.
+## Phase 3 — branding + hatch
 
-### Web preview (optional)
+Still required inside the idle loop. Hatch is visual only.
 
-`npx expo start --web` is only for a quick look at the cards. It is not the fridge install path.
+| Knob | Default | Notes |
+| --- | --- | --- |
+| `CARD_INTERVAL_MS` | 10000 | Ordinary cards, including simple branding |
+| `BRANDING_SHOWPIECE_EVERY` | **10** | Hatch on the 10th, 20th, … branding pass |
+| `BRANDING_SHOWPIECE_MS` | 10000 | ~5s hatch motion + hold |
+
+Web preview overrides: `?start=branding`, `?start=showpiece`, `?showpieceEvery=1`, `?showpieceFrame=nest|egg|hatch|house`.
 
 ## Phase 2 — idle dashboard
 
