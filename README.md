@@ -4,15 +4,27 @@ Kitchen Fire-tablet kiosk for Frank Mulkey’s Nestor household app. The on-scre
 
 This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules (keyword spotting, microphone, speech in/out) require `expo-dev-client` and prebuild.
 
-## Phase 6 (this PR)
+## Fridge setup checklist
 
-After **Nestor** wakes the egg (Phase 4) and hears a request (Phase 5), he can use household tools: add to the shopping list, read open items, hear today’s or this week’s calendar, and add a calendar note. Writes go to the existing Firebase project **nestor-c2ae8** (same as the Nestor phone app). Do not create a new project.
+One pass before the Fire tablet lives on the fridge:
 
-Gemini decides tool vs a plain kitchen answer. Shopping adds are confirmed out loud (“Added milk to the list”). Private notes, passwords, the safe, emergency details, and bills stay in the phone app — voice refuses those politely.
+1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle). Do not use Expo Go.
+2. **Gemini key** — set `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` in `.env` or as an EAS secret. Rebuild after setting or rotating it.
+3. **Tablet email / password** — set `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD` (household Email/Password, usually `shootngo@gmail.com`). Rebuild. Session persists on the tablet.
+4. **Shopping rules** — if “add milk to the list” comes back permission-denied, publish `firestore.rules` from [shootngo/Nestor](https://github.com/shootngo/Nestor) as the Firebase owner. The tablet cannot publish rules.
+5. **Overnight hours** — default **10pm–6am** America/Chicago (`OVERNIGHT_DIM_START_HOUR = 22`, `OVERNIGHT_DIM_END_HOUR = 6` in `src/config.ts`). Faint clock at night; full brightness at 6am. Rebuild JS/APK after changing hours.
 
-The tablet signs in with Email/Password (`NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD`) and keeps the session so Frank is not typing daily. Mute / volume are unchanged. Picovoice stays out.
+Details: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md), [docs/OVERNIGHT.md](./docs/OVERNIGHT.md).
 
-Secrets, rules publish, and calendar scope: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md).
+## Phase 7 (this PR)
+
+Overnight the board stays on but goes quiet. From about **10pm to 6am** America/Chicago a soft veil covers the cycling cards and a large faint clock stays readable across the kitchen. At 6am it fades back to full brightness.
+
+**Nestor** still wakes to his name at night. The veil lifts for the egg, answers are quieter, **Mute** / **–** / **+** still work, and after **Goodbye Nestor** (or five quiet minutes) the screen dims again.
+
+Phases 1–6 stay in force: dashboard, hatch, on-device wake/sleep, listen → answer, shopping and calendar tools. Picovoice stays out.
+
+Secrets, rules publish, and calendar scope: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md). Night veil and Fire brightness notes: [docs/OVERNIGHT.md](./docs/OVERNIGHT.md).
 
 ### Speech in / speech out
 
@@ -95,6 +107,16 @@ Wake / sleep (Phase 4, still in force):
 | `EGG_EXIT_MS` | `2800` | Unhurried walk-off |
 | `ALLOW_WAKE_SIMULATE` | `true` | Tap or long-press the wordmark / egg to preview without speaking |
 
+Overnight (Phase 7):
+
+| Knob | Default | Meaning |
+| --- | --- | --- |
+| `OVERNIGHT_DIM_START_HOUR` | `22` | Local hour the veil begins (America/Chicago) |
+| `OVERNIGHT_DIM_END_HOUR` | `6` | Local hour the veil lifts for the day |
+| `OVERNIGHT_DIM_MS` | `1600` | Soft fade in/out, including night wake |
+| `OVERNIGHT_WINDOW_BRIGHTNESS` | `0.08` | Best-effort Android window brightness while dimmed |
+| `OVERNIGHT_TTS_SCALE` / `OVERNIGHT_TTS_CAP` | `0.35` / `0.38` | Quieter night answers. Mute still wins |
+
 Dashboard (unchanged from Phase 3):
 
 | Knob | Default | Meaning |
@@ -140,18 +162,23 @@ Web preview only (ignored on the APK):
 - `?session=exit&hold=1` — freeze mid-walk
 - `?session=mic` — calm “mic needed” card
 - `?wakeTap=1` — tap the dashboard to wake
+- `?night=1` — overnight veil + faint clock
+- `?night=1&clock=10:42&period=PM` — freeze the night clock
+- `?night=0` — force daytime
+- `?session=listen&night=1` — night wake (veil lifts)
 - Phase 3 stills: `?start=branding`, `?start=showpiece`, `?showpieceFrame=nest\|egg\|hatch\|house`
 
-## Not in Phase 6
+## Not in Phase 7
 
-Overnight dimming, Picovoice, naming the model on the UI, traffic, fuel, sunrise/sunset, moon, Dollar Tree, voice access to private notes / passwords / bills.
+Picovoice, naming the model on the UI, traffic, fuel, sunrise/sunset, moon, Dollar Tree, voice access to private notes / passwords / bills.
 
-Future work is listed as stubs only in [PHASES.md](./PHASES.md).
+Phases 1–7 are listed as done in [PHASES.md](./PHASES.md).
 
 ## Screenshots
 
-Landscape web preview of the listen → answer path (fridge install path is still the Android APK):
+Landscape web preview (fridge install path is still the Android APK):
 
+- Phase 7 overnight: [daytime dashboard](./docs/phase-7-day.png), [overnight dim + clock](./docs/phase-7-night.png), [night wake](./docs/phase-7-wake.png)
 - [Egg listening](./docs/phase-5-listening.png)
 - [Talking egg + answer](./docs/phase-5-talking.png)
 - [Muted](./docs/phase-5-mute.png)
@@ -196,6 +223,7 @@ Optional checks:
 npm run check-feeds
 npm run check-listen
 npm run check-household
+npm run check-overnight
 npm run typecheck
 ```
 
@@ -215,7 +243,7 @@ Web preview (`npx expo start --web`) is only for a quick look at the dashboard a
 
 ## APK for the fridge tablet (no Metro)
 
-Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 6 — speech in/out is native, and the Gemini key plus tablet password are baked in at bundle time.
+Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 7 — speech in/out is native, and the Gemini key plus tablet password are baked in at bundle time.
 
 ### Option A — EAS Build (recommended)
 
@@ -247,7 +275,7 @@ Profiles in `eas.json`:
 
 | Profile | What you get |
 | --- | --- |
-| `preview` | Standalone APK for the fridge (use this for Phase 6 sign-off) |
+| `preview` | Standalone APK for the fridge (use this for Phase 7 sign-off) |
 | `development` | Debug APK with the dev-client launcher (needs Metro) |
 | `production` | Standalone APK (same install path as preview for this household app) |
 
@@ -320,7 +348,8 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 6. Ask **Add milk to the list.** He should confirm out loud. Then **What's on the shopping list?** and **What's on the calendar today?**
 7. Ask a follow-up without saying **Nestor** again. Then say **Goodbye Nestor** (or wait five quiet minutes). The egg should walk off.
 8. Use **Mute** / **–** / **+** on the egg screen if the kitchen is too loud or too quiet.
-9. Keep the tablet plugged in.
+9. After ~10pm Chicago time the board should dim with a faint clock. Say **Nestor** — the egg should appear (quieter). **Goodbye Nestor** should dim the board again. At 6am it should be full brightness.
+10. Keep the tablet plugged in. Overnight dim is not a power-off. Fire OS may ignore window brightness; the on-screen veil is the reliable dim. Do not grant “Modify system settings” unless you are experimenting.
 
 Speech-to-text uses whatever recognizer the Fire tablet already has (Play Store / Google speech, or Amazon’s). It is free OS STT, not a paid cloud SKU.
 

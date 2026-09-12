@@ -1,5 +1,65 @@
 # Test notes
 
+## Phase 7 — overnight dim + faint clock
+
+Confirm on the Fire tablet after installing a rebuilt APK. Web preview can show the veil and clock but cannot change real tablet brightness or run STT/TTS.
+
+Hours and Fire OS notes: [OVERNIGHT.md](./OVERNIGHT.md).
+
+### Engine
+
+| Piece | What we use |
+| --- | --- |
+| Window | America/Chicago hours in `src/config.ts` (`22` → `6`) |
+| Look | Soft full-screen veil + large faint clock. Cards and branding still cycle underneath |
+| Brightness | Best-effort `expo-brightness` window brightness. No `WRITE_SETTINGS` prompt. Veil is the reliable Fire OS dim |
+| Night wake | Keyword spotting stays up. Veil lifts for the egg; TTS is quieter; mute / volume unchanged |
+| After session | **Goodbye Nestor** or ~5 minutes quiet → exit → veil returns if still in the window |
+| Abandoned | Picovoice; naming the model; new voice tools; traffic / fuel / moon |
+
+### App checks
+
+| Check | Expected |
+| --- | --- |
+| Identity | **Nestor** only. No model name |
+| Day | Full-brightness dashboard before 10pm / after 6am Chicago |
+| Night idle | ~10pm–6am: dim veil, large faint clock, cards still cycle |
+| Night wake | Say **Nestor** → cream egg, mute controls visible, quieter voice |
+| Mute | **Mute** still silences TTS; text still shows |
+| Sleep | **Goodbye Nestor** → walk-off → veil and clock return (if still overnight) |
+| Morning | 6am fades to full brightness |
+| Keep-awake | Screen stays on; landscape; immersive bars |
+
+### Scripted checks (this environment)
+
+```sh
+npm run check-overnight
+npm run check-listen
+npm run check-household
+npx tsc --noEmit
+```
+
+Landscape web preview stills (1280×800):
+
+- [Daytime dashboard](./phase-7-day.png)
+- [Overnight dim + clock](./phase-7-night.png)
+- [Night wake](./phase-7-wake.png)
+
+```
+?night=0
+?night=1&clock=10:42&period=PM
+?session=listen&night=1
+?night=1&wakeTap=1
+```
+
+### Expected Fire-tablet night check (not runnable in CI)
+
+1. Sideload a Phase 7 APK.
+2. After 10pm Chicago (or temporarily set `OVERNIGHT_DIM_START_HOUR` to the current hour and rebuild), confirm the veil and clock.
+3. Say **Nestor**. Egg should appear. Ask something short. Voice should be quieter than daytime. **Mute** should still work.
+4. Say **Goodbye Nestor**. Board should dim again.
+5. In the morning the veil should be gone.
+
 ## Phase 6 — household shopping + calendar
 
 Confirm on the Fire tablet after installing a rebuilt APK with the Gemini key **and** `NESTOR_TABLET_EMAIL` / `NESTOR_TABLET_PASSWORD` baked in. The tablet must use a household Email/Password account (`shootngo@gmail.com` or `jeannie.newall@gmail.com`). Web preview can show canned confirmations but cannot sign in to Firestore or run STT/TTS.
@@ -31,7 +91,7 @@ One-time secrets and rules publish: [HOUSEHOLD.md](./HOUSEHOLD.md).
 | Mute | Unchanged |
 | Missing tablet password | General questions still work. Household tools say the tablet needs to be signed in |
 | permission-denied | Spoken line about publishing Firestore rules. Publish from shootngo/Nestor as owner |
-| Overnight dim | Still out of scope (Phase 7) |
+| Overnight dim | Phase 7 — still required |
 
 ### Scripted tool checks (this environment)
 
@@ -107,7 +167,7 @@ Still required under Phase 6. Confirm on the Fire tablet after installing a rebu
 | Mute | **Mute** stops TTS; answer still on screen; mouth rests. **+** unmutes |
 | Missing key | Wakes and listens; spoken/on-screen line about the kitchen key — no vendor name |
 | Keep-awake | Screen stays on; landscape; immersive bars |
-| Out of scope | Overnight dim (Phase 7). Shopping/calendar are Phase 6 |
+| Out of scope | Shopping/calendar are Phase 6. Overnight dim is Phase 7 |
 
 ### Expected Fire-tablet conversation test (not runnable in CI)
 

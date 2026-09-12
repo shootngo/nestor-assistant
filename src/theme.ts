@@ -15,6 +15,10 @@ export const colors = {
   sageDeep: '#6F7D62',
   shell: '#FBF6EC',
   twig: '#6B5344',
+  nightVeil: 'rgba(4, 4, 4, 0.78)',
+  nightClock: 'rgba(232, 228, 220, 0.40)',
+  nightPeriod: 'rgba(232, 228, 220, 0.28)',
+  nightMark: 'rgba(201, 196, 187, 0.22)',
 } as const;
 
 export const type = {

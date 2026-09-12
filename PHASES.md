@@ -1,6 +1,6 @@
 # Phases
 
-Frank’s kitchen-tablet build order. Phase 6 (this PR) is household shopping and calendar tools. Later phases stay stubs.
+Frank’s kitchen-tablet build order. Phase 7 (this PR) is overnight dim and fridge polish. Phases 1–7 are done.
 
 ## 1. Tablet shell — done
 
@@ -44,7 +44,7 @@ After wake, one spoken request at a time, then a spoken + on-screen reply. Follo
 - Talking egg: mouth motion while TTS plays (Phase 4 listen/blink/exit still there)
 - On-screen identity stays **Nestor**. Do not name the model
 
-## 6. Household data — **this repo, now**
+## 6. Household data — done
 
 Firestore tools on the existing **nestor-c2ae8** project (same as the Nestor PWA). Email/Password kiosk sign-in with `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD`; session persists on the tablet.
 
@@ -56,6 +56,12 @@ Firestore tools on the existing **nestor-c2ae8** project (same as the Nestor PWA
 
 Details: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md).
 
-## 7. Overnight presence
+## 7. Overnight presence — **this repo, now**
 
-Dim / ambient overnight mode. Not started.
+Dim the fridge screen overnight (~10pm–6am America/Chicago) without going fully black.
+
+- Soft veil over the still-cycling dashboard and branding, plus a large faint clock
+- Full brightness at 6am (and whenever a wake session is up)
+- **Nestor** still wakes to his name at night — answers are quieter — then the veil returns after **Goodbye Nestor** or the silence timeout
+- Hours: `OVERNIGHT_DIM_START_HOUR` / `OVERNIGHT_DIM_END_HOUR` in `src/config.ts`
+- Fire OS brightness APIs are best-effort; the veil is the reliable dim. See [docs/OVERNIGHT.md](./docs/OVERNIGHT.md)

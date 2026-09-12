@@ -40,7 +40,7 @@ module.exports = ({ config }) => ({
   ...config,
   extra: {
     ...config.extra,
-    phase: 6,
+    phase: 7,
     geminiApiKey: kitchenBrainKey,
     firebase: {
       apiKey: pickEnv('EXPO_PUBLIC_NESTOR_FIREBASE_API_KEY', 'NESTOR_FIREBASE_API_KEY') || NESTOR_FIREBASE_WEB.apiKey,

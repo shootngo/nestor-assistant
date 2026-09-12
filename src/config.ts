@@ -32,7 +32,7 @@ export const SOUTHAVEN = {
 } as const;
 
 export const USER_AGENT =
-  'NestorAssistant/1.5 (https://github.com/shootngo/nestor-assistant; kitchen kiosk)';
+  'NestorAssistant/1.6 (https://github.com/shootngo/nestor-assistant; kitchen kiosk)';
 
 /**
  * Fox News RSS. `https://www.foxnews.com/about/rss` is an HTML page (301 to
@@ -104,3 +104,30 @@ export const LISTENING_VOICE_RMS = 0.018;
  * once the kitchen is happy with voice-only.
  */
 export const ALLOW_WAKE_SIMULATE = true;
+
+/**
+ * Overnight dim window in `HOUSEHOLD_TIMEZONE` (America/Chicago).
+ * Default 10pm–6am. Start can be after end so the window wraps midnight.
+ * Rebuild JS/APK after changing these hours.
+ */
+export const OVERNIGHT_DIM_START_HOUR = 22;
+
+export const OVERNIGHT_DIM_END_HOUR = 6;
+
+/** Soft fade into / out of the night veil (and when a wake session lifts it). */
+export const OVERNIGHT_DIM_MS = 1600;
+
+/**
+ * Window brightness while the night veil is up (0–1). Used when the Android
+ * activity brightness API is available. Fire OS often ignores this — the
+ * on-screen veil is the reliable dim. See docs/OVERNIGHT.md.
+ */
+export const OVERNIGHT_WINDOW_BRIGHTNESS = 0.08;
+
+/**
+ * Night wake speaks softer than the daytime session volume. Mute still
+ * silences him completely. Volume + still nudges the tablet media stream.
+ */
+export const OVERNIGHT_TTS_SCALE = 0.35;
+
+export const OVERNIGHT_TTS_CAP = 0.38;

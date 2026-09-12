@@ -82,4 +82,4 @@ Unchanged from Phase 5. **Mute** / **–** / **+** on the egg screen.
 
 ## Out of scope
 
-Overnight dim (Phase 7), Picovoice, a new Firebase project, expanding voice to private data or bill amounts.
+Picovoice, a new Firebase project, expanding voice to private data or bill amounts. Overnight dim is Phase 7 — [OVERNIGHT.md](./OVERNIGHT.md).
