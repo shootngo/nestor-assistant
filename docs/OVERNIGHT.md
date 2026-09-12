@@ -1,6 +1,8 @@
 # Overnight dim (Phase 7)
 
-Primary fridge device is a **Samsung Tab** (plain Android / Play Store): landscape, always-on, plugged in. From about **10pm to 6am** America/Chicago the kitchen board stays on, but the screen goes quiet: the backlight dims, a dark veil covers the cycling cards, and a large faint clock stays readable. At 6am it fades back to full brightness. Hours live in `src/config.ts`:
+Primary fridge device is a **small Samsung Tab, about five years old** (~2021, plain Android / Play Store): landscape, always-on, plugged in. Type is sized to stay readable on that smaller screen from across the kitchen.
+
+From about **10pm to 6am** America/Chicago the kitchen board stays on, but the screen goes quiet: a dark veil covers the cycling cards and a large faint clock stays readable. At 6am it fades back to full dashboard brightness. Hours live in `src/config.ts`:
 
 ```
 OVERNIGHT_DIM_START_HOUR = 22
@@ -13,25 +15,25 @@ Rebuild the JS/APK after changing those numbers. The window may wrap midnight (t
 
 - Keep-awake and landscape kiosk chrome are unchanged. The tablet does not go black or sleep.
 - Dashboard cards and branding still cycle under the veil.
-- **Nestor** still hears his name. The veil lifts for the egg session (full window brightness), then fades back after **Goodbye Nestor** or the usual quiet timeout.
+- **Nestor** still hears his name. The veil lifts for the egg session, then fades back after **Goodbye Nestor** or the usual quiet timeout.
 - Night answers are **quieter** (TTS volume is scaled down). **Mute** still silences him completely. **–** / **+** still change the tablet media stream.
 
-## Brightness on a Samsung Tab
+## Dim: overlay first
 
-Two layers. Prefer the real Android API; keep the veil either way.
+Older Samsung Tabs are flaky with brightness APIs (flicker, no-op, or they fail to restore). **Do not rely on them.**
 
-1. **Activity window brightness (Samsung / plain Android).** `expo-brightness` `setBrightnessAsync` on the current window. Night uses `OVERNIGHT_WINDOW_BRIGHTNESS` (default `0.08`). Day and night-wake use `OVERNIGHT_DAY_WINDOW_BRIGHTNESS` (default `1`). That does **not** need **Modify system settings** (`WRITE_SETTINGS`). Nestor does not open that Settings page and does not write global system brightness.
-2. **Veil + faint clock (always).** A full-screen dim overlay with the large clock. This is the picture if window brightness is ignored, and it is the faint-clock face even when the backlight does dim.
+1. **Veil + faint clock (the night look).** A full-screen dim overlay and a large clock. This is what Frank sees. Always on during the overnight window when no wake session is up.
+2. **Activity window brightness (off by default).** `OVERNIGHT_USE_WINDOW_BRIGHTNESS` in `src/config.ts` is `false`. Leave it off on this Tab. If a newer tablet is later proven to honor `setBrightnessAsync`, it can be turned on — still no `WRITE_SETTINGS` / Modify system settings prompt.
 
-Samsung notes:
+Keep the tablet plugged in. Overnight dim is not a power-off. Leave battery saver / sleep optimizations off for **Nestor**.
 
-- Adaptive / auto brightness can still fight the window level a little. If the board looks too bright or too dark, turn **Adaptive brightness** off for the kiosk and leave Nestor in the foreground.
-- Keep the tablet plugged in. Overnight dim is not a power-off. Leave battery saver / sleep optimizations off for **Nestor** so always-on keep-awake is not killed.
-- Do **not** grant “Modify system settings” unless you are experimenting.
+## Android version (~2021 Tab)
+
+The APK pins **`minSdkVersion` 24** (Android 7). That still runs on 2020–2021 Galaxy Tabs (typically Android 10/11). Do not raise minSdk to 33+ or the old fridge Tab will not install.
 
 ## Fire tablet (secondary)
 
-If the old Fire is still around, the same APK runs. Many Fire tablets ignore or reset window brightness. The veil + clock still dim the picture. That is expected. Do not chase Fire brightness permissions.
+If the old Fire is still around, the same APK runs. The veil + clock are the night look there too.
 
 ## Web preview
 

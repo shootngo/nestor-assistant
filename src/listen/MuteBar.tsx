@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors } from '../theme';
+import { colors, type } from '../theme';
 import {
   MUTE_LABEL,
   UNMUTE_LABEL,
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   btn: {
-    minWidth: 64,
-    minHeight: 48,
+    minWidth: 68,
+    minHeight: 52,
     paddingHorizontal: 14,
     borderRadius: 24,
     backgroundColor: colors.creamDeep,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   glyph: {
     color: colors.bark,
-    fontSize: 18,
+    fontSize: type.hint,
     fontWeight: '600',
     letterSpacing: 0.3,
   },

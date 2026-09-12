@@ -118,14 +118,15 @@ export const OVERNIGHT_DIM_END_HOUR = 6;
 export const OVERNIGHT_DIM_MS = 1600;
 
 /**
- * Activity window brightness (0–1) while the night veil is up.
- * Samsung / plain Android honors `setBrightnessAsync` on the current window
- * (no Modify system settings). Fire OS often ignores it — the veil still dims.
- * See docs/OVERNIGHT.md.
+ * Optional activity-window brightness. Older Samsung Tabs (~2021) are flaky
+ * with this API, so the veil + faint clock are the night look. Leave false
+ * unless a newer tablet is proven to honor `setBrightnessAsync`.
  */
+export const OVERNIGHT_USE_WINDOW_BRIGHTNESS = false;
+
+/** Used only when OVERNIGHT_USE_WINDOW_BRIGHTNESS is true (0–1). */
 export const OVERNIGHT_WINDOW_BRIGHTNESS = 0.08;
 
-/** Window brightness for daytime and for a night wake session. */
 export const OVERNIGHT_DAY_WINDOW_BRIGHTNESS = 1;
 
 /**

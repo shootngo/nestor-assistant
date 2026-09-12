@@ -1,14 +1,14 @@
 # Nestor Assistant
 
-Kitchen **Samsung Tab** kiosk (plain Android / Play Store) for Frank Mulkey’s Nestor household app. Landscape, always-on, plugged in on the fridge. The on-screen and spoken identity is **Nestor**. Do not name or show the underlying AI model.
+Kitchen kiosk for Frank Mulkey’s Nestor household app on a **small Samsung Tab (~5 years old / ~2021)**. Landscape, always-on, plugged in on the fridge. Type is large enough to read from the kitchen. The on-screen and spoken identity is **Nestor**. Do not name or show the underlying AI model.
 
 This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules (keyword spotting, microphone, speech in/out) require `expo-dev-client` and prebuild.
 
 ## Fridge setup checklist
 
-One pass before the Samsung Tab lives on the fridge:
+One pass before the small Samsung Tab lives on the fridge:
 
-1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle). Do not use Expo Go.
+1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle) on the small ~2021 Samsung Tab. `minSdkVersion` stays **24**. Do not use Expo Go.
 2. **Gemini key** — set `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` in `.env` or as an EAS secret. Rebuild after setting or rotating it.
 3. **Tablet email / password** — set `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD` (household Email/Password, usually `shootngo@gmail.com`). Rebuild. Session persists on the tablet.
 4. **Shopping rules** — if “add milk to the list” comes back permission-denied, publish `firestore.rules` from [shootngo/Nestor](https://github.com/shootngo/Nestor) as the Firebase owner. The tablet cannot publish rules.
@@ -24,7 +24,7 @@ Overnight the board stays on but goes quiet. From about **10pm to 6am** America/
 
 Phases 1–6 stay in force: dashboard, hatch, on-device wake/sleep, listen → answer, shopping and calendar tools. Picovoice stays out.
 
-Secrets, rules publish, and calendar scope: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md). Night veil, Samsung window brightness, and Fire fallback: [docs/OVERNIGHT.md](./docs/OVERNIGHT.md).
+Secrets, rules publish, and calendar scope: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md). Night veil + faint clock (brightness APIs off on this Tab): [docs/OVERNIGHT.md](./docs/OVERNIGHT.md).
 
 ### Speech in / speech out
 
@@ -114,8 +114,9 @@ Overnight (Phase 7):
 | `OVERNIGHT_DIM_START_HOUR` | `22` | Local hour the veil begins (America/Chicago) |
 | `OVERNIGHT_DIM_END_HOUR` | `6` | Local hour the veil lifts for the day |
 | `OVERNIGHT_DIM_MS` | `1600` | Soft fade in/out, including night wake |
-| `OVERNIGHT_WINDOW_BRIGHTNESS` | `0.08` | Samsung / Android window brightness while dimmed |
-| `OVERNIGHT_DAY_WINDOW_BRIGHTNESS` | `1` | Window brightness for daytime and night wake |
+| `OVERNIGHT_USE_WINDOW_BRIGHTNESS` | `false` | Leave off on the ~2021 Tab. Overlay is the night look |
+| `OVERNIGHT_WINDOW_BRIGHTNESS` | `0.08` | Only if the flag above is turned on |
+| `OVERNIGHT_DAY_WINDOW_BRIGHTNESS` | `1` | Only if the flag above is turned on |
 | `OVERNIGHT_TTS_SCALE` / `OVERNIGHT_TTS_CAP` | `0.35` / `0.38` | Quieter night answers. Mute still wins |
 
 Dashboard (unchanged from Phase 3):
@@ -200,6 +201,7 @@ Phase 2 cards: [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-
 - NDK is pulled in by `expo-sherpa-onnx` on Android prebuild
 - A Gemini API key for answers (`GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY`)
 - Household Email/Password for Firestore (`NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD`)
+- Fridge device: small Samsung Tab (~2021). APK `minSdkVersion` is **24** so that era still installs — do not raise it to 33+
 
 ## Setup
 
@@ -312,9 +314,9 @@ Expo’s prebuild debug keystore is enough to sideload a debug APK. `assembleRel
 
 If you use a local `.env`, Gradle/Metro must see `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` and the tablet email/password at bundle time. EAS preview should use EAS secrets. Never commit `.env`.
 
-## Install on the Samsung Tab (primary)
+## Install on the small Samsung Tab (primary)
 
-Plain Android with Play Store. The fridge mount is **landscape** and **always-on** (plugged in). The app already locks landscape and holds keep-awake.
+~2021 Galaxy Tab, Play Store Android. The fridge mount is **landscape** and **always-on** (plugged in). Type is large for that smaller screen. The app already locks landscape and holds keep-awake. `minSdkVersion` 24 — the APK must still install on this tablet.
 
 ### Enable unknown sources
 
@@ -349,8 +351,8 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 6. Ask **Add milk to the list.** He should confirm out loud. Then **What's on the shopping list?** and **What's on the calendar today?**
 7. Ask a follow-up without saying **Nestor** again. Then say **Goodbye Nestor** (or wait five quiet minutes). The egg should walk off.
 8. Use **Mute** / **–** / **+** on the egg screen if the kitchen is too loud or too quiet.
-9. After ~10pm Chicago time the backlight should dim and a faint clock should show. Say **Nestor** — the egg should appear at full brightness (quieter voice). **Goodbye Nestor** should dim the board again. At 6am it should be full brightness.
-10. Keep the Tab plugged in. Leave battery saver / sleep optimizations off for **Nestor**. Overnight dim is not a power-off. If Adaptive brightness fights the night level, turn it off. Do not grant “Modify system settings” unless you are experimenting.
+9. After ~10pm Chicago time a dim veil and a large faint clock should show. Say **Nestor** — the egg should appear (quieter voice). **Goodbye Nestor** should dim the board again. At 6am the veil should lift. Do not expect the system backlight API to work on this older Tab.
+10. Keep the Tab plugged in. Leave battery saver / sleep optimizations off for **Nestor**. Overnight dim is not a power-off. Do not grant “Modify system settings”.
 
 Speech-to-text uses the Google / Play Store recognizer on the Tab. It is free OS STT, not a paid cloud SKU.
 
@@ -358,7 +360,7 @@ Speech-to-text uses the Google / Play Store recognizer on the Tab. It is free OS
 
 The same APK still sideloads if the old Fire is around. Treat it as plain Android: **Settings → Security & privacy** → **Apps from Unknown Sources** / **Install unknown apps**, then open the APK. USB debugging is under **Settings → Device options** (tap the serial number seven times if that menu is hidden).
 
-Fire OS often ignores window brightness. The on-screen veil + faint clock are still the night look. Speech-to-text is whatever recognizer that Fire already has (Play Store / Google speech, or Amazon’s).
+The on-screen veil + faint clock are the night look (same as the Samsung Tab). Speech-to-text is whatever recognizer that Fire already has (Play Store / Google speech, or Amazon’s).
 
 ## Identity
 
