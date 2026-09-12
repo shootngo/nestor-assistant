@@ -2,9 +2,9 @@
 
 ## Phase 7 — overnight dim + faint clock
 
-Confirm on the Fire tablet after installing a rebuilt APK. Web preview can show the veil and clock but cannot change real tablet brightness or run STT/TTS.
+Confirm on the **Samsung Tab** after installing a rebuilt APK. Web preview can show the veil and clock but cannot change real tablet brightness or run STT/TTS.
 
-Hours and Fire OS notes: [OVERNIGHT.md](./OVERNIGHT.md).
+Hours, Samsung window brightness, and Fire fallback: [OVERNIGHT.md](./OVERNIGHT.md).
 
 ### Engine
 
@@ -12,7 +12,7 @@ Hours and Fire OS notes: [OVERNIGHT.md](./OVERNIGHT.md).
 | --- | --- |
 | Window | America/Chicago hours in `src/config.ts` (`22` → `6`) |
 | Look | Soft full-screen veil + large faint clock. Cards and branding still cycle underneath |
-| Brightness | Best-effort `expo-brightness` window brightness. No `WRITE_SETTINGS` prompt. Veil is the reliable Fire OS dim |
+| Brightness | Samsung / Android `expo-brightness` `setBrightnessAsync` (window only, no `WRITE_SETTINGS`). Veil + clock always. Fire OS may ignore the backlight |
 | Night wake | Keyword spotting stays up. Veil lifts for the egg; TTS is quieter; mute / volume unchanged |
 | After session | **Goodbye Nestor** or ~5 minutes quiet → exit → veil returns if still in the window |
 | Abandoned | Picovoice; naming the model; new voice tools; traffic / fuel / moon |
@@ -53,17 +53,19 @@ Landscape web preview stills (1280×800):
 ?night=1&wakeTap=1
 ```
 
-### Expected Fire-tablet night check (not runnable in CI)
+### Expected Samsung Tab night check (not runnable in CI)
 
-1. Sideload a Phase 7 APK.
-2. After 10pm Chicago (or temporarily set `OVERNIGHT_DIM_START_HOUR` to the current hour and rebuild), confirm the veil and clock.
-3. Say **Nestor**. Egg should appear. Ask something short. Voice should be quieter than daytime. **Mute** should still work.
+1. Sideload a Phase 7 APK on the Samsung Tab. Landscape, plugged in, **Nestor** in the foreground.
+2. After 10pm Chicago (or temporarily set `OVERNIGHT_DIM_START_HOUR` to the current hour and rebuild), confirm the backlight dims, the veil, and the clock.
+3. Say **Nestor**. Egg should appear at full brightness. Ask something short. Voice should be quieter than daytime. **Mute** should still work.
 4. Say **Goodbye Nestor**. Board should dim again.
-5. In the morning the veil should be gone.
+5. In the morning the veil should be gone and the backlight full.
+
+Fire tablet (secondary): same APK. If the backlight stays bright, the veil + clock are still the night look.
 
 ## Phase 6 — household shopping + calendar
 
-Confirm on the Fire tablet after installing a rebuilt APK with the Gemini key **and** `NESTOR_TABLET_EMAIL` / `NESTOR_TABLET_PASSWORD` baked in. The tablet must use a household Email/Password account (`shootngo@gmail.com` or `jeannie.newall@gmail.com`). Web preview can show canned confirmations but cannot sign in to Firestore or run STT/TTS.
+Confirm on the Samsung Tab after installing a rebuilt APK with the Gemini key **and** `NESTOR_TABLET_EMAIL` / `NESTOR_TABLET_PASSWORD` baked in. The tablet must use a household Email/Password account (`shootngo@gmail.com` or `jeannie.newall@gmail.com`). Web preview can show canned confirmations but cannot sign in to Firestore or run STT/TTS.
 
 One-time secrets and rules publish: [HOUSEHOLD.md](./HOUSEHOLD.md).
 
@@ -96,7 +98,7 @@ One-time secrets and rules publish: [HOUSEHOLD.md](./HOUSEHOLD.md).
 
 ### Scripted tool checks (this environment)
 
-No Fire tablet and no household password in CI. Memory-store tool checks cover add-item, read-list, calendar today/week, calendar note, and permission-denied mapping:
+No Samsung Tab and no household password in CI. Memory-store tool checks cover add-item, read-list, calendar today/week, calendar note, and permission-denied mapping:
 
 ```sh
 npm run check-household
@@ -116,7 +118,7 @@ Sample spoken lines from that run are recorded in the PR. Landscape web preview 
 ?session=talk&demo=calendar
 ```
 
-### Expected Fire-tablet conversation (not runnable in CI)
+### Expected Samsung Tab conversation (not runnable in CI)
 
 1. Sideload a Phase 6 APK with Gemini key + tablet email/password.
 2. Open **Nestor**, allow the microphone, say **Nestor**.
@@ -140,7 +142,7 @@ Never commit `.env`. Rebuild after changing secrets.
 
 ## Phase 5 — listen → answer
 
-Still required under Phase 6. Confirm on the Fire tablet after installing a rebuilt APK with `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` baked in. Web preview can show the egg UI, mute control, and talking mouth but **cannot** run SpeechRecognizer, TTS, or the kitchen brain.
+Still required under Phase 6. Confirm on the Samsung Tab after installing a rebuilt APK with `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` baked in. Web preview can show the egg UI, mute control, and talking mouth but **cannot** run SpeechRecognizer, TTS, or the kitchen brain.
 
 ### Engine
 
@@ -170,9 +172,9 @@ Still required under Phase 6. Confirm on the Fire tablet after installing a rebu
 | Keep-awake | Screen stays on; landscape; immersive bars |
 | Out of scope | Shopping/calendar are Phase 6. Overnight dim is Phase 7 |
 
-### Expected Fire-tablet conversation test (not runnable in CI)
+### Expected Samsung Tab conversation test (not runnable in CI)
 
-This environment has no Fire tablet microphone. On the fridge tablet, after sideloading the Phase 5 APK:
+This environment has no tablet microphone. On the fridge Tab, after sideloading the Phase 5 APK:
 
 1. Open **Nestor**, allow the microphone.
 2. Say **Nestor**. Egg appears. Ask **How long should I rest a roast?** He should talk and show the answer. Mouth moves.
@@ -206,7 +208,7 @@ Rebuild the APK after setting the key. Never commit `.env`. `app.config.js` maps
 ?wakeTap=1
 ```
 
-Verified in this Phase 5 change: `npx tsc --noEmit` and `npm run check-listen` are clean. Landscape web preview at 1280×800 shows listening, talking egg + answer, and mute. Identity stayed **Nestor**. Full Fire-tablet STT / TTS / grounded answers still need a sideloaded APK with a key.
+Verified in this Phase 5 change: `npx tsc --noEmit` and `npm run check-listen` are clean. Landscape web preview at 1280×800 shows listening, talking egg + answer, and mute. Identity stayed **Nestor**. Full tablet STT / TTS / grounded answers still need a sideloaded APK with a key.
 
 ### Rebuild APK
 

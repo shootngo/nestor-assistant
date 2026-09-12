@@ -1,12 +1,12 @@
 # Nestor Assistant
 
-Kitchen Fire-tablet kiosk for Frank Mulkey’s Nestor household app. The on-screen and spoken identity is **Nestor**. Do not name or show the underlying AI model.
+Kitchen **Samsung Tab** kiosk (plain Android / Play Store) for Frank Mulkey’s Nestor household app. Landscape, always-on, plugged in on the fridge. The on-screen and spoken identity is **Nestor**. Do not name or show the underlying AI model.
 
 This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules (keyword spotting, microphone, speech in/out) require `expo-dev-client` and prebuild.
 
 ## Fridge setup checklist
 
-One pass before the Fire tablet lives on the fridge:
+One pass before the Samsung Tab lives on the fridge:
 
 1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle). Do not use Expo Go.
 2. **Gemini key** — set `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` in `.env` or as an EAS secret. Rebuild after setting or rotating it.
@@ -24,7 +24,7 @@ Overnight the board stays on but goes quiet. From about **10pm to 6am** America/
 
 Phases 1–6 stay in force: dashboard, hatch, on-device wake/sleep, listen → answer, shopping and calendar tools. Picovoice stays out.
 
-Secrets, rules publish, and calendar scope: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md). Night veil and Fire brightness notes: [docs/OVERNIGHT.md](./docs/OVERNIGHT.md).
+Secrets, rules publish, and calendar scope: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md). Night veil, Samsung window brightness, and Fire fallback: [docs/OVERNIGHT.md](./docs/OVERNIGHT.md).
 
 ### Speech in / speech out
 
@@ -114,7 +114,8 @@ Overnight (Phase 7):
 | `OVERNIGHT_DIM_START_HOUR` | `22` | Local hour the veil begins (America/Chicago) |
 | `OVERNIGHT_DIM_END_HOUR` | `6` | Local hour the veil lifts for the day |
 | `OVERNIGHT_DIM_MS` | `1600` | Soft fade in/out, including night wake |
-| `OVERNIGHT_WINDOW_BRIGHTNESS` | `0.08` | Best-effort Android window brightness while dimmed |
+| `OVERNIGHT_WINDOW_BRIGHTNESS` | `0.08` | Samsung / Android window brightness while dimmed |
+| `OVERNIGHT_DAY_WINDOW_BRIGHTNESS` | `1` | Window brightness for daytime and night wake |
 | `OVERNIGHT_TTS_SCALE` / `OVERNIGHT_TTS_CAP` | `0.35` / `0.38` | Quieter night answers. Mute still wins |
 
 Dashboard (unchanged from Phase 3):
@@ -241,7 +242,7 @@ npx expo start --dev-client
 
 Web preview (`npx expo start --web`) is only for a quick look at the dashboard and egg UI. Keep-awake, immersive bars, keyword spotting, SpeechRecognizer, and TTS apply on Android.
 
-## APK for the fridge tablet (no Metro)
+## APK for the Samsung Tab (no Metro)
 
 Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 7 — speech in/out is native, and the Gemini key plus tablet password are baked in at bundle time.
 
@@ -311,24 +312,24 @@ Expo’s prebuild debug keystore is enough to sideload a debug APK. `assembleRel
 
 If you use a local `.env`, Gradle/Metro must see `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` and the tablet email/password at bundle time. EAS preview should use EAS secrets. Never commit `.env`.
 
-## Install on a Fire tablet (Play Store already installed)
+## Install on the Samsung Tab (primary)
 
-Treat the device as plain Android.
+Plain Android with Play Store. The fridge mount is **landscape** and **always-on** (plugged in). The app already locks landscape and holds keep-awake.
 
 ### Enable unknown sources
 
-1. Copy the APK to the tablet (USB, Drive, email, or `adb` below).
-2. Open **Settings → Security & privacy** (wording varies by Fire OS).
-3. Enable **Apps from Unknown Sources** / **Install unknown apps** for **Files**, **Chrome**, or whichever app you use to open the APK.
+1. Copy the APK to the Tab (USB, Drive, email, or `adb` below).
+2. Open **Settings → Apps** (or the prompt Android shows) → **Special access** / **Install unknown apps**.
+3. Allow **Files**, **Chrome**, or whichever app you use to open the APK.
 4. Open the APK and install **Nestor**.
 
 If Android blocks the install, tap **Settings** on the prompt and allow that source, then retry.
 
 ### USB debugging (`adb install`)
 
-1. **Settings → Device options** (tap the serial number seven times if that menu is hidden).
+1. **Settings → About tablet** (tap the build number seven times if developer options are hidden).
 2. Enable **USB debugging** / **ADB**.
-3. Plug in the tablet, accept the RSA prompt.
+3. Plug in the Tab, accept the RSA prompt.
 4. From a machine with platform-tools:
 
 ```sh
@@ -342,16 +343,22 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 
 1. Open **Nestor**.
 2. Allow the microphone when Android asks. If you deny it, a cream card explains why; **Continue to the kitchen board** keeps the dashboard running.
-3. Rotate the tablet to landscape (or mount it on the fridge).
+3. Mount the Tab in landscape. The app locks that orientation.
 4. Confirm the charcoal dashboard still cycles. Say **Nestor**. The egg should appear.
 5. Ask a general question (“How long should I rest a roast?”). Nestor should speak the answer and show it in large type. The mouth should move unless **Mute** is on.
 6. Ask **Add milk to the list.** He should confirm out loud. Then **What's on the shopping list?** and **What's on the calendar today?**
 7. Ask a follow-up without saying **Nestor** again. Then say **Goodbye Nestor** (or wait five quiet minutes). The egg should walk off.
 8. Use **Mute** / **–** / **+** on the egg screen if the kitchen is too loud or too quiet.
-9. After ~10pm Chicago time the board should dim with a faint clock. Say **Nestor** — the egg should appear (quieter). **Goodbye Nestor** should dim the board again. At 6am it should be full brightness.
-10. Keep the tablet plugged in. Overnight dim is not a power-off. Fire OS may ignore window brightness; the on-screen veil is the reliable dim. Do not grant “Modify system settings” unless you are experimenting.
+9. After ~10pm Chicago time the backlight should dim and a faint clock should show. Say **Nestor** — the egg should appear at full brightness (quieter voice). **Goodbye Nestor** should dim the board again. At 6am it should be full brightness.
+10. Keep the Tab plugged in. Leave battery saver / sleep optimizations off for **Nestor**. Overnight dim is not a power-off. If Adaptive brightness fights the night level, turn it off. Do not grant “Modify system settings” unless you are experimenting.
 
-Speech-to-text uses whatever recognizer the Fire tablet already has (Play Store / Google speech, or Amazon’s). It is free OS STT, not a paid cloud SKU.
+Speech-to-text uses the Google / Play Store recognizer on the Tab. It is free OS STT, not a paid cloud SKU.
+
+## Fire tablet (secondary)
+
+The same APK still sideloads if the old Fire is around. Treat it as plain Android: **Settings → Security & privacy** → **Apps from Unknown Sources** / **Install unknown apps**, then open the APK. USB debugging is under **Settings → Device options** (tap the serial number seven times if that menu is hidden).
+
+Fire OS often ignores window brightness. The on-screen veil + faint clock are still the night look. Speech-to-text is whatever recognizer that Fire already has (Play Store / Google speech, or Amazon’s).
 
 ## Identity
 

@@ -1,8 +1,10 @@
 import {
+  OVERNIGHT_DAY_WINDOW_BRIGHTNESS,
   OVERNIGHT_DIM_END_HOUR,
   OVERNIGHT_DIM_START_HOUR,
   OVERNIGHT_TTS_CAP,
   OVERNIGHT_TTS_SCALE,
+  OVERNIGHT_WINDOW_BRIGHTNESS,
 } from '../src/config';
 import { parseClockLabel, splitClockTime } from '../src/overnight/clock';
 import { isOvernightHour, nightSpeakVolume } from '../src/overnight/window';
@@ -19,6 +21,8 @@ function expect(label: string, actual: unknown, wanted: unknown) {
 
 expect('default start', OVERNIGHT_DIM_START_HOUR, 22);
 expect('default end', OVERNIGHT_DIM_END_HOUR, 6);
+expect('night window brightness', OVERNIGHT_WINDOW_BRIGHTNESS, 0.08);
+expect('day window brightness', OVERNIGHT_DAY_WINDOW_BRIGHTNESS, 1);
 
 const wrapCases: Array<[number, boolean]> = [
   [21, false],
