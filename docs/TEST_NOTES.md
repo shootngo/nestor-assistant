@@ -1,8 +1,85 @@
 # Test notes
 
+## Phase 6 — household shopping + calendar
+
+Confirm on the Fire tablet after installing a rebuilt APK with the Gemini key **and** `NESTOR_TABLET_EMAIL` / `NESTOR_TABLET_PASSWORD` baked in. The tablet must use a household Email/Password account (`shootngo@gmail.com` or `jeannie.newall@gmail.com`). Web preview can show canned confirmations but cannot sign in to Firestore or run STT/TTS.
+
+One-time secrets and rules publish: [HOUSEHOLD.md](./HOUSEHOLD.md).
+
+### Engine
+
+| Piece | What we use |
+| --- | --- |
+| Wake / sleep / STT / TTS / mute | Unchanged from Phase 5 |
+| Brain | Gemini `generateContent` with household **function tools** plus Google Search grounding (search is dropped automatically if the API rejects the combination) |
+| Auth | Firebase Email/Password, session persisted with AsyncStorage |
+| Shopping | `shopping` collection — same write shape as shootngo/Nestor `saveShopping` |
+| Calendar read | `events` titles/dates. Optional clean `maintenance` / `vehicleTasks` `nextDue` reminders. **Not** `bills` / `payments` / amounts / lastCompleted |
+| Calendar write | `events` (`add_calendar_note`) |
+| Abandoned | Picovoice; naming the model; voice access to private notes / passwords / safe / emergency / bills |
+
+### App checks
+
+| Check | Expected |
+| --- | --- |
+| Identity | **Nestor** only. No model name |
+| Add item | “Add milk to the list” → “Added milk to the list.” (aisle optional) |
+| Read list | “What's on the shopping list?” → open (unchecked) items, spoken briefly |
+| Calendar | “What's on the calendar today?” / “this week” → event titles and dates; optional clean reminders; no amounts |
+| Calendar note | “Add a note on the calendar: take out recycling tomorrow” → event the PWA will show |
+| Privacy | Passwords, private notes, safe, emergency, bill amounts → polite refusal, phone app |
+| Mute | Unchanged |
+| Missing tablet password | General questions still work. Household tools say the tablet needs to be signed in |
+| permission-denied | Spoken line about publishing Firestore rules. Publish from shootngo/Nestor as owner |
+| Overnight dim | Still out of scope (Phase 7) |
+
+### Scripted tool checks (this environment)
+
+No Fire tablet and no household password in CI. Memory-store tool checks cover add-item, read-list, calendar today/week, calendar note, and permission-denied mapping:
+
+```sh
+npm run check-household
+npm run check-listen
+npx tsc --noEmit
+```
+
+Sample spoken lines from that run are recorded in the PR. Landscape web preview stills (1280×800):
+
+- [Added milk to the list](./phase-6-added.png)
+- [Open shopping list](./phase-6-list.png)
+- [Calendar today](./phase-6-calendar.png)
+
+```
+?session=talk&demo=add
+?session=talk&demo=list
+?session=talk&demo=calendar
+```
+
+### Expected Fire-tablet conversation (not runnable in CI)
+
+1. Sideload a Phase 6 APK with Gemini key + tablet email/password.
+2. Open **Nestor**, allow the microphone, say **Nestor**.
+3. **Add milk to the list.** Confirm the spoken line. Check the phone PWA shopping list.
+4. **What's on the shopping list?** Brief open items.
+5. **What's on the calendar today?** Titles only, no bill amounts.
+6. **Add a note to the calendar for tomorrow: call the plumber.** Confirm it appears in the PWA.
+7. **What's the wifi password?** / **How much is the power bill?** Polite refusal.
+8. Mute still works. **Goodbye Nestor** still walks off.
+
+### Secrets
+
+```
+cp .env.example .env
+# GEMINI_API_KEY=...
+# NESTOR_TABLET_EMAIL=shootngo@gmail.com
+# NESTOR_TABLET_PASSWORD=...
+```
+
+Never commit `.env`. Rebuild after changing secrets.
+
 ## Phase 5 — listen → answer
 
-Confirm on the Fire tablet after installing a rebuilt APK with `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` baked in. Web preview can show the egg UI, mute control, and talking mouth but **cannot** run SpeechRecognizer, TTS, or the kitchen brain.
+Still required under Phase 6. Confirm on the Fire tablet after installing a rebuilt APK with `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` baked in. Web preview can show the egg UI, mute control, and talking mouth but **cannot** run SpeechRecognizer, TTS, or the kitchen brain.
 
 ### Engine
 
@@ -13,7 +90,7 @@ Confirm on the Fire tablet after installing a rebuilt APK with `GEMINI_API_KEY` 
 | Brain | Gemini API `generateContent` + `tools: [{ google_search: {} }]`. Key: `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` |
 | Speech out | Android `TextToSpeech` in `nestor-voice`, plus large on-screen text |
 | Mute / volume | On-screen **Mute** / **–** / **+** |
-| Abandoned | Picovoice / Porcupine; naming the model on UI; Firestore tools |
+| Abandoned | Picovoice / Porcupine; naming the model on UI |
 
 ### App checks
 
@@ -30,7 +107,7 @@ Confirm on the Fire tablet after installing a rebuilt APK with `GEMINI_API_KEY` 
 | Mute | **Mute** stops TTS; answer still on screen; mouth rests. **+** unmutes |
 | Missing key | Wakes and listens; spoken/on-screen line about the kitchen key — no vendor name |
 | Keep-awake | Screen stays on; landscape; immersive bars |
-| Out of scope | No Firestore / shopping / calendar, no overnight dim |
+| Out of scope | Overnight dim (Phase 7). Shopping/calendar are Phase 6 |
 
 ### Expected Fire-tablet conversation test (not runnable in CI)
 

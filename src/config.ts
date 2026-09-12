@@ -32,7 +32,7 @@ export const SOUTHAVEN = {
 } as const;
 
 export const USER_AGENT =
-  'NestorAssistant/1.4 (https://github.com/shootngo/nestor-assistant; kitchen kiosk)';
+  'NestorAssistant/1.5 (https://github.com/shootngo/nestor-assistant; kitchen kiosk)';
 
 /**
  * Fox News RSS. `https://www.foxnews.com/about/rss` is an HTML page (301 to

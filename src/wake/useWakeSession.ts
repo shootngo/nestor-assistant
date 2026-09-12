@@ -7,7 +7,7 @@ import {
   WAKE_PHRASE,
 } from '../config';
 import { useListenLoop } from '../listen/useListenLoop';
-import { getPreviewMuted, getPreviewSession, getPreviewTalking, getWakeTapEnabled } from '../preview';
+import { getPreviewAnswer, getPreviewMuted, getPreviewSession, getPreviewTalking, getWakeTapEnabled } from '../preview';
 import { acceptKwsSamples, startKeywordSpotter, stopKeywordSpotter } from './kwsEngine';
 import { pcmRms, startMicrophone, stopMicrophone } from './microphone';
 import { getMicPermission, requestMicPermission } from './permissions';
@@ -173,6 +173,7 @@ export function useWakeSession() {
     preview: Boolean(preview),
     previewTalking,
     previewMuted,
+    previewAnswer: getPreviewAnswer(),
     onSleep: goExiting,
     onHeard: bumpIdleTimer,
     onBusy: (busy) => {

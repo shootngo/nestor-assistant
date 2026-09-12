@@ -5,7 +5,10 @@ const QUESTION_START =
   /^(who|what|when|where|why|how|which|whose|whom|is|are|am|was|were|can|could|would|will|should|do|does|did|may|might|tell|give|find|look|search|show|explain|remind|make|cook|bake|rest|please)\b/;
 
 const REQUEST_HINT =
-  /\b(recipe|recipes|ingredient|ingredients|news|headline|weather|forecast|how long|how much|how many|what is|what's|whats|what are|tell me|look up|look that|can you|could you|would you|please|i need|i want|i'd like|id like|help me|rest a roast|roast|temperature|timer|minutes?|hours?|mean|meaning|why is|who (is|was|won)|latest)\b/;
+  /\b(recipe|recipes|ingredient|ingredients|news|headline|weather|forecast|how long|how much|how many|what is|what's|whats|what are|tell me|look up|look that|can you|could you|would you|please|i need|i want|i'd like|id like|help me|rest a roast|roast|temperature|timer|minutes?|hours?|mean|meaning|why is|who (is|was|won)|latest|shopping|grocery|groceries|calendar|schedule|aisle)\b/;
+
+const HOUSEHOLD_HINT =
+  /\b((add|put|need|buy|get) .{0,60}(to|on) (the )?(list|shopping|calendar|fridge)|add .{1,40} to (the )?list|(what's|whats|what is|whats on|read|check) .{0,40}(list|shopping|calendar)|shopping list|to-?do list|on the list|this week|what's today|whats today|what do we need|remind me|add (a )?(note|event|appointment)|^(add|put) .{1,50}$)\b/;
 
 const SLEEP_UTTERANCE =
   /^(hey |ok |okay )?(nestor,? )?(goodbye|good bye|bye|good night|go to sleep|go back to sleep|that's all|thats all|that is all|we'?re done|we are done)(,?\s+nestor)?[.!?]*$/;
@@ -45,7 +48,7 @@ export function looksLikeRequest(raw: string): boolean {
   if (text.includes('?')) {
     return true;
   }
-  if (QUESTION_START.test(text) || REQUEST_HINT.test(text)) {
+  if (QUESTION_START.test(text) || REQUEST_HINT.test(text) || HOUSEHOLD_HINT.test(text)) {
     return true;
   }
   if (words.length >= 6) {

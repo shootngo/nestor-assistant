@@ -4,13 +4,15 @@ Kitchen Fire-tablet kiosk for Frank Mulkey’s Nestor household app. The on-scre
 
 This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules (keyword spotting, microphone, speech in/out) require `expo-dev-client` and prebuild.
 
-## Phase 5 (this PR)
+## Phase 6 (this PR)
 
-After **Nestor** wakes the egg (Phase 4), the kitchen can ask a question. Android speech-to-text captures one utterance. If it reads like a request, Nestor answers out loud and in large type on the cream screen. The mouth moves while he talks. Then he keeps listening for follow-ups — no wake word again — until **Goodbye Nestor** or about five quiet minutes.
+After **Nestor** wakes the egg (Phase 4) and hears a request (Phase 5), he can use household tools: add to the shopping list, read open items, hear today’s or this week’s calendar, and add a calendar note. Writes go to the existing Firebase project **nestor-c2ae8** (same as the Nestor phone app). Do not create a new project.
 
-Chatter like “yeah” or “hmm” is ignored. Shopping lists and the calendar wait for Phase 6.
+Gemini decides tool vs a plain kitchen answer. Shopping adds are confirmed out loud (“Added milk to the list”). Private notes, passwords, the safe, emergency details, and bills stay in the phone app — voice refuses those politely.
 
-The idle dashboard from Phase 2–3 still cycles until wake. Picovoice stays out; wake/sleep is still on-device **sherpa-onnx**.
+The tablet signs in with Email/Password (`NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD`) and keeps the session so Frank is not typing daily. Mute / volume are unchanged. Picovoice stays out.
+
+Secrets, rules publish, and calendar scope: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md).
 
 ### Speech in / speech out
 
@@ -28,6 +30,8 @@ The Phase 4 `AudioRecord` mic is released while SpeechRecognizer owns the microp
 Answers go through the Gemini API with **Google Search grounding** so current facts (news, today’s weather elsewhere, a recipe detail) are not frozen training data. The on-screen name is still **Nestor**. Never show a model name.
 
 The key is **not** in source and must never be committed. Builds read **either** `EXPO_PUBLIC_GEMINI_API_KEY` or `GEMINI_API_KEY` (Frank’s Grok box / EAS secret / `.env`). `app.config.js` copies the plain name into Expo’s public slot and `extra` so Metro and the APK both see it. Rebuild after setting or rotating it.
+
+Tablet household sign-in uses `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD` (or `EXPO_PUBLIC_` variants). Never commit the password. See [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md).
 
 #### Local `.env`
 
@@ -47,6 +51,13 @@ or:
 EXPO_PUBLIC_GEMINI_API_KEY=your-key-here
 ```
 
+Also set the tablet household login (must match `firestore.rules`):
+
+```
+NESTOR_TABLET_EMAIL=shootngo@gmail.com
+NESTOR_TABLET_PASSWORD=your-password-here
+```
+
 Get a key from [Google AI Studio](https://aistudio.google.com/apikey). Do not commit `.env`. Do not paste the key into the README, issues, or chat logs.
 
 Then rebuild (Metro / EAS / Gradle) so the bundle picks it up.
@@ -57,6 +68,8 @@ Create a project secret with **either** name. EAS injects it as an env var while
 
 ```sh
 npx eas-cli secret:create --name GEMINI_API_KEY --value "your-key-here" --scope project
+npx eas-cli secret:create --name NESTOR_TABLET_EMAIL --value "shootngo@gmail.com" --scope project
+npx eas-cli secret:create --name NESTOR_TABLET_PASSWORD --value "your-password-here" --scope project
 # or
 npx eas-cli secret:create --name EXPO_PUBLIC_GEMINI_API_KEY --value "your-key-here" --scope project
 ```
@@ -118,6 +131,9 @@ Web preview only (ignored on the APK):
 
 - `?session=listen` — egg listening face, mute controls visible
 - `?session=talk` — talking egg + sample on-screen answer
+- `?session=talk&demo=add` — talking egg + “Added milk to the list.”
+- `?session=talk&demo=list` — talking egg + open-list sample
+- `?session=talk&demo=calendar` — talking egg + calendar sample
 - `?session=talk&hold=1` — freeze the mouth open for a still
 - `?session=mute` — same answer with **Muted**
 - `?session=exit` — chicken-legs walk-off, then the dashboard
@@ -126,9 +142,9 @@ Web preview only (ignored on the APK):
 - `?wakeTap=1` — tap the dashboard to wake
 - Phase 3 stills: `?start=branding`, `?start=showpiece`, `?showpieceFrame=nest\|egg\|hatch\|house`
 
-## Not in Phase 5
+## Not in Phase 6
 
-Firebase/Firestore shopping/calendar, overnight dimming, Picovoice, naming the model on the UI, traffic, fuel, sunrise/sunset, moon, Dollar Tree.
+Overnight dimming, Picovoice, naming the model on the UI, traffic, fuel, sunrise/sunset, moon, Dollar Tree, voice access to private notes / passwords / bills.
 
 Future work is listed as stubs only in [PHASES.md](./PHASES.md).
 
@@ -139,6 +155,7 @@ Landscape web preview of the listen → answer path (fridge install path is stil
 - [Egg listening](./docs/phase-5-listening.png)
 - [Talking egg + answer](./docs/phase-5-talking.png)
 - [Muted](./docs/phase-5-mute.png)
+- Phase 6 household stills: [added to list](./docs/phase-6-added.png), [shopping list](./docs/phase-6-list.png), [calendar](./docs/phase-6-calendar.png)
 
 Phase 4 wake/sleep: [idle dashboard](./docs/phase-4-dashboard.png), [listening](./docs/phase-4-listening.png), [exit](./docs/phase-4-exit.png), [mic needed](./docs/phase-4-mic.png).
 
@@ -154,6 +171,7 @@ Phase 2 cards: [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-
 - For **local APKs**: Android Studio / Android SDK + JDK 17 or 21
 - NDK is pulled in by `expo-sherpa-onnx` on Android prebuild
 - A Gemini API key for answers (`GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY`)
+- Household Email/Password for Firestore (`NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD`)
 
 ## Setup
 
@@ -161,7 +179,7 @@ Phase 2 cards: [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-
 git clone https://github.com/shootngo/nestor-assistant.git
 cd nestor-assistant
 npm install
-cp .env.example .env   # then paste GEMINI_API_KEY or EXPO_PUBLIC_GEMINI_API_KEY
+cp .env.example .env   # Gemini key + NESTOR_TABLET_EMAIL / NESTOR_TABLET_PASSWORD
 ```
 
 Native `android/` is generated, not committed:
@@ -177,6 +195,7 @@ Optional checks:
 ```sh
 npm run check-feeds
 npm run check-listen
+npm run check-household
 npm run typecheck
 ```
 
@@ -196,7 +215,7 @@ Web preview (`npx expo start --web`) is only for a quick look at the dashboard a
 
 ## APK for the fridge tablet (no Metro)
 
-Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 5 — speech in/out is native, and the Gemini key is baked in at bundle time.
+Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 6 — speech in/out is native, and the Gemini key plus tablet password are baked in at bundle time.
 
 ### Option A — EAS Build (recommended)
 
@@ -206,6 +225,8 @@ One-time:
 npx eas-cli login
 npx eas-cli init    # creates the Expo project; accept the slug nestor-assistant
 npx eas-cli secret:create --name GEMINI_API_KEY --value "your-key-here" --scope project
+npx eas-cli secret:create --name NESTOR_TABLET_EMAIL --value "shootngo@gmail.com" --scope project
+npx eas-cli secret:create --name NESTOR_TABLET_PASSWORD --value "your-password-here" --scope project
 ```
 
 Cloud (no local Android SDK):
@@ -226,7 +247,7 @@ Profiles in `eas.json`:
 
 | Profile | What you get |
 | --- | --- |
-| `preview` | Standalone APK for the fridge (use this for Phase 5 sign-off) |
+| `preview` | Standalone APK for the fridge (use this for Phase 6 sign-off) |
 | `development` | Debug APK with the dev-client launcher (needs Metro) |
 | `production` | Standalone APK (same install path as preview for this household app) |
 
@@ -260,7 +281,7 @@ cd android
 
 Expo’s prebuild debug keystore is enough to sideload a debug APK. `assembleRelease` needs a signing key; EAS preview handles that for you.
 
-If you use a local `.env`, Gradle/Metro must see `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` at bundle time. EAS preview should use an EAS secret of either name. Never commit the key.
+If you use a local `.env`, Gradle/Metro must see `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` and the tablet email/password at bundle time. EAS preview should use EAS secrets. Never commit `.env`.
 
 ## Install on a Fire tablet (Play Store already installed)
 
@@ -296,9 +317,10 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 3. Rotate the tablet to landscape (or mount it on the fridge).
 4. Confirm the charcoal dashboard still cycles. Say **Nestor**. The egg should appear.
 5. Ask a general question (“How long should I rest a roast?”). Nestor should speak the answer and show it in large type. The mouth should move unless **Mute** is on.
-6. Ask a follow-up without saying **Nestor** again. Then say **Goodbye Nestor** (or wait five quiet minutes). The egg should walk off.
-7. Use **Mute** / **–** / **+** on the egg screen if the kitchen is too loud or too quiet.
-8. Keep the tablet plugged in.
+6. Ask **Add milk to the list.** He should confirm out loud. Then **What's on the shopping list?** and **What's on the calendar today?**
+7. Ask a follow-up without saying **Nestor** again. Then say **Goodbye Nestor** (or wait five quiet minutes). The egg should walk off.
+8. Use **Mute** / **–** / **+** on the egg screen if the kitchen is too loud or too quiet.
+9. Keep the tablet plugged in.
 
 Speech-to-text uses whatever recognizer the Fire tablet already has (Play Store / Google speech, or Amazon’s). It is free OS STT, not a paid cloud SKU.
 

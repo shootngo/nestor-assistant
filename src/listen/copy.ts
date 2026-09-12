@@ -27,3 +27,9 @@ export const STT_MISSING_REPLY =
 /** Canned kitchen preview for web screenshots. Not used on the APK. */
 export const PREVIEW_ANSWER =
   'Rest a roast 15 to 20 minutes, loosely tented. The juices settle and it slices cleaner.';
+
+export const PREVIEW_ADDED = 'Added milk to the list.';
+
+export const PREVIEW_LIST = 'Milk, bananas, and paper towels.';
+
+export const PREVIEW_CALENDAR = 'Today: take out recycling.';

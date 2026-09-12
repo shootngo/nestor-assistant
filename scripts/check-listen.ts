@@ -8,6 +8,10 @@ const requests = [
   'can you look up the weather in Southaven',
   'tell me why the sky is blue',
   'please find a roast recipe',
+  'add milk to the list',
+  "what's on the shopping list",
+  "what's on the calendar today",
+  'add a note to the calendar for tomorrow',
 ];
 
 const chatter = ['yeah', 'hmm', 'wow', 'ok', 'thanks', 'the radio', 'uh'];
@@ -53,7 +57,7 @@ expectKey(
 expectKey('extra fallback', resolveKitchenBrainKey({}, 'extra-key'), 'extra-key');
 expectKey('empty', resolveKitchenBrainKey({}), '');
 expectKey('extra helper', extraGeminiApiKey({ geminiApiKey: 'from-extra' }), 'from-extra');
-expectKey('extra empty', extraGeminiApiKey({ phase: 5 }), '');
+expectKey('extra empty', extraGeminiApiKey({ phase: 6 }), '');
 
 if (failed > 0) {
   console.error(`check-listen: ${failed} failed`);

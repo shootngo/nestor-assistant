@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import { BRANDING_SHOWPIECE_EVERY } from './config';
+import { PREVIEW_ADDED, PREVIEW_ANSWER, PREVIEW_CALENDAR, PREVIEW_LIST } from './listen/copy';
 import type { WakePhase } from './wake/types';
 
 /**
@@ -15,7 +16,8 @@ import type { WakePhase } from './wake/types';
  *     hatch = mid still (shell cracking, zoom)
  *     house = revealed cottage + large serif Nestor + greeting
  *   ?session=listen|exit|mic|talk|mute   Phase 4–5 preview (web)
- *   ?session=talk&hold=1                 freeze the talking mouth open
+ *   ?session=talk&demo=add|list|calendar   Phase 6 canned household replies
+ *   ?session=talk&hold=1                   freeze the talking mouth open
  *   ?wakeTap=1                           tap the dashboard to wake (web)
  */
 
@@ -113,6 +115,24 @@ export function getPreviewMuted(): boolean {
   }
   const raw = query()?.get('mute');
   return raw === '1' || raw === 'true';
+}
+
+export function getPreviewAnswer(): string {
+  if (!getPreviewTalking() && !getPreviewMuted()) {
+    return '';
+  }
+  const params = query();
+  const demo = params?.get('demo') ?? params?.get('household');
+  if (demo === 'add' || demo === 'shopping') {
+    return PREVIEW_ADDED;
+  }
+  if (demo === 'list') {
+    return PREVIEW_LIST;
+  }
+  if (demo === 'calendar') {
+    return PREVIEW_CALENDAR;
+  }
+  return PREVIEW_ANSWER;
 }
 
 export function getHoldTalking(): boolean {
