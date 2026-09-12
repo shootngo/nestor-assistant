@@ -41,10 +41,11 @@ npx tsc --noEmit
 
 Portrait web preview stills (~800×1280):
 
-- [Daytime dashboard](./phase-7-day.png)
-- [Overnight dim + clock](./phase-7-night.png)
-- [Night wake](./phase-7-wake.png)
-- [Dim after wake](./phase-7-dim-after-wake.png)
+- [Daytime dashboard](./portrait-tab-a-day.png)
+- [Overnight dim + clock](./portrait-tab-a-night.png)
+- [Night wake](./portrait-tab-a-wake.png)
+
+Phase 7 landscape archive: [day](./phase-7-day.png), [night](./phase-7-night.png), [wake](./phase-7-wake.png), [dim after wake](./phase-7-dim-after-wake.png).
 
 ```
 ?night=0
@@ -55,7 +56,7 @@ Portrait web preview stills (~800×1280):
 
 ### Expected Samsung Tab night check (not runnable in CI)
 
-1. Sideload a Phase 7 APK on the Samsung Tab. Landscape, plugged in, **Nestor** in the foreground.
+1. Sideload a rebuilt APK on the Samsung Tab A. Portrait (tall), plugged in, **Nestor** in the foreground.
 2. After 10pm Chicago (or temporarily set `OVERNIGHT_DIM_START_HOUR` to the current hour and rebuild), confirm the backlight dims, the veil, and the clock.
 3. Say **Nestor**. Egg should appear at full brightness. Ask something short. Voice should be quieter than daytime. **Mute** should still work.
 4. Say **Goodbye Nestor**. Board should dim again.
@@ -169,7 +170,7 @@ Still required under Phase 6. Confirm on the Samsung Tab after installing a rebu
 | Sleep | **Goodbye Nestor** (spoken) or ~5 minutes quiet → chicken-legs exit → dashboard |
 | Mute | **Mute** stops TTS; answer still on screen; mouth rests. **+** unmutes |
 | Missing key | Wakes and listens; spoken/on-screen line about the kitchen key — no vendor name |
-| Keep-awake | Screen stays on; landscape; immersive bars |
+| Keep-awake | Screen stays on; portrait; immersive bars |
 | Out of scope | Shopping/calendar are Phase 6. Overnight dim is Phase 7 |
 
 ### Expected Samsung Tab conversation test (not runnable in CI)
@@ -263,7 +264,7 @@ Per-keyword thresholds already shipped:
 | Mic prompt | First launch asks for the microphone. Deny → cream “mic needed” card |
 | Wake | Say **Nestor** → dashboard pauses → cream egg |
 | Sleep | Say **Goodbye Nestor** → little legs, unhurried run off screen → dashboard resumes |
-| Keep-awake | Screen stays on; landscape; immersive bars |
+| Keep-awake | Screen stays on; portrait; immersive bars |
 
 ## Phase 3 — branding + hatch
 
@@ -295,4 +296,4 @@ npm run check-feeds
 
 ## Phase 1 — kiosk shell
 
-Still required under the dashboard: charcoal fullscreen, keep-awake, landscape, immersive-ish bars. Placeholder UI from Phase 1: [docs/phase-1-placeholder.png](./phase-1-placeholder.png).
+Still required under the dashboard: charcoal fullscreen, keep-awake, portrait, immersive-ish bars. Placeholder UI from Phase 1: [docs/phase-1-placeholder.png](./phase-1-placeholder.png).

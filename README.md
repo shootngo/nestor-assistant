@@ -185,7 +185,7 @@ Phases 1–7 are listed as done in [PHASES.md](./PHASES.md).
 
 Portrait web preview for the Tab A fridge (~800×1280):
 
-- This PR: [daytime](./docs/portrait-tab-a-day.png), [overnight clock](./docs/portrait-tab-a-night.png), [night wake](./docs/portrait-tab-a-wake.png)
+- This PR: [daytime](./docs/portrait-tab-a-day.png), [overnight clock](./docs/portrait-tab-a-night.png), [night wake](./docs/portrait-tab-a-wake.png), [hatch](./docs/portrait-tab-a-hatch.png), [talking egg](./docs/portrait-tab-a-talk.png)
 - Phase 7 overnight (landscape archive): [daytime dashboard](./docs/phase-7-day.png), [overnight dim + clock](./docs/phase-7-night.png), [night wake](./docs/phase-7-wake.png), [dim after wake](./docs/phase-7-dim-after-wake.png)
 - [Egg listening](./docs/phase-5-listening.png)
 - [Talking egg + answer](./docs/phase-5-talking.png)
