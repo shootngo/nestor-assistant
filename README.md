@@ -360,7 +360,7 @@ Speech-to-text uses the Google / Play Store recognizer on the Tab. It is free OS
 
 The same APK still sideloads if the old Fire is around. Treat it as plain Android: **Settings → Security & privacy** → **Apps from Unknown Sources** / **Install unknown apps**, then open the APK. USB debugging is under **Settings → Device options** (tap the serial number seven times if that menu is hidden).
 
-The on-screen veil + faint clock are the night look (same as the Samsung Tab). Speech-to-text is whatever recognizer that Fire already has (Play Store / Google speech, or Amazon’s).
+The on-screen veil + faint clock are the night look (same as the Tab A). Speech-to-text is whatever recognizer that Fire already has (Play Store / Google speech, or Amazon’s).
 
 ## Identity
 

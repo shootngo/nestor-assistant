@@ -53,7 +53,7 @@ Landscape web preview stills (1280×800):
 ?night=1&wakeTap=1
 ```
 
-### Expected Samsung Tab night check (not runnable in CI)
+### Expected Samsung Tab A night check (not runnable in CI)
 
 1. Sideload a Phase 7 APK on the Samsung Tab A. Landscape (sideways on the fridge), plugged in, **Nestor** in the foreground. Type should read from the kitchen.
 2. After 10pm Chicago (or temporarily set `OVERNIGHT_DIM_START_HOUR` to the current hour and rebuild), confirm the veil and the large faint clock. The backlight may stay the same — that is OK.
