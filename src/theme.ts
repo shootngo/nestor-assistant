@@ -22,7 +22,7 @@ export const colors = {
   nightPlate: 'rgba(8, 8, 8, 0.92)',
 } as const;
 
-/** Sized for a small landscape Samsung Tab (~2021) viewed from the fridge. */
+/** Sized for a Samsung Tab A (small, ~2021) in landscape on the fridge. */
 export const type = {
   wordmark: 24,
   kicker: 18,

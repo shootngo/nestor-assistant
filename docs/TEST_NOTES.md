@@ -2,7 +2,7 @@
 
 ## Phase 7 — overnight dim + faint clock
 
-Confirm on the **small Samsung Tab (~2021)** after installing a rebuilt APK. Web preview can show the veil, clock, and large type but cannot run STT/TTS.
+Confirm on the **Samsung Tab A** (small, ~2021, landscape) after installing a rebuilt APK. Web preview can show the veil, clock, and large type but cannot run STT/TTS.
 
 Hours and overlay-first night look: [OVERNIGHT.md](./OVERNIGHT.md).
 
@@ -11,7 +11,7 @@ Hours and overlay-first night look: [OVERNIGHT.md](./OVERNIGHT.md).
 | Piece | What we use |
 | --- | --- |
 | Window | America/Chicago hours in `src/config.ts` (`22` → `6`) |
-| Look | Soft full-screen veil + large faint clock. Cards and branding still cycle underneath. Type sized for a small landscape Tab |
+| Look | Soft full-screen veil + large faint clock. Cards and branding still cycle underneath. Type sized for a Samsung Tab A in landscape |
 | Brightness | Overlay first. `OVERNIGHT_USE_WINDOW_BRIGHTNESS` is **false** — older Samsung brightness APIs are flaky |
 | Night wake | Keyword spotting stays up. Veil lifts for the egg; TTS is quieter; mute / volume unchanged |
 | After session | **Goodbye Nestor** or ~5 minutes quiet → exit → veil returns if still in the window |
@@ -55,7 +55,7 @@ Landscape web preview stills (1280×800):
 
 ### Expected Samsung Tab night check (not runnable in CI)
 
-1. Sideload a Phase 7 APK on the small Samsung Tab. Landscape, plugged in, **Nestor** in the foreground. Type should read from the fridge.
+1. Sideload a Phase 7 APK on the Samsung Tab A. Landscape (sideways on the fridge), plugged in, **Nestor** in the foreground. Type should read from the kitchen.
 2. After 10pm Chicago (or temporarily set `OVERNIGHT_DIM_START_HOUR` to the current hour and rebuild), confirm the veil and the large faint clock. The backlight may stay the same — that is OK.
 3. Say **Nestor**. Egg should appear. Ask something short. Voice should be quieter than daytime. **Mute** should still work.
 4. Say **Goodbye Nestor**. Veil and clock should return.

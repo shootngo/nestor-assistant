@@ -1,14 +1,14 @@
 # Nestor Assistant
 
-Kitchen kiosk for Frank Mulkey’s Nestor household app on a **small Samsung Tab (~5 years old / ~2021)**. Landscape, always-on, plugged in on the fridge. Type is large enough to read from the kitchen. The on-screen and spoken identity is **Nestor**. Do not name or show the underlying AI model.
+Kitchen kiosk for Frank Mulkey’s Nestor household app on a **Samsung Tab A** (small, ~5 years old / ~2021). It sits **sideways on top of the fridge** — **landscape** (wide), always-on, plugged in. Type is large enough to read from the kitchen. The on-screen and spoken identity is **Nestor**. Do not name or show the underlying AI model.
 
 This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules (keyword spotting, microphone, speech in/out) require `expo-dev-client` and prebuild.
 
 ## Fridge setup checklist
 
-One pass before the small Samsung Tab lives on the fridge:
+One pass before the Samsung Tab A lives on the fridge:
 
-1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle) on the small ~2021 Samsung Tab. `minSdkVersion` stays **24**. Do not use Expo Go.
+1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle) on the **Samsung Tab A**. `minSdkVersion` stays **24**. Do not use Expo Go. The app stays **landscape**.
 2. **Gemini key** — set `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` in `.env` or as an EAS secret. Rebuild after setting or rotating it.
 3. **Tablet email / password** — set `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD` (household Email/Password, usually `shootngo@gmail.com`). Rebuild. Session persists on the tablet.
 4. **Shopping rules** — if “add milk to the list” comes back permission-denied, publish `firestore.rules` from [shootngo/Nestor](https://github.com/shootngo/Nestor) as the Firebase owner. The tablet cannot publish rules.
@@ -201,7 +201,7 @@ Phase 2 cards: [weather](./docs/phase-2-weather.png), [Fox News](./docs/phase-2-
 - NDK is pulled in by `expo-sherpa-onnx` on Android prebuild
 - A Gemini API key for answers (`GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY`)
 - Household Email/Password for Firestore (`NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD`)
-- Fridge device: small Samsung Tab (~2021). APK `minSdkVersion` is **24** so that era still installs — do not raise it to 33+
+- Fridge device: **Samsung Tab A** (small, ~2021), mounted sideways / landscape. APK `minSdkVersion` is **24** so that era still installs — do not raise it to 33+
 
 ## Setup
 
@@ -244,7 +244,7 @@ npx expo start --dev-client
 
 Web preview (`npx expo start --web`) is only for a quick look at the dashboard and egg UI. Keep-awake, immersive bars, keyword spotting, SpeechRecognizer, and TTS apply on Android.
 
-## APK for the Samsung Tab (no Metro)
+## APK for the Samsung Tab A (no Metro)
 
 Install a **preview APK** so the tablet does not need a computer. Rebuild after pulling Phase 7 — speech in/out is native, and the Gemini key plus tablet password are baked in at bundle time.
 
@@ -314,9 +314,9 @@ Expo’s prebuild debug keystore is enough to sideload a debug APK. `assembleRel
 
 If you use a local `.env`, Gradle/Metro must see `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` and the tablet email/password at bundle time. EAS preview should use EAS secrets. Never commit `.env`.
 
-## Install on the small Samsung Tab (primary)
+## Install on the Samsung Tab A (primary)
 
-~2021 Galaxy Tab, Play Store Android. The fridge mount is **landscape** and **always-on** (plugged in). Type is large for that smaller screen. The app already locks landscape and holds keep-awake. `minSdkVersion` 24 — the APK must still install on this tablet.
+Small Galaxy **Tab A**, ~5 years old (~2021), Play Store Android. It sits **on top of the fridge sideways** — **landscape** (wide), always-on, plugged in. Type is large for that screen. The app already locks landscape and holds keep-awake. `minSdkVersion` 24 — the APK must still install on this tablet. Do not ship a portrait lock.
 
 ### Enable unknown sources
 
@@ -345,7 +345,7 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 
 1. Open **Nestor**.
 2. Allow the microphone when Android asks. If you deny it, a cream card explains why; **Continue to the kitchen board** keeps the dashboard running.
-3. Mount the Tab in landscape. The app locks that orientation.
+3. Sit the Tab A sideways on the fridge (landscape). The app locks that orientation.
 4. Confirm the charcoal dashboard still cycles. Say **Nestor**. The egg should appear.
 5. Ask a general question (“How long should I rest a roast?”). Nestor should speak the answer and show it in large type. The mouth should move unless **Mute** is on.
 6. Ask **Add milk to the list.** He should confirm out loud. Then **What's on the shopping list?** and **What's on the calendar today?**

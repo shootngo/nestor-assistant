@@ -1,6 +1,6 @@
 # Overnight dim (Phase 7)
 
-Primary fridge device is a **small Samsung Tab, about five years old** (~2021, plain Android / Play Store): landscape, always-on, plugged in. Type is sized to stay readable on that smaller screen from across the kitchen.
+Primary fridge device is a **Samsung Tab A** (small, about five years old / ~2021, plain Android / Play Store). It sits **sideways on top of the fridge** — **landscape**, always-on, plugged in. Type is sized to stay readable on that smaller screen from across the kitchen.
 
 From about **10pm to 6am** America/Chicago the kitchen board stays on, but the screen goes quiet: a dark veil covers the cycling cards and a large faint clock stays readable. At 6am it fades back to full dashboard brightness. Hours live in `src/config.ts`:
 
@@ -29,7 +29,7 @@ Keep the tablet plugged in. Overnight dim is not a power-off. Leave battery save
 
 ## Android version (~2021 Tab)
 
-The APK pins **`minSdkVersion` 24** (Android 7). That still runs on 2020–2021 Galaxy Tabs (typically Android 10/11). Do not raise minSdk to 33+ or the old fridge Tab will not install.
+The APK pins **`minSdkVersion` 24** (Android 7). That still runs on a ~2021 Tab A (typically Android 10/11). Do not raise minSdk to 33+ or the fridge Tab A will not install.
 
 ## Fire tablet (secondary)
 
