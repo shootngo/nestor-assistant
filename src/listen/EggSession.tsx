@@ -63,7 +63,7 @@ export function EggSession({
         </View>
         {split ? (
           <View style={styles.answerWrap}>
-            <Text style={styles.answer} numberOfLines={8}>
+            <Text style={styles.answer} numberOfLines={8} allowFontScaling={false}>
               {answer}
             </Text>
             <Text style={styles.hint}>{DISMISS_LINE}</Text>
@@ -123,14 +123,14 @@ const styles = StyleSheet.create({
   },
   answer: {
     color: colors.bark,
-    fontSize: 34,
-    lineHeight: 42,
+    fontSize: type.answer,
+    lineHeight: 46,
     fontWeight: '400',
     ...serif,
   },
   mark: {
     color: colors.bark,
-    fontSize: 34,
+    fontSize: type.answer,
     fontWeight: '600',
     letterSpacing: 0.4,
     marginTop: 10,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   hint: {
     color: colors.mutedNest,
-    fontSize: 18,
+    fontSize: type.hint,
     marginTop: 8,
     letterSpacing: 0.2,
   },

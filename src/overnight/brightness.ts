@@ -1,13 +1,16 @@
 import { Platform } from 'react-native';
-import { OVERNIGHT_DAY_WINDOW_BRIGHTNESS, OVERNIGHT_WINDOW_BRIGHTNESS } from '../config';
+import {
+  OVERNIGHT_DAY_WINDOW_BRIGHTNESS,
+  OVERNIGHT_USE_WINDOW_BRIGHTNESS,
+  OVERNIGHT_WINDOW_BRIGHTNESS,
+} from '../config';
 
 /**
- * Real Android activity-window brightness (Samsung Tab / Play Store).
- * Does not ask for WRITE_SETTINGS and does not write global system brightness.
- * The dim overlay still runs as the visual fallback (and the faint clock).
+ * Optional window brightness. Off by default — older Samsung Tabs flake
+ * on this API. The dim overlay + faint clock are the night look.
  */
 export async function applyOvernightBrightness(dimmed: boolean): Promise<void> {
-  if (Platform.OS !== 'android') {
+  if (Platform.OS !== 'android' || !OVERNIGHT_USE_WINDOW_BRIGHTNESS) {
     return;
   }
   try {
@@ -21,6 +24,6 @@ export async function applyOvernightBrightness(dimmed: boolean): Promise<void> {
     const level = dimmed ? OVERNIGHT_WINDOW_BRIGHTNESS : OVERNIGHT_DAY_WINDOW_BRIGHTNESS;
     await Brightness.setBrightnessAsync(level);
   } catch {
-    // Overlay still dims. Samsung usually honors this; Fire OS often does not.
+    // Overlay still dims. Do not prompt for WRITE_SETTINGS.
   }
 }

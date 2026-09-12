@@ -49,13 +49,25 @@ export function DimOverlay({ dimmed, clock }: Props) {
       <View style={styles.clockWrap}>
         <View style={styles.plate}>
           <View style={styles.digits} testID="nestor-overnight-clock">
-            <Text style={styles.time}>{hour}</Text>
-            <Text style={styles.colon}>:</Text>
-            <Text style={styles.time}>{minute}</Text>
+            <Text style={styles.time} allowFontScaling={false}>
+              {hour}
+            </Text>
+            <Text style={styles.colon} allowFontScaling={false}>
+              :
+            </Text>
+            <Text style={styles.time} allowFontScaling={false}>
+              {minute}
+            </Text>
           </View>
-          {clock.period ? <Text style={styles.period}>{clock.period}</Text> : null}
+          {clock.period ? (
+            <Text style={styles.period} allowFontScaling={false}>
+              {clock.period}
+            </Text>
+          ) : null}
         </View>
-        <Text style={styles.mark}>Nestor</Text>
+        <Text style={styles.mark} allowFontScaling={false}>
+          Nestor
+        </Text>
       </View>
     </Animated.View>
   );
@@ -103,7 +115,7 @@ const styles = StyleSheet.create({
   },
   period: {
     color: colors.nightPeriod,
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: '400',
     letterSpacing: 6,
     marginTop: -4,
@@ -111,7 +123,7 @@ const styles = StyleSheet.create({
   },
   mark: {
     color: colors.nightMark,
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '300',
     letterSpacing: 5,
     marginTop: 18,

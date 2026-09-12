@@ -2,17 +2,17 @@
 
 ## Phase 7 — overnight dim + faint clock
 
-Confirm on the **Samsung Tab** after installing a rebuilt APK. Web preview can show the veil and clock but cannot change real tablet brightness or run STT/TTS.
+Confirm on the **Samsung Tab A** (small, ~2021, landscape) after installing a rebuilt APK. Web preview can show the veil, clock, and large type but cannot run STT/TTS.
 
-Hours, Samsung window brightness, and Fire fallback: [OVERNIGHT.md](./OVERNIGHT.md).
+Hours and overlay-first night look: [OVERNIGHT.md](./OVERNIGHT.md).
 
 ### Engine
 
 | Piece | What we use |
 | --- | --- |
 | Window | America/Chicago hours in `src/config.ts` (`22` → `6`) |
-| Look | Soft full-screen veil + large faint clock. Cards and branding still cycle underneath |
-| Brightness | Samsung / Android `expo-brightness` `setBrightnessAsync` (window only, no `WRITE_SETTINGS`). Veil + clock always. Fire OS may ignore the backlight |
+| Look | Soft full-screen veil + large faint clock. Cards and branding still cycle underneath. Type sized for a Samsung Tab A in landscape |
+| Brightness | Overlay first. `OVERNIGHT_USE_WINDOW_BRIGHTNESS` is **false** — older Samsung brightness APIs are flaky |
 | Night wake | Keyword spotting stays up. Veil lifts for the egg; TTS is quieter; mute / volume unchanged |
 | After session | **Goodbye Nestor** or ~5 minutes quiet → exit → veil returns if still in the window |
 | Abandoned | Picovoice; naming the model; new voice tools; traffic / fuel / moon |
@@ -23,7 +23,7 @@ Hours, Samsung window brightness, and Fire fallback: [OVERNIGHT.md](./OVERNIGHT.
 | --- | --- |
 | Identity | **Nestor** only. No model name |
 | Day | Full-brightness dashboard before 10pm / after 6am Chicago |
-| Night idle | ~10pm–6am: dim veil, large faint clock, cards still cycle |
+| Night idle | ~10pm–6am: dim veil, large faint clock, cards still cycle. Do not require the backlight API |
 | Night wake | Say **Nestor** → cream egg, mute controls visible, quieter voice |
 | Mute | **Mute** still silences TTS; text still shows |
 | Sleep | **Goodbye Nestor** → walk-off → veil and clock return (if still overnight) |
@@ -53,15 +53,15 @@ Landscape web preview stills (1280×800):
 ?night=1&wakeTap=1
 ```
 
-### Expected Samsung Tab night check (not runnable in CI)
+### Expected Samsung Tab A night check (not runnable in CI)
 
-1. Sideload a Phase 7 APK on the Samsung Tab. Landscape, plugged in, **Nestor** in the foreground.
-2. After 10pm Chicago (or temporarily set `OVERNIGHT_DIM_START_HOUR` to the current hour and rebuild), confirm the backlight dims, the veil, and the clock.
-3. Say **Nestor**. Egg should appear at full brightness. Ask something short. Voice should be quieter than daytime. **Mute** should still work.
-4. Say **Goodbye Nestor**. Board should dim again.
-5. In the morning the veil should be gone and the backlight full.
+1. Sideload a Phase 7 APK on the Samsung Tab A. Landscape (sideways on the fridge), plugged in, **Nestor** in the foreground. Type should read from the kitchen.
+2. After 10pm Chicago (or temporarily set `OVERNIGHT_DIM_START_HOUR` to the current hour and rebuild), confirm the veil and the large faint clock. The backlight may stay the same — that is OK.
+3. Say **Nestor**. Egg should appear. Ask something short. Voice should be quieter than daytime. **Mute** should still work.
+4. Say **Goodbye Nestor**. Veil and clock should return.
+5. In the morning the veil should be gone.
 
-Fire tablet (secondary): same APK. If the backlight stays bright, the veil + clock are still the night look.
+Fire tablet (secondary): same APK. Veil + clock are the night look.
 
 ## Phase 6 — household shopping + calendar
 

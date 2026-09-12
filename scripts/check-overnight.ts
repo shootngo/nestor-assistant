@@ -4,6 +4,7 @@ import {
   OVERNIGHT_DIM_START_HOUR,
   OVERNIGHT_TTS_CAP,
   OVERNIGHT_TTS_SCALE,
+  OVERNIGHT_USE_WINDOW_BRIGHTNESS,
   OVERNIGHT_WINDOW_BRIGHTNESS,
 } from '../src/config';
 import { parseClockLabel, splitClockTime } from '../src/overnight/clock';
@@ -21,6 +22,7 @@ function expect(label: string, actual: unknown, wanted: unknown) {
 
 expect('default start', OVERNIGHT_DIM_START_HOUR, 22);
 expect('default end', OVERNIGHT_DIM_END_HOUR, 6);
+expect('window brightness off', OVERNIGHT_USE_WINDOW_BRIGHTNESS, false);
 expect('night window brightness', OVERNIGHT_WINDOW_BRIGHTNESS, 0.08);
 expect('day window brightness', OVERNIGHT_DAY_WINDOW_BRIGHTNESS, 1);
 

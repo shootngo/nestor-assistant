@@ -6,7 +6,7 @@ import type { WakePhase } from './wake/types';
 
 /**
  * Web-only query helpers for screenshots and kitchen-side preview.
- * Ignored on the Samsung Tab APK.
+ * Ignored on the Samsung Tab A APK.
  *
  *   ?start=branding          jump to the first house-in-the-nest card
  *   ?start=showpiece         jump to branding and force the hatch showpiece
