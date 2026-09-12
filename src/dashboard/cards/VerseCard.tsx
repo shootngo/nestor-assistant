@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
   wrap: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 80,
-    maxWidth: 980,
+    paddingHorizontal: 28,
+    maxWidth: 720,
     alignSelf: 'center',
   },
   kicker: {
@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
   verse: {
     color: colors.ivory,
     fontSize: type.verse,
-    lineHeight: 44,
+    lineHeight: 46,
     fontWeight: '300',
     fontStyle: 'italic',
   },
   reference: {
     color: colors.ivoryMuted,
-    fontSize: 20,
+    fontSize: type.meta,
     marginTop: 28,
     letterSpacing: 0.6,
   },

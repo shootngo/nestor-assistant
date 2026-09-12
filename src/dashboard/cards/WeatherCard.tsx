@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 48,
+    paddingHorizontal: 24,
   },
   kicker: {
     color: colors.gold,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     fontSize: type.weatherTemp,
     fontWeight: '200',
     letterSpacing: -2,
-    lineHeight: 128,
+    lineHeight: 116,
     marginTop: 8,
   },
   condition: {
@@ -61,11 +61,11 @@ const styles = StyleSheet.create({
   },
   meta: {
     color: colors.ivoryMuted,
-    fontSize: 22,
+    fontSize: type.meta,
     letterSpacing: 0.6,
   },
   dot: {
     color: colors.stone,
-    fontSize: 22,
+    fontSize: type.meta,
   },
 });

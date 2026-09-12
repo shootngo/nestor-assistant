@@ -2,7 +2,7 @@
 
 ## Phase 7 — overnight dim + faint clock
 
-Confirm on the **Samsung Tab** after installing a rebuilt APK. Web preview can show the veil and clock but cannot change real tablet brightness or run STT/TTS.
+Confirm on the **Samsung Tab A** (portrait) after installing a rebuilt APK. Web preview can show the veil and clock but cannot change real tablet brightness or run STT/TTS.
 
 Hours, Samsung window brightness, and Fire fallback: [OVERNIGHT.md](./OVERNIGHT.md).
 
@@ -28,7 +28,7 @@ Hours, Samsung window brightness, and Fire fallback: [OVERNIGHT.md](./OVERNIGHT.
 | Mute | **Mute** still silences TTS; text still shows |
 | Sleep | **Goodbye Nestor** → walk-off → veil and clock return (if still overnight) |
 | Morning | 6am fades to full brightness |
-| Keep-awake | Screen stays on; landscape; immersive bars |
+| Keep-awake | Screen stays on; portrait; immersive bars |
 
 ### Scripted checks (this environment)
 
@@ -39,7 +39,7 @@ npm run check-household
 npx tsc --noEmit
 ```
 
-Landscape web preview stills (1280×800):
+Portrait web preview stills (~800×1280):
 
 - [Daytime dashboard](./phase-7-day.png)
 - [Overnight dim + clock](./phase-7-night.png)

@@ -22,18 +22,22 @@ export const colors = {
   nightPlate: 'rgba(8, 8, 8, 0.92)',
 } as const;
 
+/** Sized for a Samsung Tab A (small, ~2021) in portrait on the fridge. */
 export const type = {
-  wordmark: 22,
-  kicker: 15,
-  title: 38,
-  weatherTemp: 118,
-  weatherMeta: 26,
-  body: 28,
-  verse: 32,
-  caption: 16,
-  branding: 30,
-  greeting: 24,
-  serifMark: 72,
+  wordmark: 26,
+  kicker: 18,
+  title: 36,
+  weatherTemp: 108,
+  weatherMeta: 28,
+  body: 30,
+  verse: 34,
+  caption: 18,
+  branding: 32,
+  greeting: 26,
+  serifMark: 64,
+  answer: 36,
+  hint: 20,
+  meta: 22,
 } as const;
 
 export const serif = {

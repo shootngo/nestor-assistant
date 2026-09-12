@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(12, 12, 12, 0.38)',
   },
   caption: {
-    paddingHorizontal: 56,
-    paddingBottom: 64,
+    paddingHorizontal: 24,
+    paddingBottom: 72,
     paddingTop: 28,
     backgroundColor: colors.overlayDeep,
   },
@@ -96,14 +96,14 @@ const styles = StyleSheet.create({
     color: colors.ivory,
     fontSize: type.title,
     fontWeight: '400',
-    lineHeight: 48,
+    lineHeight: 44,
     marginTop: 12,
   },
   plain: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 72,
-    maxWidth: 980,
+    paddingHorizontal: 28,
+    maxWidth: 720,
     alignSelf: 'center',
   },
   rule: {

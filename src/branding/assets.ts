@@ -1,5 +1,5 @@
 /**
- * Official household Nestor PWA look, composed as landscape fridge stills
+ * Official household Nestor PWA look, composed for the portrait Tab A fridge
  * from Frank’s hatch reference (cracked egg → opening → revealed cottage).
  */
 export const brandingImages = {

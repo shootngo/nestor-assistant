@@ -1,12 +1,12 @@
 # Nestor Assistant
 
-Kitchen **Samsung Tab** kiosk (plain Android / Play Store) for Frank Mulkey’s Nestor household app. Landscape, always-on, plugged in on the fridge. The on-screen and spoken identity is **Nestor**. Do not name or show the underlying AI model.
+Kitchen kiosk for Frank Mulkey’s Nestor household app on a **Samsung Tab A** (small, ~5 years old / ~2021). **Portrait** (tall) is the primary fridge layout — large type, always-on, plugged in. The on-screen and spoken identity is **Nestor**. Do not name or show the underlying AI model.
 
 This repo is an Expo (React Native) Android app. It is **not** an Expo Go project — native modules (keyword spotting, microphone, speech in/out) require `expo-dev-client` and prebuild.
 
 ## Fridge setup checklist
 
-One pass before the Samsung Tab lives on the fridge:
+One pass before the Samsung Tab A lives on the fridge (portrait):
 
 1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle). Do not use Expo Go.
 2. **Gemini key** — set `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` in `.env` or as an EAS secret. Rebuild after setting or rotating it.
@@ -16,7 +16,13 @@ One pass before the Samsung Tab lives on the fridge:
 
 Details: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD.md), [docs/OVERNIGHT.md](./docs/OVERNIGHT.md).
 
-## Phase 7 (this PR)
+## Portrait fridge layout (this PR)
+
+The Tab A fridge UI is **portrait** (tall). Dashboard cards, hatch, egg, mute, and the overnight clock are laid out for a small ~800×1280 screen with large type. Overnight dim (10pm–6am America/Chicago) is unchanged from Phase 7.
+
+Older Fire **landscape** notes below are secondary / outdated for this household.
+
+## Phase 7 (overnight, already on main)
 
 Overnight the board stays on but goes quiet. From about **10pm to 6am** America/Chicago a soft veil covers the cycling cards and a large faint clock stays readable across the kitchen. At 6am it fades back to full brightness.
 
@@ -177,9 +183,10 @@ Phases 1–7 are listed as done in [PHASES.md](./PHASES.md).
 
 ## Screenshots
 
-Landscape web preview (fridge install path is still the Android APK):
+Portrait web preview for the Tab A fridge (~800×1280):
 
-- Phase 7 overnight: [daytime dashboard](./docs/phase-7-day.png), [overnight dim + clock](./docs/phase-7-night.png), [night wake](./docs/phase-7-wake.png), [dim after wake](./docs/phase-7-dim-after-wake.png)
+- This PR: [daytime](./docs/portrait-tab-a-day.png), [overnight clock](./docs/portrait-tab-a-night.png), [night wake](./docs/portrait-tab-a-wake.png)
+- Phase 7 overnight (landscape archive): [daytime dashboard](./docs/phase-7-day.png), [overnight dim + clock](./docs/phase-7-night.png), [night wake](./docs/phase-7-wake.png), [dim after wake](./docs/phase-7-dim-after-wake.png)
 - [Egg listening](./docs/phase-5-listening.png)
 - [Talking egg + answer](./docs/phase-5-talking.png)
 - [Muted](./docs/phase-5-mute.png)
@@ -312,9 +319,9 @@ Expo’s prebuild debug keystore is enough to sideload a debug APK. `assembleRel
 
 If you use a local `.env`, Gradle/Metro must see `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` and the tablet email/password at bundle time. EAS preview should use EAS secrets. Never commit `.env`.
 
-## Install on the Samsung Tab (primary)
+## Install on the Samsung Tab A (primary)
 
-Plain Android with Play Store. The fridge mount is **landscape** and **always-on** (plugged in). The app already locks landscape and holds keep-awake.
+Small Galaxy Tab A, ~2021, Play Store Android. The fridge UI is **portrait** (tall) and **always-on** (plugged in). The app locks portrait and holds keep-awake. Type is large for that smaller screen.
 
 ### Enable unknown sources
 
@@ -343,7 +350,7 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 
 1. Open **Nestor**.
 2. Allow the microphone when Android asks. If you deny it, a cream card explains why; **Continue to the kitchen board** keeps the dashboard running.
-3. Mount the Tab in landscape. The app locks that orientation.
+3. Mount the Tab A in **portrait** (tall). The app locks that orientation.
 4. Confirm the charcoal dashboard still cycles. Say **Nestor**. The egg should appear.
 5. Ask a general question (“How long should I rest a roast?”). Nestor should speak the answer and show it in large type. The mouth should move unless **Mute** is on.
 6. Ask **Add milk to the list.** He should confirm out loud. Then **What's on the shopping list?** and **What's on the calendar today?**
@@ -354,11 +361,9 @@ Replace an older build with `-r`. The launcher name is **Nestor**.
 
 Speech-to-text uses the Google / Play Store recognizer on the Tab. It is free OS STT, not a paid cloud SKU.
 
-## Fire tablet (secondary)
+## Fire tablet (secondary / outdated)
 
-The same APK still sideloads if the old Fire is around. Treat it as plain Android: **Settings → Security & privacy** → **Apps from Unknown Sources** / **Install unknown apps**, then open the APK. USB debugging is under **Settings → Device options** (tap the serial number seven times if that menu is hidden).
-
-Fire OS often ignores window brightness. The on-screen veil + faint clock are still the night look. Speech-to-text is whatever recognizer that Fire already has (Play Store / Google speech, or Amazon’s).
+This household’s fridge is the Tab A in **portrait**. A leftover Fire can still sideload the same APK, but landscape Fire notes are outdated: Nestor now locks **portrait**. Install path if needed: **Settings → Security & privacy** → **Apps from Unknown Sources**. The veil + faint clock are still the night look.
 
 ## Identity
 

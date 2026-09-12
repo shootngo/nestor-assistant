@@ -12,7 +12,7 @@ export function BrandingCard({ card }: { card: BrandingCardData }) {
 
   return (
     <View style={styles.wrap} testID="nestor-card-branding" accessibilityLabel={card.line}>
-      <Image source={brandingImages.houseInNest} style={styles.art} resizeMode="contain" />
+      <Image source={brandingImages.houseInNest} style={styles.art} resizeMode="cover" />
       <View style={styles.rule} />
       <Text style={styles.line}>{card.line}</Text>
     </View>
@@ -24,15 +24,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 48,
-    paddingBottom: 20,
+    paddingHorizontal: 24,
+    paddingBottom: 28,
   },
   art: {
-    width: 240,
-    height: 240,
-    maxWidth: '28%',
-    maxHeight: '44%',
-    borderRadius: 36,
+    width: '78%',
+    aspectRatio: 1,
+    maxWidth: 360,
+    maxHeight: '52%',
+    borderRadius: 40,
   },
   rule: {
     width: 48,

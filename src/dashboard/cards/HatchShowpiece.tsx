@@ -76,9 +76,9 @@ export function HatchShowpiece({ frame = null }: Props) {
   return (
     <View style={styles.wrap} testID="nestor-card-showpiece" accessibilityLabel={SHOWPIECE_GREETING}>
       <Animated.View style={styles.stage}>
-        <Animated.Image source={brandingImages.hatchStart} style={[styles.art, { opacity: start }]} resizeMode="contain" />
-        <Animated.Image source={brandingImages.hatchMid} style={[styles.art, { opacity: mid }]} resizeMode="contain" />
-        <Animated.Image source={brandingImages.hatchEnd} style={[styles.art, { opacity: end }]} resizeMode="contain" />
+        <Animated.Image source={brandingImages.hatchStart} style={[styles.art, { opacity: start }]} resizeMode="cover" />
+        <Animated.Image source={brandingImages.hatchMid} style={[styles.art, { opacity: mid }]} resizeMode="cover" />
+        <Animated.Image source={brandingImages.hatchEnd} style={[styles.art, { opacity: end }]} resizeMode="cover" />
       </Animated.View>
       <Animated.View style={[styles.opening, { opacity: openingCopy }]}>
         <Animated.Text style={styles.smallMark}>{SHOWPIECE_MARK}</Animated.Text>
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
+    transform: [{ scale: 1.12 }],
   },
   opening: {
     position: 'absolute',

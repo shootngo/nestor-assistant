@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors } from '../theme';
+import { colors, type } from '../theme';
 import {
   MUTE_LABEL,
   UNMUTE_LABEL,
@@ -53,15 +53,17 @@ export function MuteBar({ muted, onToggleMute, onVolumeDown, onVolumeUp }: Props
 const styles = StyleSheet.create({
   bar: {
     position: 'absolute',
-    top: 18,
-    right: 22,
+    top: 16,
+    left: 16,
+    right: 16,
     zIndex: 24,
     flexDirection: 'row',
+    justifyContent: 'flex-end',
     gap: 10,
   },
   btn: {
-    minWidth: 64,
-    minHeight: 48,
+    minWidth: 72,
+    minHeight: 56,
     paddingHorizontal: 14,
     borderRadius: 24,
     backgroundColor: colors.creamDeep,
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
   },
   glyph: {
     color: colors.bark,
-    fontSize: 18,
+    fontSize: type.hint,
     fontWeight: '600',
     letterSpacing: 0.3,
   },

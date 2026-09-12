@@ -113,6 +113,21 @@ function hasPermission(modResults, name) {
   return permissions.some((entry) => entry.$?.['android:name'] === name);
 }
 
+function withPortraitLock(config) {
+  return withAndroidManifest(config, (modConfig) => {
+    const application = modConfig.modResults.manifest.application || [];
+    for (const app of application) {
+      for (const activity of app.activity || []) {
+        const name = String(activity.$?.['android:name'] ?? '');
+        if (name.endsWith('.MainActivity') || name === '.MainActivity') {
+          activity.$['android:screenOrientation'] = 'portrait';
+        }
+      }
+    }
+    return modConfig;
+  });
+}
+
 function withRecordAudio(config) {
   return withAndroidManifest(config, (modConfig) => {
     const manifest = modConfig.modResults.manifest;
@@ -129,6 +144,7 @@ function withRecordAudio(config) {
 module.exports = function withAndroidKiosk(config) {
   config = withKioskStyles(config);
   config = withKioskMainActivity(config);
+  config = withPortraitLock(config);
   config = withRecordAudio(config);
   return config;
 };

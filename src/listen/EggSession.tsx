@@ -45,7 +45,7 @@ export function EggSession({
         onVolumeUp={onVolumeUp}
       />
       <Pressable
-        style={[styles.row, split ? styles.rowSplit : styles.rowCenter]}
+        style={[styles.column, split ? styles.columnSplit : styles.columnCenter]}
         onPress={ALLOW_WAKE_SIMULATE ? onSimulateSleep : undefined}
         onLongPress={ALLOW_WAKE_SIMULATE ? onSimulateSleep : undefined}
         delayLongPress={700}
@@ -63,7 +63,7 @@ export function EggSession({
         </View>
         {split ? (
           <View style={styles.answerWrap}>
-            <Text style={styles.answer} numberOfLines={8}>
+            <Text style={styles.answer} numberOfLines={10} allowFontScaling={false}>
               {answer}
             </Text>
             <Text style={styles.hint}>{DISMISS_LINE}</Text>
@@ -81,56 +81,55 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 20,
-    paddingHorizontal: 28,
+    paddingHorizontal: 22,
+    paddingTop: 72,
   },
-  row: {
+  column: {
     width: '100%',
-    maxWidth: 1100,
+    maxWidth: 720,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  rowCenter: {
     flexDirection: 'column',
   },
-  rowSplit: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingRight: 8,
+  columnCenter: {
+    gap: 4,
+  },
+  columnSplit: {
+    gap: 18,
+    paddingBottom: 12,
   },
   persona: {
     alignItems: 'center',
   },
   stage: {
-    width: 320,
-    height: 300,
+    width: 280,
+    height: 270,
     alignItems: 'center',
     justifyContent: 'flex-end',
     marginBottom: 8,
   },
   stageSplit: {
-    width: 280,
-    transform: [{ scale: 0.92 }],
+    width: 240,
+    height: 230,
+    transform: [{ scale: 0.9 }],
     marginBottom: 0,
   },
   answerWrap: {
-    flex: 1,
-    minWidth: 280,
-    maxWidth: 640,
-    paddingHorizontal: 12,
+    width: '100%',
+    paddingHorizontal: 8,
     justifyContent: 'center',
   },
   answer: {
     color: colors.bark,
-    fontSize: 34,
-    lineHeight: 42,
+    fontSize: type.answer,
+    lineHeight: 44,
     fontWeight: '400',
+    textAlign: 'center',
     ...serif,
   },
   mark: {
     color: colors.bark,
-    fontSize: 34,
+    fontSize: type.answer,
     fontWeight: '600',
     letterSpacing: 0.4,
     marginTop: 10,
@@ -145,7 +144,8 @@ const styles = StyleSheet.create({
   },
   hint: {
     color: colors.mutedNest,
-    fontSize: 18,
+    fontSize: type.hint,
+    textAlign: 'center',
     marginTop: 8,
     letterSpacing: 0.2,
   },

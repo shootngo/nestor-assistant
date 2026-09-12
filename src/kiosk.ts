@@ -10,7 +10,7 @@ export async function applyKioskChrome(): Promise<void> {
   }
 
   try {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
   } catch {
     // Orientation lock is best-effort outside a native Android build.
   }

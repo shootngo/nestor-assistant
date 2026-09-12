@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
     zIndex: 20,
   },
   stage: {
-    width: 320,
-    height: 300,
+    width: 280,
+    height: 270,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },

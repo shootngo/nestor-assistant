@@ -1,6 +1,6 @@
 # Overnight dim (Phase 7)
 
-Primary fridge device is a **Samsung Tab** (plain Android / Play Store): landscape, always-on, plugged in. From about **10pm to 6am** America/Chicago the kitchen board stays on, but the screen goes quiet: the backlight dims, a dark veil covers the cycling cards, and a large faint clock stays readable. At 6am it fades back to full brightness. Hours live in `src/config.ts`:
+Primary fridge device is a **Samsung Tab A** (small, ~2021) in **portrait**. From about **10pm to 6am** America/Chicago the kitchen board stays on, but the screen goes quiet: a dark veil covers the cycling cards and a large faint clock stays readable. At 6am it fades back to full brightness. Hours live in `src/config.ts`:
 
 ```
 OVERNIGHT_DIM_START_HOUR = 22
@@ -11,7 +11,7 @@ Rebuild the JS/APK after changing those numbers. The window may wrap midnight (t
 
 ## What stays awake
 
-- Keep-awake and landscape kiosk chrome are unchanged. The tablet does not go black or sleep.
+- Keep-awake and **portrait** kiosk chrome are unchanged. The tablet does not go black or sleep.
 - Dashboard cards and branding still cycle under the veil.
 - **Nestor** still hears his name. The veil lifts for the egg session (full window brightness), then fades back after **Goodbye Nestor** or the usual quiet timeout.
 - Night answers are **quieter** (TTS volume is scaled down). **Mute** still silences him completely. **–** / **+** still change the tablet media stream.

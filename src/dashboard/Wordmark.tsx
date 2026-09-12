@@ -28,8 +28,8 @@ export function Wordmark({
 const styles = StyleSheet.create({
   wrap: {
     position: 'absolute',
-    top: 22,
-    left: 28,
+    top: 20,
+    left: 20,
     zIndex: 4,
   },
   mark: {

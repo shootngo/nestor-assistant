@@ -1,10 +1,10 @@
 # Phases
 
-Frank’s kitchen-tablet build order. Phase 7 (this PR) is overnight dim and fridge polish. Primary device is a **Samsung Tab** (plain Android / Play Store), landscape, always-on. Phases 1–7 are done.
+Frank’s kitchen-tablet build order. Phases 1–7 are on main (overnight dim). This follow-up is **portrait** layout for the **Samsung Tab A** fridge (tall, large type).
 
 ## 1. Tablet shell — done
 
-Expo Android kiosk for the Samsung Tab: landscape, keep-awake, immersive-ish system UI, sideload APK. No voice, no cloud, no dashboard.
+Expo Android kiosk for the Samsung Tab A: **portrait**, keep-awake, immersive-ish system UI, sideload APK. No voice, no cloud, no dashboard.
 
 ## 2. Idle dashboard loop — done
 
@@ -64,4 +64,4 @@ Dim the fridge screen overnight (~10pm–6am America/Chicago) without going full
 - Full brightness at 6am (and whenever a wake session is up)
 - **Nestor** still wakes to his name at night — answers are quieter — then the veil returns after **Goodbye Nestor** or the silence timeout
 - Hours: `OVERNIGHT_DIM_START_HOUR` / `OVERNIGHT_DIM_END_HOUR` in `src/config.ts`
-- Samsung Tab is the primary fridge device (landscape, always-on). Window brightness dims the backlight; the veil + faint clock always run as fallback. Fire tablet is secondary. See [docs/OVERNIGHT.md](./docs/OVERNIGHT.md)
+- **Samsung Tab A** fridge UI is **portrait** (tall) with large type. Overnight veil + faint clock unchanged. Fire landscape notes are outdated. See [docs/OVERNIGHT.md](./docs/OVERNIGHT.md)
