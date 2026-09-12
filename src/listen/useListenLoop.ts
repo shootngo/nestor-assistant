@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import { PRIVATE_REPLY } from '../household/copy';
 import { isPrivateHouseholdAsk } from '../household/privacy';
+import { nightSpeakVolume } from '../overnight/window';
 import { askNestor } from './brain';
 import {
   PREVIEW_ANSWER,
@@ -37,6 +38,7 @@ type Options = {
   previewTalking?: boolean;
   previewMuted?: boolean;
   previewAnswer?: string;
+  quietNight?: boolean;
   onSleep: () => void;
   onHeard: () => void;
   onBusy: (busy: boolean) => void;
@@ -49,6 +51,7 @@ export function useListenLoop({
   previewTalking = false,
   previewMuted = false,
   previewAnswer: previewAnswerProp,
+  quietNight = false,
   onSleep,
   onHeard,
   onBusy,
@@ -68,6 +71,8 @@ export function useListenLoop({
   mutedRef.current = muted;
   const volumeRef = useRef(volume);
   volumeRef.current = volume;
+  const quietNightRef = useRef(quietNight);
+  quietNightRef.current = quietNight;
   const enabledRef = useRef(enabled);
   enabledRef.current = enabled;
   const turnRef = useRef(0);
@@ -138,7 +143,7 @@ export function useListenLoop({
 
       const speakAloud = !mutedRef.current && kitchenVoiceAvailable();
       if (speakAloud) {
-        const started = await speakAnswer(text, volumeRef.current);
+        const started = await speakAnswer(text, nightSpeakVolume(volumeRef.current, quietNightRef.current));
         if (started) {
           return;
         }

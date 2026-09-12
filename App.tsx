@@ -7,6 +7,7 @@ import { Dashboard } from './src/dashboard/Dashboard';
 import { ensureTabletAuth } from './src/household/auth';
 import { applyKioskChrome } from './src/kiosk';
 import { EggSession } from './src/listen/EggSession';
+import { DimOverlay } from './src/overnight';
 import { colors } from './src/theme';
 import { EggExit, MicNeededCard, useWakeSession } from './src/wake';
 
@@ -29,6 +30,7 @@ export default function App() {
       <StatusBar hidden style="light" />
       {Platform.OS === 'android' ? <NavigationBar hidden /> : null}
       <Dashboard paused={paused} onSimulateWake={session.simulateWake} />
+      <DimOverlay dimmed={session.overnight.dimmed} clock={session.overnight.clock} />
       {session.phase === 'listening' ? (
         <EggSession
           mode={session.mode}

@@ -7,6 +7,7 @@ import {
   WAKE_PHRASE,
 } from '../config';
 import { useListenLoop } from '../listen/useListenLoop';
+import { useOvernight } from '../overnight/useOvernight';
 import { getPreviewAnswer, getPreviewMuted, getPreviewSession, getPreviewTalking, getWakeTapEnabled } from '../preview';
 import { acceptKwsSamples, startKeywordSpotter, stopKeywordSpotter } from './kwsEngine';
 import { pcmRms, startMicrophone, stopMicrophone } from './microphone';
@@ -168,12 +169,15 @@ export function useWakeSession() {
     return () => clearInterval(timer);
   }, [goExiting, phase, preview]);
 
+  const overnight = useOvernight(phase !== 'idle');
+
   const listen = useListenLoop({
     enabled: phase === 'listening',
     preview: Boolean(preview),
     previewTalking,
     previewMuted,
     previewAnswer: getPreviewAnswer(),
+    quietNight: overnight.quiet,
     onSleep: goExiting,
     onHeard: bumpIdleTimer,
     onBusy: (busy) => {
@@ -229,5 +233,6 @@ export function useWakeSession() {
     toggleMute: listen.toggleMute,
     volumeUp: listen.volumeUp,
     volumeDown: listen.volumeDown,
+    overnight,
   };
 }

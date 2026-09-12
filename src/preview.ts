@@ -1,11 +1,12 @@
 import { Platform } from 'react-native';
 import { BRANDING_SHOWPIECE_EVERY } from './config';
 import { PREVIEW_ADDED, PREVIEW_ANSWER, PREVIEW_CALENDAR, PREVIEW_LIST } from './listen/copy';
+import { parseClockLabel, type OvernightClock } from './overnight/clock';
 import type { WakePhase } from './wake/types';
 
 /**
  * Web-only query helpers for screenshots and kitchen-side preview.
- * Ignored on the Fire tablet APK.
+ * Ignored on the Samsung Tab APK.
  *
  *   ?start=branding          jump to the first house-in-the-nest card
  *   ?start=showpiece         jump to branding and force the hatch showpiece
@@ -19,6 +20,10 @@ import type { WakePhase } from './wake/types';
  *   ?session=talk&demo=add|list|calendar   Phase 6 canned household replies
  *   ?session=talk&hold=1                   freeze the talking mouth open
  *   ?wakeTap=1                           tap the dashboard to wake (web)
+ *   ?night=1                             force overnight dim + faint clock (web)
+ *   ?night=0                             force daytime (web)
+ *   ?night=1&clock=10:42                 freeze the night clock
+ *   ?session=listen&night=1              night wake (veil lifts, quiet TTS)
  */
 
 export type ShowpieceFrame = 'nest' | 'egg' | 'hatch' | 'house';
@@ -151,4 +156,42 @@ export function getWakeTapEnabled(): boolean {
   }
   const raw = params.get('wakeTap') ?? params.get('wake');
   return raw === '1' || raw === 'true';
+}
+
+/** Web-only: true force night, false force day, null follow Chicago clock. */
+export function getOvernightPreview(): boolean | null {
+  const params = query();
+  if (!params) {
+    return null;
+  }
+  const raw = params.get('night') ?? params.get('overnight');
+  if (raw === '1' || raw === 'true' || raw === 'dim') {
+    return true;
+  }
+  if (raw === '0' || raw === 'false' || raw === 'day') {
+    return false;
+  }
+  return null;
+}
+
+export function getPreviewClock(): OvernightClock | null {
+  const params = query();
+  if (!params) {
+    return null;
+  }
+  const raw = params.get('clock') ?? params.get('nightClock');
+  if (!raw) {
+    return null;
+  }
+  const parsed = parseClockLabel(raw.replace('+', ' '));
+  if (!parsed) {
+    return null;
+  }
+  if (!parsed.period) {
+    const period = (params.get('period') ?? '').toUpperCase();
+    if (period === 'AM' || period === 'PM') {
+      return { time: parsed.time, period };
+    }
+  }
+  return parsed;
 }
