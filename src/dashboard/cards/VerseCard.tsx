@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
   verse: {
     color: colors.ivory,
     fontSize: type.verse,
-    lineHeight: 44,
+    lineHeight: 48,
     fontWeight: '300',
     fontStyle: 'italic',
   },
   reference: {
     color: colors.ivoryMuted,
-    fontSize: 20,
+    fontSize: type.meta,
     marginTop: 28,
     letterSpacing: 0.6,
   },

@@ -61,11 +61,11 @@ const styles = StyleSheet.create({
   },
   meta: {
     color: colors.ivoryMuted,
-    fontSize: 22,
+    fontSize: type.meta,
     letterSpacing: 0.6,
   },
   dot: {
     color: colors.stone,
-    fontSize: 22,
+    fontSize: type.meta,
   },
 });

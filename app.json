@@ -52,6 +52,7 @@
     },
     "android": {
       "package": "com.shootngo.nestorassistant",
+      "minSdkVersion": 24,
       "versionCode": 7,
       "permissions": ["android.permission.RECORD_AUDIO"],
       "softwareKeyboardLayoutMode": "pan",
