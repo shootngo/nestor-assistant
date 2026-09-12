@@ -25,3 +25,8 @@ export function formatHouseholdClock(now = new Date()): OvernightClock {
 export function clockAccessibilityLabel(clock: OvernightClock): string {
   return clock.period ? `${clock.time} ${clock.period}` : clock.time;
 }
+
+export function splitClockTime(time: string): { hour: string; minute: string } {
+  const [hour, minute] = time.split(':');
+  return { hour: hour || '12', minute: minute || '00' };
+}

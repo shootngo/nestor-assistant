@@ -4,7 +4,7 @@ import {
   OVERNIGHT_TTS_CAP,
   OVERNIGHT_TTS_SCALE,
 } from '../src/config';
-import { parseClockLabel } from '../src/overnight/clock';
+import { parseClockLabel, splitClockTime } from '../src/overnight/clock';
 import { isOvernightHour, nightSpeakVolume } from '../src/overnight/window';
 import { householdClockParts, householdHour } from '../src/time';
 
@@ -50,6 +50,8 @@ expect('parse time', parsed?.time, '10:42');
 expect('parse period', parsed?.period, 'PM');
 expect('parse clock only', parseClockLabel('6:00')?.time, '6:00');
 expect('parse reject', parseClockLabel('late'), null);
+expect('split hour', splitClockTime('10:42').hour, '10');
+expect('split minute', splitClockTime('10:42').minute, '42');
 
 const chicagoNoon = new Date('2026-09-12T17:00:00.000Z'); // 12:00 America/Chicago (CDT)
 expect('chicago noon hour', householdHour(chicagoNoon), 12);

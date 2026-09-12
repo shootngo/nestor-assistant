@@ -44,6 +44,7 @@ Landscape web preview stills (1280×800):
 - [Daytime dashboard](./phase-7-day.png)
 - [Overnight dim + clock](./phase-7-night.png)
 - [Night wake](./phase-7-wake.png)
+- [Dim after wake](./phase-7-dim-after-wake.png)
 
 ```
 ?night=0

@@ -178,7 +178,7 @@ Phases 1–7 are listed as done in [PHASES.md](./PHASES.md).
 
 Landscape web preview (fridge install path is still the Android APK):
 
-- Phase 7 overnight: [daytime dashboard](./docs/phase-7-day.png), [overnight dim + clock](./docs/phase-7-night.png), [night wake](./docs/phase-7-wake.png)
+- Phase 7 overnight: [daytime dashboard](./docs/phase-7-day.png), [overnight dim + clock](./docs/phase-7-night.png), [night wake](./docs/phase-7-wake.png), [dim after wake](./docs/phase-7-dim-after-wake.png)
 - [Egg listening](./docs/phase-5-listening.png)
 - [Talking egg + answer](./docs/phase-5-talking.png)
 - [Muted](./docs/phase-5-mute.png)
