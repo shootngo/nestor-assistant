@@ -10,6 +10,22 @@
     "backgroundColor": "#161616",
     "primaryColor": "#161616",
     "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24,
+            "buildArchs": ["armeabi-v7a", "arm64-v8a"],
+            "packagingOptions": {
+              "pickFirst": [
+                "**/libc++_shared.so",
+                "**/libarchive.so",
+                "**/libzstd.so"
+              ]
+            }
+          }
+        }
+      ],
       "expo-dev-client",
       [
         "expo-splash-screen",
@@ -44,7 +60,8 @@
           "style": "light"
         }
       ],
-      "./plugins/withAndroidKiosk.js"
+      "./plugins/withAndroidKiosk.js",
+      "./plugins/withSherpaOnnxAndroid.js"
     ],
     "ios": {
       "bundleIdentifier": "com.shootngo.nestorassistant",
