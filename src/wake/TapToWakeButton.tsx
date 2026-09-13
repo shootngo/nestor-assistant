@@ -9,7 +9,7 @@ type Props = {
 /** Large always-visible kitchen fallback. Voice wake stays on. */
 export function TapToWakeButton({ onPress }: Props) {
   return (
-    <View style={styles.wrap} pointerEvents="box-none">
+    <View style={styles.wrap}>
       <Pressable
         style={({ pressed }) => [styles.button, pressed ? styles.pressed : null]}
         onPress={onPress}

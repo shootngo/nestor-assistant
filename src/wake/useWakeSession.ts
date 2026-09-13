@@ -287,6 +287,10 @@ export function useWakeSession(options?: WakeSessionOptions) {
     if (phaseRef.current !== 'idle' && phaseRef.current !== 'mic-needed') {
       return;
     }
+    if (Platform.OS !== 'android') {
+      goListening();
+      return;
+    }
     if (permissionRef.current !== 'granted') {
       setPhase('idle');
       void startEngine(true).then(() => {
