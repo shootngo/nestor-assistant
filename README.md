@@ -9,8 +9,8 @@ This repo is an Expo (React Native) Android app. It is **not** an Expo Go projec
 One pass before the Samsung Tab A lives on the fridge:
 
 1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle) on the **Samsung Tab A**. `minSdkVersion` stays **24**. Do not use Expo Go. The app stays **landscape**.
-2. **Gemini key** — set `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` in `.env` or as an EAS secret. Rebuild after setting or rotating it.
-3. **Tablet email / password** — set `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD` (household Email/Password, usually `shootngo@gmail.com`). Rebuild. Session persists on the tablet.
+2. **Gemini key** — set `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` in `.env` or as an **EAS preview secret**. Rebuild after setting or rotating it. Missing keys do **not** fail Gradle; Nestor just cannot answer until they are baked in.
+3. **Tablet email / password** — set `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD` as EAS preview secrets (household Email/Password, usually `shootngo@gmail.com`). Rebuild. Session persists on the tablet.
 4. **Shopping rules** — if “add milk to the list” comes back permission-denied, publish `firestore.rules` from [shootngo/Nestor](https://github.com/shootngo/Nestor) as the Firebase owner. The tablet cannot publish rules.
 5. **Overnight hours** — default **10pm–6am** America/Chicago (`OVERNIGHT_DIM_START_HOUR = 22`, `OVERNIGHT_DIM_END_HOUR = 6` in `src/config.ts`). Faint clock at night; full brightness at 6am. Rebuild JS/APK after changing hours.
 
@@ -74,9 +74,11 @@ Get a key from [Google AI Studio](https://aistudio.google.com/apikey). Do not co
 
 Then rebuild (Metro / EAS / Gradle) so the bundle picks it up.
 
-#### EAS secret (cloud APK)
+#### EAS preview secrets (required for a useful fridge APK)
 
-Create a project secret with **either** name. EAS injects it as an env var while bundling; `app.config.js` accepts both:
+The failed EAS build `edaaab6f-98d8-466e-8173-77198fc14b71` had **no preview env vars**. That does **not** fail Gradle. Without these, the APK still installs, but Nestor cannot call the kitchen brain or sign in to Firestore.
+
+Set all three as **project secrets** (or EAS Environment variables on the **preview** environment). `app.config.js` also accepts the `EXPO_PUBLIC_` names.
 
 ```sh
 npx eas-cli secret:create --name GEMINI_API_KEY --value "your-key-here" --scope project
@@ -86,13 +88,43 @@ npx eas-cli secret:create --name NESTOR_TABLET_PASSWORD --value "your-password-h
 npx eas-cli secret:create --name EXPO_PUBLIC_GEMINI_API_KEY --value "your-key-here" --scope project
 ```
 
-Newer Expo accounts can use EAS Environment variables instead; the name can be `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY`. After the secret exists:
+Dashboard: Expo → project **nestor-assistant** → Environment variables. Attach them to the **preview** environment (and production if you use that profile). Then rebuild.
+
+If the Gemini key is missing, Nestor still wakes and listens. He will say he needs the kitchen key set — he will not name the vendor on screen.
+
+### What broke on EAS Android (Gradle)
+
+EAS preview build `edaaab6f-98d8-466e-8173-77198fc14b71` died in **Run gradlew** with “Gradle build failed with unknown error.”
+
+**Root cause:** `expo-sherpa-onnx@0.0.8` turns on a CMake/NDK `libarchive` helper and also ships those same `.so` files as `jniLibs`. AGP then fails while compiling/merging native libs (duplicate `libarchive.so` / `libc++_shared.so`, plus a four-ABI NDK compile we do not need). Nestor only uses keyword spotting with the vendored files in `assets/kws/` — it never extracts `.tar.bz2` models.
+
+**Fix in this repo:**
+
+- `plugins/withSherpaOnnxAndroid.js` writes `sherpaOnnxDisableLibarchive=true` so that CMake step is skipped
+- `expo-build-properties` keeps `minSdkVersion` **24**, builds only **armeabi-v7a** + **arm64-v8a** (Samsung Tab A), and `pickFirst`s colliding JNI libs
+- `eas.json` preview/production run `assembleRelease --no-configure-on-demand` (EAS Gradle 8.14 can drop autolinked modules under configure-on-demand)
+
+Landscape is unchanged. Do not flip the fridge board to portrait.
+
+### Rebuild the preview APK
 
 ```sh
-npx eas-cli build -p android --profile preview
+git pull
+npm install
+npx eas-cli login
+# set the three secrets above if they are still missing
+npx eas-cli build -p android --profile preview --clear-cache
 ```
 
-If the key is missing, Nestor still wakes and listens. He will say he needs the kitchen key set — he will not name the vendor on screen.
+Local check (needs Android SDK + JDK 17/21):
+
+```sh
+npx expo prebuild --platform android
+cd android
+./gradlew :app:assembleRelease --no-configure-on-demand
+```
+
+Confirm `android/gradle.properties` contains `sherpaOnnxDisableLibarchive=true` after prebuild. Download the `.apk` and sideload on the Tab A.
 
 ### Config knobs (`src/config.ts`)
 
@@ -263,7 +295,7 @@ npx eas-cli secret:create --name NESTOR_TABLET_PASSWORD --value "your-password-h
 Cloud (no local Android SDK):
 
 ```sh
-npx eas-cli build -p android --profile preview
+npx eas-cli build -p android --profile preview --clear-cache
 ```
 
 Local Gradle via EAS (needs Android SDK):
@@ -294,7 +326,7 @@ Or assemble an APK without installing:
 ```sh
 npx expo prebuild --platform android
 cd android
-./gradlew assembleRelease
+./gradlew assembleRelease --no-configure-on-demand
 ```
 
 Release APK path:

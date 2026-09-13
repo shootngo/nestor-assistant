@@ -28,14 +28,17 @@ NESTOR_TABLET_PASSWORD=your-password-here
 
 `EXPO_PUBLIC_NESTOR_TABLET_EMAIL` / `EXPO_PUBLIC_NESTOR_TABLET_PASSWORD` also work if Metro needs the public slot. Rebuild after changing these.
 
-### EAS secrets
+### EAS preview secrets
+
+Missing tablet / Gemini secrets do **not** fail Gradle. They only leave the sideloaded APK unable to answer or sign in. Set all three on the Expo project (project secrets or the **preview** environment):
 
 ```sh
+npx eas-cli secret:create --name GEMINI_API_KEY --value "your-key-here" --scope project
 npx eas-cli secret:create --name NESTOR_TABLET_EMAIL --value "shootngo@gmail.com" --scope project
 npx eas-cli secret:create --name NESTOR_TABLET_PASSWORD --value "your-password-here" --scope project
 ```
 
-Keep `GEMINI_API_KEY` (or `EXPO_PUBLIC_GEMINI_API_KEY`) as well.
+`EXPO_PUBLIC_GEMINI_API_KEY` / `EXPO_PUBLIC_NESTOR_TABLET_EMAIL` / `EXPO_PUBLIC_NESTOR_TABLET_PASSWORD` also work. Rebuild the preview APK after setting or rotating them.
 
 ### Firebase web config
 
