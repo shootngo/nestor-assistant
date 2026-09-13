@@ -1,0 +1,2480 @@
+diff --git a/node_modules/expo-sherpa-onnx/android/build/20260913_5626054355781355039.compiler.options b/node_modules/expo-sherpa-onnx/android/build/20260913_5626054355781355039.compiler.options
+new file mode 100644
+index 0000000..1d9078a
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/20260913_5626054355781355039.compiler.options
+@@ -0,0 +1 @@
++"-Xallow-no-source-files" "-classpath" "/home/ubuntu/android-sdk/platforms/android-36/android.jar:/home/ubuntu/android-sdk/build-tools/35.0.0/core-lambda-stubs.jar:/workspace/node_modules/expo-sherpa-onnx/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar:/workspace/node_modules/expo-modules-core/android/build/intermediates/compile_library_classes_jar/release/bundleLibCompileToJarRelease/classes.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/io.github.lukmccall.pika/pika-api/0.3.2/e80dff6fc36448ac79ef7041175f31af39bac8d5/pika-api-0.3.2.jar:/home/ubuntu/.gradle/caches/9.3.1/transforms/05673322f30a02e1455b11e21685cc58/transformed/core-ktx-1.17.0-api.jar:/home/ubuntu/.gradle/caches/9.3.1/transforms/bbdaeebb468b95b5f48f2ec229951b87/transformed/core-1.17.0-api.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm/1.10.2/4a9f78ef49483748e2c129f3d124b8fa249dafbf/kotlinx-coroutines-core-jvm-1.10.2.jar:/home/ubuntu/.gradle/caches/9.3.1/transforms/5247dcbf77a368fcfd6984a7665df5c1/transformed/lifecycle-runtime-2.6.2-api.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-common/2.6.2/10f354fdb64868baecd67128560c5a0d6312c495/lifecycle-common-2.6.2.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-android/1.10.2/c8705d275d81f19e8afaf3ff9b5bf7a4b6b6c19b/kotlinx-coroutines-android-1.10.2.jar:/home/ubuntu/.gradle/caches/9.3.1/transforms/9308cca4cf4a19917d67c3e991304ad9/transformed/versionedparcelable-1.1.1-api.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/androidx.arch.core/core-common/2.2.0/5e1b8b81dfd5f52c56a8d53b18ca759c19a301f3/core-common-2.2.0.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/androidx.collection/collection/1.0.0/42858b26cafdaa69b6149f45dfc2894007bc2c7a/collection-1.0.0.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/androidx.annotation/annotation-jvm/1.8.1/b8a16fe526014b7941c1debaccaf9c5153692dbb/annotation-jvm-1.8.1.jar:/home/ubuntu/.gradle/caches/9.3.1/transforms/26a0dd11f656d4e16f41dbf03609dbe8/transformed/annotation-experimental-1.4.1-api.jar:/home/ubuntu/.gradle/caches/9.3.1/transforms/6c3891b296323aaef53039954d02ab91/transformed/core-viewtree-1.0.0-api.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.1.20/aa8ca79cd50578314f6d1180c47cbe14c0fee567/kotlin-stdlib-2.1.20.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/2.1.20/72672df5e83231744c00550955b10acb71ed49d6/kotlin-stdlib-jdk7-2.1.20.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/23.0.0/8cc20c07506ec18e0834947b84a864bfc094484e/annotations-23.0.0.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/com.google.guava/listenablefuture/1.0/c949a840a6acbc5268d088e47b04177bf90b3cad/listenablefuture-1.0.jar:/home/ubuntu/.gradle/caches/modules-2/files-2.1/org.jspecify/jspecify/1.0.0/7425a601c1c7ec76645a78d22b8c6a627edee507/jspecify-1.0.0.jar" "-d" "/workspace/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release" "-jvm-target" "17" "-module-name" "expo-sherpa-onnx_release" "-no-jdk" "-no-reflect" "-no-stdlib" "-Xplugin=/home/ubuntu/.gradle/caches/modules-2/files-2.1/io.github.lukmccall.pika/pika-compiler/0.3.2-2.1.20/a5839baa0b31debd17649885c9957fc43da5e53b/pika-compiler-0.3.2-2.1.20.jar,/home/ubuntu/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.1.20/aa8ca79cd50578314f6d1180c47cbe14c0fee567/kotlin-stdlib-2.1.20.jar,/home/ubuntu/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" "-P" "plugin:io.github.lukmccall.pika:enabled=true,plugin:io.github.lukmccall.pika:introspectableAnnotation=expo.modules.kotlin.types.OptimizedRecord,plugin:io.github.lukmccall.pika:introspectableAnnotation=expo.modules.kotlin.views.OptimizedComposeProps" "/workspace/node_modules/expo-sherpa-onnx/android/build/generated/source/buildConfig/release/expo/modules/sherpaonnx/BuildConfig.java" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/OnlineStream.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/Vad.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/OnlinePunctuation.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiser.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/OfflinePunctuation.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/OfflineRecognizer.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/VersionInfo.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/Speaker.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/SpokenLanguageIdentification.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiser.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/WaveReader.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractorConfig.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/QnnConfig.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/FeatureConfig.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/OfflineStream.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/Tts.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/HomophoneReplacerConfig.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/AudioTagging.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarization.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/OnlineRecognizer.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/DenoisedAudio.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/com/k2fsa/sherpa/onnx/KeywordSpotter.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/expo/modules/sherpaonnx/StreamingPipeline.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/expo/modules/sherpaonnx/ExpoSherpaOnnxModule.kt" "/workspace/node_modules/expo-sherpa-onnx/android/src/main/java/expo/modules/sherpaonnx/ArchiveHelper.kt"
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/generated/source/buildConfig/release/expo/modules/sherpaonnx/BuildConfig.java b/node_modules/expo-sherpa-onnx/android/build/generated/source/buildConfig/release/expo/modules/sherpaonnx/BuildConfig.java
+new file mode 100644
+index 0000000..cfb2be0
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/generated/source/buildConfig/release/expo/modules/sherpaonnx/BuildConfig.java
+@@ -0,0 +1,10 @@
++/**
++ * Automatically generated file. DO NOT MODIFY
++ */
++package expo.modules.sherpaonnx;
++
++public final class BuildConfig {
++  public static final boolean DEBUG = false;
++  public static final String LIBRARY_PACKAGE_NAME = "expo.modules.sherpaonnx";
++  public static final String BUILD_TYPE = "release";
++}
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/AndroidManifest.xml b/node_modules/expo-sherpa-onnx/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/AndroidManifest.xml
+new file mode 100644
+index 0000000..778633b
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/AndroidManifest.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="expo.modules.sherpaonnx" >
++
++    <uses-sdk android:minSdkVersion="24" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/output-metadata.json b/node_modules/expo-sherpa-onnx/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/output-metadata.json
+new file mode 100644
+index 0000000..1c1d4fd
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/output-metadata.json
+@@ -0,0 +1,18 @@
++{
++  "version": 3,
++  "artifactType": {
++    "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
++    "kind": "Directory"
++  },
++  "applicationId": "expo.modules.sherpaonnx",
++  "variantName": "release",
++  "elements": [
++    {
++      "type": "SINGLE",
++      "filters": [],
++      "attributes": [],
++      "outputFile": "AndroidManifest.xml"
++    }
++  ],
++  "elementType": "File"
++}
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/aar_metadata/release/writeReleaseAarMetadata/aar-metadata.properties b/node_modules/expo-sherpa-onnx/android/build/intermediates/aar_metadata/release/writeReleaseAarMetadata/aar-metadata.properties
+new file mode 100644
+index 0000000..1211b1e
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/aar_metadata/release/writeReleaseAarMetadata/aar-metadata.properties
+@@ -0,0 +1,6 @@
++aarFormatVersion=1.0
++aarMetadataVersion=1.0
++minCompileSdk=1
++minCompileSdkExtension=0
++minAndroidGradlePluginVersion=1.0.0
++coreLibraryDesugaringEnabled=false
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/annotation_processor_list/release/javaPreCompileRelease/annotationProcessors.json b/node_modules/expo-sherpa-onnx/android/build/intermediates/annotation_processor_list/release/javaPreCompileRelease/annotationProcessors.json
+new file mode 100644
+index 0000000..9e26dfe
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/annotation_processor_list/release/javaPreCompileRelease/annotationProcessors.json
+@@ -0,0 +1 @@
++{}
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar b/node_modules/expo-sherpa-onnx/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar
+new file mode 100644
+index 0000000..8261a6b
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/compile_symbol_list/release/generateReleaseRFile/R.txt b/node_modules/expo-sherpa-onnx/android/build/intermediates/compile_symbol_list/release/generateReleaseRFile/R.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-8.12.0 b/node_modules/expo-sherpa-onnx/android/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-8.12.0
+new file mode 100644
+index 0000000..5a3e3a5
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-8.12.0
+@@ -0,0 +1,89 @@
++# This is a configuration file for ProGuard.
++# http://proguard.sourceforge.net/index.html#manual/usage.html
++#
++# Starting with version 2.2 of the Android plugin for Gradle, this file is distributed together with
++# the plugin and unpacked at build-time. The files in $ANDROID_HOME are no longer maintained and
++# will be ignored by new version of the Android plugin for Gradle.
++
++# Optimizations: If you don't want to optimize, use the proguard-android.txt configuration file
++# instead of this one, which turns off the optimization flags.
++-allowaccessmodification
++
++# Preserve some attributes that may be required for reflection.
++-keepattributes AnnotationDefault,
++                EnclosingMethod,
++                InnerClasses,
++                RuntimeVisibleAnnotations,
++                RuntimeVisibleParameterAnnotations,
++                RuntimeVisibleTypeAnnotations,
++                Signature
++
++-keep public class com.google.vending.licensing.ILicensingService
++-keep public class com.android.vending.licensing.ILicensingService
++-keep public class com.google.android.vending.licensing.ILicensingService
++-dontnote com.android.vending.licensing.ILicensingService
++-dontnote com.google.vending.licensing.ILicensingService
++-dontnote com.google.android.vending.licensing.ILicensingService
++
++# For native methods, see https://www.guardsquare.com/manual/configuration/examples#native
++-keepclasseswithmembernames,includedescriptorclasses class * {
++    native <methods>;
++}
++
++# Keep setters in Views so that animations can still work.
++-keepclassmembers public class * extends android.view.View {
++    void set*(***);
++    *** get*();
++}
++
++# We want to keep methods in Activity that could be used in the XML attribute onClick.
++-keepclassmembers class * extends android.app.Activity {
++    public void *(android.view.View);
++}
++
++# For enumeration classes, see https://www.guardsquare.com/manual/configuration/examples#enumerations
++-keepclassmembers enum * {
++    public static **[] values();
++    public static ** valueOf(java.lang.String);
++}
++
++-keepclassmembers class * implements android.os.Parcelable {
++    public static final ** CREATOR;
++}
++
++# Preserve annotated Javascript interface methods.
++-keepclassmembers class * {
++    @android.webkit.JavascriptInterface <methods>;
++}
++
++# The support libraries contains references to newer platform versions.
++# Don't warn about those in case this app is linking against an older
++# platform version. We know about them, and they are safe.
++-dontnote android.support.**
++-dontnote androidx.**
++-dontwarn android.support.**
++-dontwarn androidx.**
++
++# Understand the @Keep support annotation.
++-keep class android.support.annotation.Keep
++
++-keep @android.support.annotation.Keep class * {*;}
++
++-keepclasseswithmembers class * {
++    @android.support.annotation.Keep <methods>;
++}
++
++-keepclasseswithmembers class * {
++    @android.support.annotation.Keep <fields>;
++}
++
++-keepclasseswithmembers class * {
++    @android.support.annotation.Keep <init>(...);
++}
++
++# These classes are duplicated between android.jar and org.apache.http.legacy.jar.
++-dontnote org.apache.http.**
++-dontnote android.net.http.**
++
++# These classes are duplicated between android.jar and core-lambda-stubs.jar.
++-dontnote java.lang.invoke.**
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/default_proguard_files/global/proguard-android.txt-8.12.0 b/node_modules/expo-sherpa-onnx/android/build/intermediates/default_proguard_files/global/proguard-android.txt-8.12.0
+new file mode 100644
+index 0000000..6f7e4ef
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/default_proguard_files/global/proguard-android.txt-8.12.0
+@@ -0,0 +1,95 @@
++# This is a configuration file for ProGuard.
++# http://proguard.sourceforge.net/index.html#manual/usage.html
++#
++# Starting with version 2.2 of the Android plugin for Gradle, this file is distributed together with
++# the plugin and unpacked at build-time. The files in $ANDROID_HOME are no longer maintained and
++# will be ignored by new version of the Android plugin for Gradle.
++
++# Optimization is turned off by default. Dex does not like code run
++# through the ProGuard optimize steps (and performs some
++# of these optimizations on its own).
++# Note that if you want to enable optimization, you cannot just
++# include optimization flags in your own project configuration file;
++# instead you will need to point to the
++# "proguard-android-optimize.txt" file instead of this one from your
++# project.properties file.
++-dontoptimize
++
++# Preserve some attributes that may be required for reflection.
++-keepattributes AnnotationDefault,
++                EnclosingMethod,
++                InnerClasses,
++                RuntimeVisibleAnnotations,
++                RuntimeVisibleParameterAnnotations,
++                RuntimeVisibleTypeAnnotations,
++                Signature
++
++-keep public class com.google.vending.licensing.ILicensingService
++-keep public class com.android.vending.licensing.ILicensingService
++-keep public class com.google.android.vending.licensing.ILicensingService
++-dontnote com.android.vending.licensing.ILicensingService
++-dontnote com.google.vending.licensing.ILicensingService
++-dontnote com.google.android.vending.licensing.ILicensingService
++
++# For native methods, see https://www.guardsquare.com/manual/configuration/examples#native
++-keepclasseswithmembernames,includedescriptorclasses class * {
++    native <methods>;
++}
++
++# Keep setters in Views so that animations can still work.
++-keepclassmembers public class * extends android.view.View {
++    void set*(***);
++    *** get*();
++}
++
++# We want to keep methods in Activity that could be used in the XML attribute onClick.
++-keepclassmembers class * extends android.app.Activity {
++    public void *(android.view.View);
++}
++
++# For enumeration classes, see https://www.guardsquare.com/manual/configuration/examples#enumerations
++-keepclassmembers enum * {
++    public static **[] values();
++    public static ** valueOf(java.lang.String);
++}
++
++-keepclassmembers class * implements android.os.Parcelable {
++    public static final ** CREATOR;
++}
++
++# Preserve annotated Javascript interface methods.
++-keepclassmembers class * {
++    @android.webkit.JavascriptInterface <methods>;
++}
++
++# The support libraries contains references to newer platform versions.
++# Don't warn about those in case this app is linking against an older
++# platform version. We know about them, and they are safe.
++-dontnote android.support.**
++-dontnote androidx.**
++-dontwarn android.support.**
++-dontwarn androidx.**
++
++# Understand the @Keep support annotation.
++-keep class android.support.annotation.Keep
++
++-keep @android.support.annotation.Keep class * {*;}
++
++-keepclasseswithmembers class * {
++    @android.support.annotation.Keep <methods>;
++}
++
++-keepclasseswithmembers class * {
++    @android.support.annotation.Keep <fields>;
++}
++
++-keepclasseswithmembers class * {
++    @android.support.annotation.Keep <init>(...);
++}
++
++# These classes are duplicated between android.jar and org.apache.http.legacy.jar.
++-dontnote org.apache.http.**
++-dontnote android.net.http.**
++
++# These classes are duplicated between android.jar and core-lambda-stubs.jar.
++-dontnote java.lang.invoke.**
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/default_proguard_files/global/proguard-defaults.txt-8.12.0 b/node_modules/expo-sherpa-onnx/android/build/intermediates/default_proguard_files/global/proguard-defaults.txt-8.12.0
+new file mode 100644
+index 0000000..7bbb228
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/default_proguard_files/global/proguard-defaults.txt-8.12.0
+@@ -0,0 +1,89 @@
++# This is a configuration file for ProGuard.
++# http://proguard.sourceforge.net/index.html#manual/usage.html
++#
++# Starting with version 2.2 of the Android plugin for Gradle, this file is distributed together with
++# the plugin and unpacked at build-time. The files in $ANDROID_HOME are no longer maintained and
++# will be ignored by new version of the Android plugin for Gradle.
++
++# Optimizations can be turned on and off in the 'postProcessing' DSL block.
++# The configuration below is applied if optimizations are enabled.
++-allowaccessmodification
++
++# Preserve some attributes that may be required for reflection.
++-keepattributes AnnotationDefault,
++                EnclosingMethod,
++                InnerClasses,
++                RuntimeVisibleAnnotations,
++                RuntimeVisibleParameterAnnotations,
++                RuntimeVisibleTypeAnnotations,
++                Signature
++
++-keep public class com.google.vending.licensing.ILicensingService
++-keep public class com.android.vending.licensing.ILicensingService
++-keep public class com.google.android.vending.licensing.ILicensingService
++-dontnote com.android.vending.licensing.ILicensingService
++-dontnote com.google.vending.licensing.ILicensingService
++-dontnote com.google.android.vending.licensing.ILicensingService
++
++# For native methods, see https://www.guardsquare.com/manual/configuration/examples#native
++-keepclasseswithmembernames,includedescriptorclasses class * {
++    native <methods>;
++}
++
++# Keep setters in Views so that animations can still work.
++-keepclassmembers public class * extends android.view.View {
++    void set*(***);
++    *** get*();
++}
++
++# We want to keep methods in Activity that could be used in the XML attribute onClick.
++-keepclassmembers class * extends android.app.Activity {
++    public void *(android.view.View);
++}
++
++# For enumeration classes, see https://www.guardsquare.com/manual/configuration/examples#enumerations
++-keepclassmembers enum * {
++    public static **[] values();
++    public static ** valueOf(java.lang.String);
++}
++
++-keepclassmembers class * implements android.os.Parcelable {
++    public static final ** CREATOR;
++}
++
++# Preserve annotated Javascript interface methods.
++-keepclassmembers class * {
++    @android.webkit.JavascriptInterface <methods>;
++}
++
++# The support libraries contains references to newer platform versions.
++# Don't warn about those in case this app is linking against an older
++# platform version. We know about them, and they are safe.
++-dontnote android.support.**
++-dontnote androidx.**
++-dontwarn android.support.**
++-dontwarn androidx.**
++
++# Understand the @Keep support annotation.
++-keep class android.support.annotation.Keep
++
++-keep @android.support.annotation.Keep class * {*;}
++
++-keepclasseswithmembers class * {
++    @android.support.annotation.Keep <methods>;
++}
++
++-keepclasseswithmembers class * {
++    @android.support.annotation.Keep <fields>;
++}
++
++-keepclasseswithmembers class * {
++    @android.support.annotation.Keep <init>(...);
++}
++
++# These classes are duplicated between android.jar and org.apache.http.legacy.jar.
++-dontnote org.apache.http.**
++-dontnote android.net.http.**
++
++# These classes are duplicated between android.jar and core-lambda-stubs.jar.
++-dontnote java.lang.invoke.**
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/mergeReleaseAssets/merger.xml b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/mergeReleaseAssets/merger.xml
+new file mode 100644
+index 0000000..4c148a0
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/mergeReleaseAssets/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/main/assets"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/release/assets"/></dataSet><dataSet config="generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/build/intermediates/shader_assets/release/compileReleaseShaders/out"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml
+new file mode 100644
+index 0000000..e56c46d
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/main/jniLibs"><file name="x86_64/libsherpa-onnx-jni.so" path="/workspace/node_modules/expo-sherpa-onnx/android/src/main/jniLibs/x86_64/libsherpa-onnx-jni.so"/><file name="armeabi-v7a/libsherpa-onnx-jni.so" path="/workspace/node_modules/expo-sherpa-onnx/android/src/main/jniLibs/armeabi-v7a/libsherpa-onnx-jni.so"/><file name="arm64-v8a/libsherpa-onnx-jni.so" path="/workspace/node_modules/expo-sherpa-onnx/android/src/main/jniLibs/arm64-v8a/libsherpa-onnx-jni.so"/></source></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/release/jniLibs"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
+new file mode 100644
+index 0000000..dff1bb1
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/main/shaders"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/release/shaders"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties
+new file mode 100644
+index 0000000..2b9bc30
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Sun Sep 13 14:34:42 UTC 2026
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/release/packageReleaseResources/merger.xml b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/release/packageReleaseResources/merger.xml
+new file mode 100644
+index 0000000..7a19574
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/incremental/release/packageReleaseResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/release/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release" generated-set="release$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/src/release/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/workspace/node_modules/expo-sherpa-onnx/android/build/generated/res/resValues/release"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/library_and_local_jars_jni/release/copyReleaseJniLibsProjectAndLocalJars/jni/arm64-v8a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_and_local_jars_jni/release/copyReleaseJniLibsProjectAndLocalJars/jni/arm64-v8a/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..75d5057
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_and_local_jars_jni/release/copyReleaseJniLibsProjectAndLocalJars/jni/arm64-v8a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/library_and_local_jars_jni/release/copyReleaseJniLibsProjectAndLocalJars/jni/armeabi-v7a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_and_local_jars_jni/release/copyReleaseJniLibsProjectAndLocalJars/jni/armeabi-v7a/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..6a6a4e3
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_and_local_jars_jni/release/copyReleaseJniLibsProjectAndLocalJars/jni/armeabi-v7a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/library_and_local_jars_jni/release/copyReleaseJniLibsProjectAndLocalJars/jni/x86_64/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_and_local_jars_jni/release/copyReleaseJniLibsProjectAndLocalJars/jni/x86_64/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..cc4b321
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_and_local_jars_jni/release/copyReleaseJniLibsProjectAndLocalJars/jni/x86_64/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/library_jni/release/copyReleaseJniLibsProjectOnly/jni/arm64-v8a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_jni/release/copyReleaseJniLibsProjectOnly/jni/arm64-v8a/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..75d5057
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_jni/release/copyReleaseJniLibsProjectOnly/jni/arm64-v8a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/library_jni/release/copyReleaseJniLibsProjectOnly/jni/armeabi-v7a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_jni/release/copyReleaseJniLibsProjectOnly/jni/armeabi-v7a/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..6a6a4e3
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_jni/release/copyReleaseJniLibsProjectOnly/jni/armeabi-v7a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/library_jni/release/copyReleaseJniLibsProjectOnly/jni/x86_64/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_jni/release/copyReleaseJniLibsProjectOnly/jni/x86_64/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..cc4b321
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/library_jni/release/copyReleaseJniLibsProjectOnly/jni/x86_64/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/lint_model_metadata/release/writeReleaseLintModelMetadata/lint-model-metadata.properties b/node_modules/expo-sherpa-onnx/android/build/intermediates/lint_model_metadata/release/writeReleaseLintModelMetadata/lint-model-metadata.properties
+new file mode 100644
+index 0000000..30d8e46
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/lint_model_metadata/release/writeReleaseLintModelMetadata/lint-model-metadata.properties
+@@ -0,0 +1,3 @@
++mavenArtifactId=expo-sherpa-onnx
++mavenGroupId=expo.modules.sherpaonnx
++mavenVersion=0.1.0
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/local_only_symbol_list/release/parseReleaseLocalResources/R-def.txt b/node_modules/expo-sherpa-onnx/android/build/intermediates/local_only_symbol_list/release/parseReleaseLocalResources/R-def.txt
+new file mode 100644
+index 0000000..78ac5b8
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/local_only_symbol_list/release/parseReleaseLocalResources/R-def.txt
+@@ -0,0 +1,2 @@
++R_DEF: Internal format may change without notice
++local
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/manifest_merge_blame_file/release/processReleaseManifest/manifest-merger-blame-release-report.txt b/node_modules/expo-sherpa-onnx/android/build/intermediates/manifest_merge_blame_file/release/processReleaseManifest/manifest-merger-blame-release-report.txt
+new file mode 100644
+index 0000000..38627a2
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/manifest_merge_blame_file/release/processReleaseManifest/manifest-merger-blame-release-report.txt
+@@ -0,0 +1,7 @@
++1<?xml version="1.0" encoding="utf-8"?>
++2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++3    package="expo.modules.sherpaonnx" >
++4
++5    <uses-sdk android:minSdkVersion="24" />
++6
++7</manifest>
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/arm64-v8a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/arm64-v8a/libsherpa-onnx-jni.so
+new file mode 100755
+index 0000000..75d5057
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/arm64-v8a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/armeabi-v7a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/armeabi-v7a/libsherpa-onnx-jni.so
+new file mode 100755
+index 0000000..6a6a4e3
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/armeabi-v7a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/x86_64/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/x86_64/libsherpa-onnx-jni.so
+new file mode 100755
+index 0000000..cc4b321
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_jni_libs/release/mergeReleaseJniLibFolders/out/x86_64/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml
+new file mode 100644
+index 0000000..778633b
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="expo.modules.sherpaonnx" >
++
++    <uses-sdk android:minSdkVersion="24" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..75d5057
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/arm64-v8a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/armeabi-v7a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/armeabi-v7a/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..6a6a4e3
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/armeabi-v7a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..cc4b321
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/x86_64/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/navigation_json/release/extractDeepLinksRelease/navigation.json b/node_modules/expo-sherpa-onnx/android/build/intermediates/navigation_json/release/extractDeepLinksRelease/navigation.json
+new file mode 100644
+index 0000000..0637a08
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/navigation_json/release/extractDeepLinksRelease/navigation.json
+@@ -0,0 +1 @@
++[]
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/nested_resources_validation_report/release/generateReleaseResources/nestedResourcesValidationReport.txt b/node_modules/expo-sherpa-onnx/android/build/intermediates/nested_resources_validation_report/release/generateReleaseResources/nestedResourcesValidationReport.txt
+new file mode 100644
+index 0000000..08f4ebe
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/nested_resources_validation_report/release/generateReleaseResources/nestedResourcesValidationReport.txt
+@@ -0,0 +1 @@
++0 Warning/Error
+\ No newline at end of file
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/arm64-v8a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/arm64-v8a/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..75d5057
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/arm64-v8a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/armeabi-v7a/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/armeabi-v7a/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..6a6a4e3
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/armeabi-v7a/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/x86_64/libsherpa-onnx-jni.so b/node_modules/expo-sherpa-onnx/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/x86_64/libsherpa-onnx-jni.so
+new file mode 100644
+index 0000000..cc4b321
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/intermediates/stripped_native_libs/release/stripReleaseDebugSymbols/out/lib/x86_64/libsherpa-onnx-jni.so differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/intermediates/symbol_list_with_package_name/release/generateReleaseRFile/package-aware-r.txt b/node_modules/expo-sherpa-onnx/android/build/intermediates/symbol_list_with_package_name/release/generateReleaseRFile/package-aware-r.txt
+new file mode 100644
+index 0000000..ad7d50a
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/intermediates/symbol_list_with_package_name/release/generateReleaseRFile/package-aware-r.txt
+@@ -0,0 +1 @@
++expo.modules.sherpaonnx
+diff --git a/node_modules/expo-sherpa-onnx/android/build/outputs/logs/manifest-merger-release-report.txt b/node_modules/expo-sherpa-onnx/android/build/outputs/logs/manifest-merger-release-report.txt
+new file mode 100644
+index 0000000..87b51c2
+--- /dev/null
++++ b/node_modules/expo-sherpa-onnx/android/build/outputs/logs/manifest-merger-release-report.txt
+@@ -0,0 +1,14 @@
++-- Merging decision tree log ---
++manifest
++ADDED from /workspace/node_modules/expo-sherpa-onnx/android/src/main/AndroidManifest.xml:1:1-2:12
++INJECTED from /workspace/node_modules/expo-sherpa-onnx/android/src/main/AndroidManifest.xml:1:1-2:12
++	package
++		INJECTED from /workspace/node_modules/expo-sherpa-onnx/android/src/main/AndroidManifest.xml
++uses-sdk
++INJECTED from /workspace/node_modules/expo-sherpa-onnx/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /workspace/node_modules/expo-sherpa-onnx/android/src/main/AndroidManifest.xml
++INJECTED from /workspace/node_modules/expo-sherpa-onnx/android/src/main/AndroidManifest.xml
++	android:targetSdkVersion
++		INJECTED from /workspace/node_modules/expo-sherpa-onnx/android/src/main/AndroidManifest.xml
++	android:minSdkVersion
++		INJECTED from /workspace/node_modules/expo-sherpa-onnx/android/src/main/AndroidManifest.xml
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioEvent.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioEvent.class
+new file mode 100644
+index 0000000..eb9311b
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioEvent.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTagging$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTagging$Companion.class
+new file mode 100644
+index 0000000..8a13743
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTagging$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTagging.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTagging.class
+new file mode 100644
+index 0000000..143406c
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTagging.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTaggingConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTaggingConfig.class
+new file mode 100644
+index 0000000..30b451f
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTaggingConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTaggingKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTaggingKt.class
+new file mode 100644
+index 0000000..0b1abc6
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTaggingKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTaggingModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTaggingModelConfig.class
+new file mode 100644
+index 0000000..cd912c0
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/AudioTaggingModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/DenoisedAudio.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/DenoisedAudio.class
+new file mode 100644
+index 0000000..5137f2e
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/DenoisedAudio.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/EndpointConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/EndpointConfig.class
+new file mode 100644
+index 0000000..b04bec1
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/EndpointConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/EndpointRule.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/EndpointRule.class
+new file mode 100644
+index 0000000..ba321ea
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/EndpointRule.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/FastClusteringConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/FastClusteringConfig.class
+new file mode 100644
+index 0000000..4535053
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/FastClusteringConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/FeatureConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/FeatureConfig.class
+new file mode 100644
+index 0000000..2a66f6a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/FeatureConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/FeatureConfigKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/FeatureConfigKt.class
+new file mode 100644
+index 0000000..2352ded
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/FeatureConfigKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/GeneratedAudio.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/GeneratedAudio.class
+new file mode 100644
+index 0000000..6b2523f
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/GeneratedAudio.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/GenerationConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/GenerationConfig.class
+new file mode 100644
+index 0000000..69a5c93
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/GenerationConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/HomophoneReplacerConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/HomophoneReplacerConfig.class
+new file mode 100644
+index 0000000..b013149
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/HomophoneReplacerConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotter$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotter$Companion.class
+new file mode 100644
+index 0000000..cd10584
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotter$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotter.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotter.class
+new file mode 100644
+index 0000000..368d39e
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotter.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotterConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotterConfig.class
+new file mode 100644
+index 0000000..1b42ac7
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotterConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotterKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotterKt.class
+new file mode 100644
+index 0000000..c07c542
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotterKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotterResult.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotterResult.class
+new file mode 100644
+index 0000000..621ff5d
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/KeywordSpotterResult.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineCanaryModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineCanaryModelConfig.class
+new file mode 100644
+index 0000000..83f69b6
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineCanaryModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineDolphinModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineDolphinModelConfig.class
+new file mode 100644
+index 0000000..f0c6eb0
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineDolphinModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineFireRedAsrCtcModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineFireRedAsrCtcModelConfig.class
+new file mode 100644
+index 0000000..4b8f746
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineFireRedAsrCtcModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineFireRedAsrModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineFireRedAsrModelConfig.class
+new file mode 100644
+index 0000000..8b73097
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineFireRedAsrModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineFunAsrNanoModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineFunAsrNanoModelConfig.class
+new file mode 100644
+index 0000000..898ea51
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineFunAsrNanoModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineMedAsrCtcModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineMedAsrCtcModelConfig.class
+new file mode 100644
+index 0000000..ad71a58
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineMedAsrCtcModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineModelConfig.class
+new file mode 100644
+index 0000000..f3c1fdf
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineMoonshineModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineMoonshineModelConfig.class
+new file mode 100644
+index 0000000..4ae2105
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineMoonshineModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineNemoEncDecCtcModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineNemoEncDecCtcModelConfig.class
+new file mode 100644
+index 0000000..fa3cbf9
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineNemoEncDecCtcModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineOmnilingualAsrCtcModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineOmnilingualAsrCtcModelConfig.class
+new file mode 100644
+index 0000000..882d044
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineOmnilingualAsrCtcModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineParaformerModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineParaformerModelConfig.class
+new file mode 100644
+index 0000000..ca3785c
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineParaformerModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuation$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuation$Companion.class
+new file mode 100644
+index 0000000..5275428
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuation$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuation.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuation.class
+new file mode 100644
+index 0000000..f49884b
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuation.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuationConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuationConfig.class
+new file mode 100644
+index 0000000..e56e8b8
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuationConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuationModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuationModelConfig.class
+new file mode 100644
+index 0000000..479a495
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflinePunctuationModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizer$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizer$Companion.class
+new file mode 100644
+index 0000000..dfa128e
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizer$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizer.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizer.class
+new file mode 100644
+index 0000000..8422a2a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizer.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizerConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizerConfig.class
+new file mode 100644
+index 0000000..d79da2a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizerConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizerKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizerKt.class
+new file mode 100644
+index 0000000..574418a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizerKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizerResult.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizerResult.class
+new file mode 100644
+index 0000000..0ed28fb
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineRecognizerResult.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSenseVoiceModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSenseVoiceModelConfig.class
+new file mode 100644
+index 0000000..d34ceaa
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSenseVoiceModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarization$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarization$Companion.class
+new file mode 100644
+index 0000000..f7565ea
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarization$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarization.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarization.class
+new file mode 100644
+index 0000000..f3a7d4a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarization.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarizationConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarizationConfig.class
+new file mode 100644
+index 0000000..40611da
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarizationConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarizationSegment.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarizationSegment.class
+new file mode 100644
+index 0000000..687ed4c
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerDiarizationSegment.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerSegmentationModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerSegmentationModelConfig.class
+new file mode 100644
+index 0000000..26886cb
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerSegmentationModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerSegmentationPyannoteModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerSegmentationPyannoteModelConfig.class
+new file mode 100644
+index 0000000..453c01a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeakerSegmentationPyannoteModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiser$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiser$Companion.class
+new file mode 100644
+index 0000000..ee74b3a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiser$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiser.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiser.class
+new file mode 100644
+index 0000000..04df4a7
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiser.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserConfig.class
+new file mode 100644
+index 0000000..d95cfe7
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserDpdfNetModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserDpdfNetModelConfig.class
+new file mode 100644
+index 0000000..e258c5f
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserDpdfNetModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserGtcrnModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserGtcrnModelConfig.class
+new file mode 100644
+index 0000000..9fb221e
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserGtcrnModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserModelConfig.class
+new file mode 100644
+index 0000000..ef55647
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineSpeechDenoiserModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineStream$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineStream$Companion.class
+new file mode 100644
+index 0000000..ecaf330
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineStream$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineStream.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineStream.class
+new file mode 100644
+index 0000000..e75f9ee
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineStream.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTransducerModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTransducerModelConfig.class
+new file mode 100644
+index 0000000..2ca8267
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTransducerModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTts$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTts$Companion.class
+new file mode 100644
+index 0000000..6b4644f
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTts$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTts.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTts.class
+new file mode 100644
+index 0000000..64fc31b
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTts.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsConfig.class
+new file mode 100644
+index 0000000..bd9311b
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsKittenModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsKittenModelConfig.class
+new file mode 100644
+index 0000000..4d7afb0
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsKittenModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsKokoroModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsKokoroModelConfig.class
+new file mode 100644
+index 0000000..3f62f5a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsKokoroModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsMatchaModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsMatchaModelConfig.class
+new file mode 100644
+index 0000000..24c5317
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsMatchaModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsModelConfig.class
+new file mode 100644
+index 0000000..99ea2cb
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsPocketModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsPocketModelConfig.class
+new file mode 100644
+index 0000000..a360c36
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsPocketModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsSupertonicModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsSupertonicModelConfig.class
+new file mode 100644
+index 0000000..fd81bc9
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsSupertonicModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsVitsModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsVitsModelConfig.class
+new file mode 100644
+index 0000000..e5c194b
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsVitsModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsZipVoiceModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsZipVoiceModelConfig.class
+new file mode 100644
+index 0000000..5a6dc44
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineTtsZipVoiceModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineWenetCtcModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineWenetCtcModelConfig.class
+new file mode 100644
+index 0000000..6de515e
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineWenetCtcModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineWhisperModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineWhisperModelConfig.class
+new file mode 100644
+index 0000000..8970395
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineWhisperModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineZipformerAudioTaggingModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineZipformerAudioTaggingModelConfig.class
+new file mode 100644
+index 0000000..62594d0
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineZipformerAudioTaggingModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineZipformerCtcModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineZipformerCtcModelConfig.class
+new file mode 100644
+index 0000000..c872b4c
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OfflineZipformerCtcModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineCtcFstDecoderConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineCtcFstDecoderConfig.class
+new file mode 100644
+index 0000000..577593d
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineCtcFstDecoderConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineLMConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineLMConfig.class
+new file mode 100644
+index 0000000..8a83193
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineLMConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineModelConfig.class
+new file mode 100644
+index 0000000..dfd524e
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineNeMoCtcModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineNeMoCtcModelConfig.class
+new file mode 100644
+index 0000000..a13bb95
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineNeMoCtcModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineParaformerModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineParaformerModelConfig.class
+new file mode 100644
+index 0000000..90fed26
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineParaformerModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuation$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuation$Companion.class
+new file mode 100644
+index 0000000..5156cf0
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuation$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuation.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuation.class
+new file mode 100644
+index 0000000..446e4c6
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuation.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuationConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuationConfig.class
+new file mode 100644
+index 0000000..bf62361
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuationConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuationModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuationModelConfig.class
+new file mode 100644
+index 0000000..a53f67a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlinePunctuationModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizer$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizer$Companion.class
+new file mode 100644
+index 0000000..0e20ad5
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizer$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizer.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizer.class
+new file mode 100644
+index 0000000..0f4cf2b
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizer.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizerConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizerConfig.class
+new file mode 100644
+index 0000000..30ee50d
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizerConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizerKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizerKt.class
+new file mode 100644
+index 0000000..5151883
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizerKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizerResult.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizerResult.class
+new file mode 100644
+index 0000000..b87a4cb
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineRecognizerResult.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiser$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiser$Companion.class
+new file mode 100644
+index 0000000..78a8108
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiser$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiser.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiser.class
+new file mode 100644
+index 0000000..55d9920
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiser.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiserConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiserConfig.class
+new file mode 100644
+index 0000000..4843ea0
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineSpeechDenoiserConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineStream$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineStream$Companion.class
+new file mode 100644
+index 0000000..287e896
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineStream$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineStream.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineStream.class
+new file mode 100644
+index 0000000..1a82399
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineStream.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineToneCtcModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineToneCtcModelConfig.class
+new file mode 100644
+index 0000000..ef0259b
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineToneCtcModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineTransducerModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineTransducerModelConfig.class
+new file mode 100644
+index 0000000..c29fe87
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineTransducerModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineZipformer2CtcModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineZipformer2CtcModelConfig.class
+new file mode 100644
+index 0000000..687fd66
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/OnlineZipformer2CtcModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/QnnConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/QnnConfig.class
+new file mode 100644
+index 0000000..9d3dd00
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/QnnConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SileroVadModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SileroVadModelConfig.class
+new file mode 100644
+index 0000000..a9d203b
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SileroVadModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractor$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractor$Companion.class
+new file mode 100644
+index 0000000..032a228
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractor$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractor.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractor.class
+new file mode 100644
+index 0000000..2bb403d
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractor.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractorConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractorConfig.class
+new file mode 100644
+index 0000000..c689c7e
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingExtractorConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingManager$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingManager$Companion.class
+new file mode 100644
+index 0000000..f699f50
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingManager$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingManager.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingManager.class
+new file mode 100644
+index 0000000..e03a2d2
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerEmbeddingManager.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerKt.class
+new file mode 100644
+index 0000000..7074b97
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerRecognition.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerRecognition.class
+new file mode 100644
+index 0000000..75cd16c
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeakerRecognition.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeechSegment.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeechSegment.class
+new file mode 100644
+index 0000000..0cda494
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpeechSegment.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentification$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentification$Companion.class
+new file mode 100644
+index 0000000..4baaa36
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentification$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentification.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentification.class
+new file mode 100644
+index 0000000..8cd041f
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentification.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentificationConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentificationConfig.class
+new file mode 100644
+index 0000000..2268f5d
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentificationConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentificationKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentificationKt.class
+new file mode 100644
+index 0000000..206dbbc
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentificationKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentificationWhisperConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentificationWhisperConfig.class
+new file mode 100644
+index 0000000..c7da155
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/SpokenLanguageIdentificationWhisperConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/TenVadModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/TenVadModelConfig.class
+new file mode 100644
+index 0000000..1b69bcc
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/TenVadModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/TtsKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/TtsKt.class
+new file mode 100644
+index 0000000..4b79869
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/TtsKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/Vad$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/Vad$Companion.class
+new file mode 100644
+index 0000000..86a69b8
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/Vad$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/Vad.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/Vad.class
+new file mode 100644
+index 0000000..89e45bd
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/Vad.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VadKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VadKt.class
+new file mode 100644
+index 0000000..30a006a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VadKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VadModelConfig.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VadModelConfig.class
+new file mode 100644
+index 0000000..3bcf19d
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VadModelConfig.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VersionInfo$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VersionInfo$Companion.class
+new file mode 100644
+index 0000000..3a8ef6a
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VersionInfo$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VersionInfo.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VersionInfo.class
+new file mode 100644
+index 0000000..a4b653e
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/VersionInfo.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/WaveData.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/WaveData.class
+new file mode 100644
+index 0000000..d41f5ab
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/WaveData.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/WaveReader$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/WaveReader$Companion.class
+new file mode 100644
+index 0000000..d7b38a5
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/WaveReader$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/WaveReader.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/WaveReader.class
+new file mode 100644
+index 0000000..b4dbc2f
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/com/k2fsa/sherpa/onnx/WaveReader.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/expo/modules/sherpaonnx/ArchiveHelper$Companion.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/expo/modules/sherpaonnx/ArchiveHelper$Companion.class
+new file mode 100644
+index 0000000..e7a995d
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/expo/modules/sherpaonnx/ArchiveHelper$Companion.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/expo/modules/sherpaonnx/ArchiveHelper.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/expo/modules/sherpaonnx/ArchiveHelper.class
+new file mode 100644
+index 0000000..3552a3f
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/expo/modules/sherpaonnx/ArchiveHelper.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/expo/modules/sherpaonnx/ArchiveHelperKt.class b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/expo/modules/sherpaonnx/ArchiveHelperKt.class
+new file mode 100644
+index 0000000..6606ebf
+Binary files /dev/null and b/node_modules/expo-sherpa-onnx/android/build/tmp/kotlin-classes/release/expo/modules/sherpaonnx/ArchiveHelperKt.class differ
+diff --git a/node_modules/expo-sherpa-onnx/android/src/main/java/expo/modules/sherpaonnx/ExpoSherpaOnnxModule.kt b/node_modules/expo-sherpa-onnx/android/src/main/java/expo/modules/sherpaonnx/ExpoSherpaOnnxModule.kt
+index c5a65f1..8240be3 100644
+--- a/node_modules/expo-sherpa-onnx/android/src/main/java/expo/modules/sherpaonnx/ExpoSherpaOnnxModule.kt
++++ b/node_modules/expo-sherpa-onnx/android/src/main/java/expo/modules/sherpaonnx/ExpoSherpaOnnxModule.kt
+@@ -58,23 +58,10 @@ class ExpoSherpaOnnxModule : Module() {
+   override fun definition() = ModuleDefinition {
+     Name("ExpoSherpaOnnx")
+ 
++    // Nestor only uses keyword spotting. The upstream definition() registers
++    // ASR/TTS/VAD/diarization/etc. in one method and exceeds the JVM 64KB
++    // bytecode limit (MethodTooLargeException / Kotlin ICE on SDK 57).
+     OnDestroy {
+-      val streams = onlineStreams.toMap()
+-      onlineStreams.clear()
+-      streamToRecognizer.clear()
+-      streams.values.forEach { try { it.release() } catch (_: Exception) {} }
+-
+-      val onlineRecs = onlineRecognizers.toMap()
+-      onlineRecognizers.clear()
+-      onlineRecs.values.forEach { try { it.release() } catch (_: Exception) {} }
+-
+-      val offlineRecs = offlineRecognizers.toMap()
+-      offlineRecognizers.clear()
+-      offlineRecs.values.forEach { try { it.release() } catch (_: Exception) {} }
+-
+-      offlineTtsEngines.values.forEach { it.release() }
+-      offlineTtsEngines.clear()
+-
+       val kwsStr = kwsStreams.toMap()
+       kwsStreams.clear()
+       kwsStreamToSpotter.clear()
+@@ -83,520 +70,12 @@ class ExpoSherpaOnnxModule : Module() {
+       val spotters = keywordSpotters.toMap()
+       keywordSpotters.clear()
+       spotters.values.forEach { try { it.release() } catch (_: Exception) {} }
+-
+-      vadEngines.values.forEach { try { it.release() } catch (_: Exception) {} }
+-      vadEngines.clear()
+-
+-      val spkStreams = speakerStreams.toMap()
+-      speakerStreams.clear()
+-      speakerStreamToExtractor.clear()
+-      spkStreams.values.forEach { try { it.release() } catch (_: Exception) {} }
+-
+-      val extractors = speakerExtractors.toMap()
+-      speakerExtractors.clear()
+-      extractors.values.forEach { try { it.release() } catch (_: Exception) {} }
+-
+-      speakerManagers.values.forEach { try { it.release() } catch (_: Exception) {} }
+-      speakerManagers.clear()
+-
+-      diarizationEngines.values.forEach { try { it.release() } catch (_: Exception) {} }
+-      diarizationEngines.clear()
+-      slidEngines.values.forEach { try { it.release() } catch (_: Exception) {} }
+-      slidEngines.clear()
+-      audioTaggingEngines.values.forEach { try { it.release() } catch (_: Exception) {} }
+-      audioTaggingEngines.clear()
+-      offlinePunctuationEngines.values.forEach { try { it.release() } catch (_: Exception) {} }
+-      offlinePunctuationEngines.clear()
+-      onlinePunctuationEngines.values.forEach { try { it.release() } catch (_: Exception) {} }
+-      onlinePunctuationEngines.clear()
+-      offlineSpeechDenoiserEngines.values.forEach { try { it.release() } catch (_: Exception) {} }
+-      offlineSpeechDenoiserEngines.clear()
+-      onlineSpeechDenoiserEngines.values.forEach { try { it.release() } catch (_: Exception) {} }
+-      onlineSpeechDenoiserEngines.clear()
+-      streamingPipelines.values.forEach { try { it.destroy() } catch (_: Exception) {} }
+-      streamingPipelines.clear()
+     }
+ 
+-    // Version info
+-
+     Function("getVersion") {
+       VersionInfo.version
+     }
+ 
+-    Function("getGitSha1") {
+-      VersionInfo.gitSha1
+-    }
+-
+-    Function("getGitDate") {
+-      VersionInfo.gitDate
+-    }
+-
+-    Function("getVersionInfo") {
+-      mapOf(
+-        "version" to VersionInfo.version,
+-        "gitSha1" to VersionInfo.gitSha1,
+-        "gitDate" to VersionInfo.gitDate,
+-      )
+-    }
+-
+-    Function("getAppPaths") {
+-      val context = appContext.reactContext ?: throw IllegalStateException("React context not available")
+-      val docsDir = context.filesDir.absolutePath
+-      val cacheDir = context.cacheDir.absolutePath
+-      val modelsDir = File(context.filesDir, "models").also { it.mkdirs() }.absolutePath
+-
+-      mapOf(
+-        "documentsDir" to docsDir,
+-        "cacheDir" to cacheDir,
+-        "modelsDir" to modelsDir,
+-      )
+-    }
+-
+-    AsyncFunction("resolveModelPath") { config: Map<String, String> ->
+-      val type = config["type"] ?: throw IllegalArgumentException("Missing 'type' in model path config")
+-      val path = config["path"] ?: throw IllegalArgumentException("Missing 'path' in model path config")
+-
+-      when (type) {
+-        "asset" -> resolveAssetPath(path)
+-        "file" -> resolveFilePath(path)
+-        "auto" -> {
+-          try {
+-            resolveAssetPath(path)
+-          } catch (_: Exception) {
+-            resolveFilePath(path)
+-          }
+-        }
+-        else -> throw IllegalArgumentException("Unknown model path type: '$type'. Expected 'asset', 'file', or 'auto'")
+-      }
+-    }
+-
+-    AsyncFunction("listModelsAtPath") { path: String, recursive: Boolean ->
+-      val resolvedPath = resolveDirectoryPath(path)
+-      val dir = File(resolvedPath)
+-
+-      if (recursive) {
+-        dir.walk()
+-          .filter { it != dir }
+-          .map { it.relativeTo(dir).path }
+-          .toList()
+-      } else {
+-        dir.listFiles()?.map { it.name } ?: emptyList()
+-      }
+-    }
+-
+-    // =========================================================================
+-    // Offline ASR
+-    // =========================================================================
+-
+-    AsyncFunction("createOfflineRecognizer") { config: Map<String, Any?> ->
+-      val recognizerConfig = buildOfflineRecognizerConfig(config)
+-      validateOfflineConfig(recognizerConfig)
+-      Log.i(TAG, "Creating offline recognizer (validated)...")
+-      val recognizer = OfflineRecognizer(null, recognizerConfig)
+-      Log.i(TAG, "  recognizer created, isValid=${recognizer.isValid}")
+-      if (!recognizer.isValid) {
+-        throw Exception("Failed to create offline recognizer. Native model loading returned null.")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      offlineRecognizers[handle] = recognizer
+-      handle
+-    }
+-
+-    AsyncFunction("offlineRecognizerDecode") { handle: Int, samples: List<Double>, sampleRate: Int ->
+-      val recognizer = offlineRecognizers[handle]
+-        ?: throw IllegalArgumentException("Invalid offline recognizer handle: $handle")
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      val stream = recognizer.createStream()
+-      stream.acceptWaveform(floatSamples, sampleRate)
+-      recognizer.decode(stream)
+-      val result = recognizer.getResult(stream)
+-      stream.release()
+-      mapOf(
+-        "text" to result.text,
+-        "tokens" to result.tokens.toList(),
+-        "timestamps" to result.timestamps.toList(),
+-        "lang" to result.lang,
+-        "emotion" to result.emotion,
+-        "event" to result.event,
+-        "durations" to result.durations.toList(),
+-      )
+-    }
+-
+-    AsyncFunction("offlineRecognizerDecodeFile") { handle: Int, filePath: String ->
+-      val recognizer = offlineRecognizers[handle]
+-        ?: throw IllegalArgumentException("Invalid offline recognizer handle: $handle")
+-      val waveData = WaveReader.readWave(filePath)
+-      val stream = recognizer.createStream()
+-      stream.acceptWaveform(waveData.samples, waveData.sampleRate)
+-      recognizer.decode(stream)
+-      val result = recognizer.getResult(stream)
+-      stream.release()
+-      mapOf(
+-        "text" to result.text,
+-        "tokens" to result.tokens.toList(),
+-        "timestamps" to result.timestamps.toList(),
+-        "lang" to result.lang,
+-        "emotion" to result.emotion,
+-        "event" to result.event,
+-        "durations" to result.durations.toList(),
+-      )
+-    }
+-
+-    AsyncFunction("destroyOfflineRecognizer") { handle: Int ->
+-      val recognizer = offlineRecognizers.remove(handle)
+-        ?: throw IllegalArgumentException("Invalid offline recognizer handle: $handle")
+-      recognizer.release()
+-    }
+-
+-    // =========================================================================
+-    // Online (Streaming) ASR
+-    // =========================================================================
+-
+-    AsyncFunction("createOnlineRecognizer") { config: Map<String, Any?> ->
+-      val recognizerConfig = buildOnlineRecognizerConfig(config)
+-      validateOnlineConfig(recognizerConfig)
+-      Log.i(TAG, "Creating online recognizer (validated)...")
+-      val recognizer = OnlineRecognizer(null, recognizerConfig)
+-      Log.i(TAG, "  recognizer created, isValid=${recognizer.isValid}")
+-      if (!recognizer.isValid) {
+-        throw Exception("Failed to create online recognizer. Native model loading returned null.")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      onlineRecognizers[handle] = recognizer
+-      Log.i(TAG, "  online recognizer handle=$handle")
+-      handle
+-    }
+-
+-    AsyncFunction("createOnlineStream") { recognizerHandle: Int, hotwords: String ->
+-      val recognizer = onlineRecognizers[recognizerHandle]
+-        ?: throw IllegalArgumentException("Invalid online recognizer handle: $recognizerHandle")
+-      val stream = recognizer.createStream(hotwords)
+-      val streamHandle = handleCounter.incrementAndGet()
+-      onlineStreams[streamHandle] = stream
+-      streamToRecognizer[streamHandle] = recognizerHandle
+-      streamHandle
+-    }
+-
+-    AsyncFunction("onlineStreamAcceptWaveform") { streamHandle: Int, samples: List<Double>, sampleRate: Int ->
+-      val stream = onlineStreams[streamHandle] ?: return@AsyncFunction
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      stream.acceptWaveform(floatSamples, sampleRate)
+-    }
+-
+-    AsyncFunction("onlineStreamInputFinished") { streamHandle: Int ->
+-      val stream = onlineStreams[streamHandle] ?: return@AsyncFunction
+-      stream.inputFinished()
+-    }
+-
+-    AsyncFunction("onlineRecognizerDecode") { recognizerHandle: Int, streamHandle: Int ->
+-      val recognizer = onlineRecognizers[recognizerHandle] ?: return@AsyncFunction
+-      val stream = onlineStreams[streamHandle] ?: return@AsyncFunction
+-      recognizer.decode(stream)
+-    }
+-
+-    AsyncFunction("onlineRecognizerIsReady") { recognizerHandle: Int, streamHandle: Int ->
+-      val recognizer = onlineRecognizers[recognizerHandle] ?: return@AsyncFunction false
+-      val stream = onlineStreams[streamHandle] ?: return@AsyncFunction false
+-      recognizer.isReady(stream)
+-    }
+-
+-    AsyncFunction("onlineRecognizerIsEndpoint") { recognizerHandle: Int, streamHandle: Int ->
+-      val recognizer = onlineRecognizers[recognizerHandle] ?: return@AsyncFunction false
+-      val stream = onlineStreams[streamHandle] ?: return@AsyncFunction false
+-      recognizer.isEndpoint(stream)
+-    }
+-
+-    AsyncFunction("onlineRecognizerGetResult") { recognizerHandle: Int, streamHandle: Int ->
+-      val recognizer = onlineRecognizers[recognizerHandle]
+-        ?: return@AsyncFunction mapOf("text" to "", "tokens" to emptyList<String>(), "timestamps" to emptyList<Float>())
+-      val stream = onlineStreams[streamHandle]
+-        ?: return@AsyncFunction mapOf("text" to "", "tokens" to emptyList<String>(), "timestamps" to emptyList<Float>())
+-      val result = recognizer.getResult(stream)
+-      mapOf(
+-        "text" to result.text,
+-        "tokens" to result.tokens.toList(),
+-        "timestamps" to result.timestamps.toList(),
+-      )
+-    }
+-
+-    AsyncFunction("onlineRecognizerReset") { recognizerHandle: Int, streamHandle: Int ->
+-      val recognizer = onlineRecognizers[recognizerHandle] ?: return@AsyncFunction
+-      val stream = onlineStreams[streamHandle] ?: return@AsyncFunction
+-      recognizer.reset(stream)
+-    }
+-
+-    AsyncFunction("destroyOnlineStream") { streamHandle: Int ->
+-      val stream = onlineStreams.remove(streamHandle) ?: return@AsyncFunction
+-      streamToRecognizer.remove(streamHandle)
+-      stream.release()
+-    }
+-
+-    AsyncFunction("destroyOnlineRecognizer") { recognizerHandle: Int ->
+-      val toRemove = streamToRecognizer.entries.filter { it.value == recognizerHandle }.map { it.key }
+-      for (sh in toRemove) {
+-        onlineStreams.remove(sh)?.release()
+-        streamToRecognizer.remove(sh)
+-      }
+-      val recognizer = onlineRecognizers.remove(recognizerHandle) ?: return@AsyncFunction
+-      recognizer.release()
+-    }
+-
+-    // =========================================================================
+-    // Wave reading
+-    // =========================================================================
+-
+-    AsyncFunction("readWaveFile") { filePath: String ->
+-      val waveData = WaveReader.readWave(filePath)
+-      mapOf(
+-        "samples" to waveData.samples.toList(),
+-        "sampleRate" to waveData.sampleRate,
+-      )
+-    }
+-
+-    // =========================================================================
+-    // Hardware acceleration detection
+-    // =========================================================================
+-
+-    Function("getAvailableProviders") {
+-      val providers = mutableListOf("cpu")
+-      try {
+-        val nnApiClass = Class.forName("android.os.Build\$VERSION")
+-        val sdkInt = nnApiClass.getField("SDK_INT").getInt(null)
+-        if (sdkInt >= 27) providers.add("nnapi")
+-      } catch (_: Exception) {}
+-      providers.add("xnnpack")
+-      providers.toList()
+-    }
+-
+-    Events("ttsChunk", "ttsComplete", "ttsError",
+-           "pipelinePartial", "pipelineSegment", "pipelineError", "pipelineStopped")
+-
+-    // =========================================================================
+-    // Offline TTS
+-    // =========================================================================
+-
+-    AsyncFunction("createOfflineTts") { config: Map<String, Any?> ->
+-      Log.i(TAG, "=== createOfflineTts START ===")
+-      Log.i(TAG, "  Raw config keys: ${config.keys}")
+-      val ttsConfig = buildOfflineTtsConfig(config)
+-      Log.i(TAG, "  Built ttsConfig, running validation...")
+-      validateTtsConfig(ttsConfig)
+-      Log.i(TAG, "  Validation passed. Calling OfflineTts constructor...")
+-      val tts = try {
+-        OfflineTts(null, ttsConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  OfflineTts constructor threw: ${e.message}", e)
+-        throw Exception("Native TTS creation failed: ${e.message}")
+-      } catch (e: Error) {
+-        Log.e(TAG, "  OfflineTts constructor threw Error: ${e.message}", e)
+-        throw Exception("Native TTS creation failed (Error): ${e.message}")
+-      }
+-      Log.i(TAG, "  OfflineTts constructor returned, checking sampleRate...")
+-      val sr = try { tts.sampleRate() } catch (e: Exception) {
+-        Log.e(TAG, "  sampleRate() failed: ${e.message}", e)
+-        tts.release()
+-        throw Exception("TTS engine invalid (sampleRate failed): ${e.message}")
+-      }
+-      Log.i(TAG, "  sampleRate=$sr, checking numSpeakers...")
+-      val ns = try { tts.numSpeakers() } catch (e: Exception) {
+-        Log.e(TAG, "  numSpeakers() failed: ${e.message}", e)
+-        tts.release()
+-        throw Exception("TTS engine invalid (numSpeakers failed): ${e.message}")
+-      }
+-      Log.i(TAG, "  numSpeakers=$ns")
+-      val handle = handleCounter.incrementAndGet()
+-      offlineTtsEngines[handle] = tts
+-      Log.i(TAG, "=== createOfflineTts DONE handle=$handle sr=$sr ns=$ns ===")
+-      mapOf(
+-        "handle" to handle,
+-        "sampleRate" to sr,
+-        "numSpeakers" to ns,
+-      )
+-    }
+-
+-    AsyncFunction("offlineTtsGenerate") { handle: Int, text: String, sid: Int, speed: Double ->
+-      Log.i(TAG, "=== offlineTtsGenerate START handle=$handle textLen=${text.length} sid=$sid speed=$speed ===")
+-      val tts = offlineTtsEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid TTS handle: $handle")
+-      Log.i(TAG, "  Calling tts.generate()...")
+-      val audio = try {
+-        tts.generate(text, sid, speed.toFloat())
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  tts.generate() threw: ${e.message}", e)
+-        throw Exception("TTS generate failed: ${e.message}")
+-      }
+-      Log.i(TAG, "  Generated ${audio.samples.size} samples at ${audio.sampleRate} Hz")
+-      Log.i(TAG, "=== offlineTtsGenerate DONE ===")
+-      mapOf(
+-        "samples" to audio.samples.map { it.toDouble() },
+-        "sampleRate" to audio.sampleRate,
+-      )
+-    }
+-
+-    AsyncFunction("offlineTtsSampleRate") { handle: Int ->
+-      val tts = offlineTtsEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid TTS handle: $handle")
+-      tts.sampleRate()
+-    }
+-
+-    AsyncFunction("offlineTtsNumSpeakers") { handle: Int ->
+-      val tts = offlineTtsEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid TTS handle: $handle")
+-      tts.numSpeakers()
+-    }
+-
+-    AsyncFunction("destroyOfflineTts") { handle: Int ->
+-      Log.i(TAG, "=== destroyOfflineTts handle=$handle ===")
+-      val tts = offlineTtsEngines.remove(handle)
+-      if (tts != null) {
+-        try { tts.release() } catch (e: Exception) {
+-          Log.e(TAG, "  release() threw: ${e.message}", e)
+-        }
+-      }
+-      Log.i(TAG, "=== destroyOfflineTts DONE ===")
+-    }
+-
+-    AsyncFunction("offlineTtsGenerateStreaming") { handle: Int, text: String, sid: Int, speed: Double, requestId: String ->
+-      Log.i(TAG, "=== offlineTtsGenerateStreaming START handle=$handle textLen=${text.length} ===")
+-      val tts = offlineTtsEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid TTS handle: $handle")
+-      try {
+-        val audio = tts.generateWithCallback(text, sid, speed.toFloat()) { samples ->
+-          sendEvent("ttsChunk", mapOf(
+-            "requestId" to requestId,
+-            "samples" to samples.map { it.toDouble() },
+-          ))
+-          0
+-        }
+-        Log.i(TAG, "  Streaming done, ${audio.samples.size} total samples")
+-        sendEvent("ttsComplete", mapOf(
+-          "requestId" to requestId,
+-          "sampleRate" to audio.sampleRate,
+-        ))
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  Streaming generate threw: ${e.message}", e)
+-        sendEvent("ttsError", mapOf(
+-          "requestId" to requestId,
+-          "error" to (e.message ?: "Unknown TTS error"),
+-        ))
+-      }
+-      Log.i(TAG, "=== offlineTtsGenerateStreaming DONE ===")
+-    }
+-
+-    // =========================================================================
+-    // Voice Activity Detection (VAD)
+-    // =========================================================================
+-
+-    AsyncFunction("createVad") { config: Map<String, Any?>, bufferSizeInSeconds: Double ->
+-      val vadConfig = buildVadModelConfig(config)
+-      validateVadConfig(vadConfig)
+-      Log.i(TAG, "=== createVad START ===")
+-      val vad = try {
+-        Vad(null, vadConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  Vad constructor threw: ${e.message}", e)
+-        throw Exception("Native VAD creation failed: ${e.message}")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      vadEngines[handle] = vad
+-      Log.i(TAG, "=== createVad DONE handle=$handle ===")
+-      handle
+-    }
+-
+-    AsyncFunction("vadAcceptWaveform") { handle: Int, samples: List<Double> ->
+-      val vad = vadEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid VAD handle: $handle")
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      vad.acceptWaveform(floatSamples)
+-    }
+-
+-    AsyncFunction("vadEmpty") { handle: Int ->
+-      val vad = vadEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid VAD handle: $handle")
+-      vad.empty()
+-    }
+-
+-    AsyncFunction("vadIsSpeechDetected") { handle: Int ->
+-      val vad = vadEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid VAD handle: $handle")
+-      vad.isSpeechDetected()
+-    }
+-
+-    AsyncFunction("vadPop") { handle: Int ->
+-      val vad = vadEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid VAD handle: $handle")
+-      vad.pop()
+-    }
+-
+-    AsyncFunction("vadFront") { handle: Int ->
+-      val vad = vadEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid VAD handle: $handle")
+-      val segment = vad.front()
+-      mapOf(
+-        "start" to segment.start,
+-        "samples" to segment.samples.map { it.toDouble() },
+-      )
+-    }
+-
+-    AsyncFunction("vadClear") { handle: Int ->
+-      val vad = vadEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid VAD handle: $handle")
+-      vad.clear()
+-    }
+-
+-    AsyncFunction("vadReset") { handle: Int ->
+-      val vad = vadEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid VAD handle: $handle")
+-      vad.reset()
+-    }
+-
+-    AsyncFunction("vadFlush") { handle: Int ->
+-      val vad = vadEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid VAD handle: $handle")
+-      vad.flush()
+-    }
+-
+-    AsyncFunction("vadProcessFile") { handle: Int, filePath: String ->
+-      val vad = vadEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid VAD handle: $handle")
+-      Log.i(TAG, "=== vadProcessFile START filePath=$filePath ===")
+-      val waveData = WaveReader.readWave(filePath)
+-      vad.reset()
+-      val windowSize = 512
+-      var i = 0
+-      while (i + windowSize <= waveData.samples.size) {
+-        val chunk = waveData.samples.copyOfRange(i, i + windowSize)
+-        vad.acceptWaveform(chunk)
+-        i += windowSize
+-      }
+-      vad.flush()
+-      val segments = mutableListOf<Map<String, Any>>()
+-      while (!vad.empty()) {
+-        val seg = vad.front()
+-        segments.add(mapOf(
+-          "start" to seg.start,
+-          "samples" to seg.samples.map { it.toDouble() },
+-        ))
+-        vad.pop()
+-      }
+-      Log.i(TAG, "=== vadProcessFile DONE ${segments.size} segments ===")
+-      segments.toList()
+-    }
+-
+-    AsyncFunction("destroyVad") { handle: Int ->
+-      Log.i(TAG, "=== destroyVad handle=$handle ===")
+-      val vad = vadEngines.remove(handle)
+-      if (vad != null) {
+-        try { vad.release() } catch (e: Exception) {
+-          Log.e(TAG, "  VAD release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    // =========================================================================
+-    // Keyword Spotting
+-    // =========================================================================
+-
+     AsyncFunction("createKeywordSpotter") { config: Map<String, Any?> ->
+       val kwsConfig = buildKeywordSpotterConfig(config)
+       validateKwsConfig(kwsConfig)
+@@ -689,866 +168,9 @@ class ExpoSherpaOnnxModule : Module() {
+         }
+       }
+     }
+-
+-    // =========================================================================
+-    // Speaker Embedding Extractor
+-    // =========================================================================
+-
+-    AsyncFunction("createSpeakerEmbeddingExtractor") { config: Map<String, Any?> ->
+-      val model = config["model"] as? String ?: ""
+-      if (model.isBlank()) throw Exception("Speaker embedding model path is required")
+-      requireFile(model, "speaker embedding model")
+-
+-      val extractorConfig = SpeakerEmbeddingExtractorConfig(
+-        model = model,
+-        numThreads = (config["numThreads"] as? Number)?.toInt() ?: 1,
+-        debug = config["debug"] as? Boolean ?: false,
+-        provider = config["provider"] as? String ?: "cpu",
+-      )
+-      Log.i(TAG, "=== createSpeakerEmbeddingExtractor START ===")
+-      val extractor = try {
+-        SpeakerEmbeddingExtractor(null, extractorConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  SpeakerEmbeddingExtractor constructor threw: ${e.message}", e)
+-        throw Exception("Native SpeakerEmbeddingExtractor creation failed: ${e.message}")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      speakerExtractors[handle] = extractor
+-      Log.i(TAG, "=== createSpeakerEmbeddingExtractor DONE handle=$handle dim=${extractor.dim()} ===")
+-      handle
+-    }
+-
+-    AsyncFunction("speakerExtractorCreateStream") { extractorHandle: Int ->
+-      val extractor = speakerExtractors[extractorHandle]
+-        ?: throw IllegalArgumentException("Invalid speaker extractor handle: $extractorHandle")
+-      val stream = extractor.createStream()
+-      val streamHandle = handleCounter.incrementAndGet()
+-      speakerStreams[streamHandle] = stream
+-      speakerStreamToExtractor[streamHandle] = extractorHandle
+-      streamHandle
+-    }
+-
+-    AsyncFunction("speakerStreamAcceptWaveform") { streamHandle: Int, samples: List<Double>, sampleRate: Int ->
+-      val stream = speakerStreams[streamHandle]
+-        ?: throw IllegalArgumentException("Invalid speaker stream handle: $streamHandle")
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      stream.acceptWaveform(floatSamples, sampleRate)
+-    }
+-
+-    AsyncFunction("speakerExtractorIsReady") { extractorHandle: Int, streamHandle: Int ->
+-      val extractor = speakerExtractors[extractorHandle]
+-        ?: throw IllegalArgumentException("Invalid speaker extractor handle: $extractorHandle")
+-      val stream = speakerStreams[streamHandle]
+-        ?: throw IllegalArgumentException("Invalid speaker stream handle: $streamHandle")
+-      extractor.isReady(stream)
+-    }
+-
+-    AsyncFunction("speakerExtractorCompute") { extractorHandle: Int, streamHandle: Int ->
+-      val extractor = speakerExtractors[extractorHandle]
+-        ?: throw IllegalArgumentException("Invalid speaker extractor handle: $extractorHandle")
+-      val stream = speakerStreams[streamHandle]
+-        ?: throw IllegalArgumentException("Invalid speaker stream handle: $streamHandle")
+-      val embedding = extractor.compute(stream)
+-      embedding.map { it.toDouble() }
+-    }
+-
+-    AsyncFunction("speakerExtractorDim") { extractorHandle: Int ->
+-      val extractor = speakerExtractors[extractorHandle]
+-        ?: throw IllegalArgumentException("Invalid speaker extractor handle: $extractorHandle")
+-      extractor.dim()
+-    }
+-
+-    AsyncFunction("speakerExtractorComputeFromFile") { extractorHandle: Int, filePath: String ->
+-      val extractor = speakerExtractors[extractorHandle]
+-        ?: throw IllegalArgumentException("Invalid speaker extractor handle: $extractorHandle")
+-      Log.i(TAG, "=== speakerExtractorComputeFromFile START filePath=$filePath ===")
+-      val waveData = WaveReader.readWave(filePath)
+-      val stream = extractor.createStream()
+-      stream.acceptWaveform(waveData.samples, waveData.sampleRate)
+-      val embedding = extractor.compute(stream)
+-      stream.release()
+-      Log.i(TAG, "=== speakerExtractorComputeFromFile DONE dim=${embedding.size} ===")
+-      embedding.map { it.toDouble() }
+-    }
+-
+-    AsyncFunction("destroySpeakerStream") { streamHandle: Int ->
+-      val stream = speakerStreams.remove(streamHandle)
+-      speakerStreamToExtractor.remove(streamHandle)
+-      if (stream != null) {
+-        try { stream.release() } catch (_: Exception) {}
+-      }
+-    }
+-
+-    AsyncFunction("destroySpeakerEmbeddingExtractor") { extractorHandle: Int ->
+-      Log.i(TAG, "=== destroySpeakerEmbeddingExtractor handle=$extractorHandle ===")
+-      val streamsToRemove = speakerStreamToExtractor.filter { it.value == extractorHandle }.keys
+-      streamsToRemove.forEach { sh ->
+-        speakerStreams.remove(sh)?.let { try { it.release() } catch (_: Exception) {} }
+-        speakerStreamToExtractor.remove(sh)
+-      }
+-      val extractor = speakerExtractors.remove(extractorHandle)
+-      if (extractor != null) {
+-        try { extractor.release() } catch (e: Exception) {
+-          Log.e(TAG, "  SpeakerEmbeddingExtractor release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    // =========================================================================
+-    // Speaker Embedding Manager
+-    // =========================================================================
+-
+-    AsyncFunction("createSpeakerEmbeddingManager") { dim: Int ->
+-      Log.i(TAG, "=== createSpeakerEmbeddingManager dim=$dim ===")
+-      val manager = SpeakerEmbeddingManager(dim)
+-      val handle = handleCounter.incrementAndGet()
+-      speakerManagers[handle] = manager
+-      handle
+-    }
+-
+-    AsyncFunction("speakerManagerAdd") { handle: Int, name: String, embedding: List<Double> ->
+-      val manager = speakerManagers[handle]
+-        ?: throw IllegalArgumentException("Invalid speaker manager handle: $handle")
+-      val floatEmbedding = FloatArray(embedding.size) { embedding[it].toFloat() }
+-      manager.add(name, floatEmbedding)
+-    }
+-
+-    AsyncFunction("speakerManagerAddList") { handle: Int, name: String, embeddings: List<List<Double>> ->
+-      val manager = speakerManagers[handle]
+-        ?: throw IllegalArgumentException("Invalid speaker manager handle: $handle")
+-      val floatEmbeddings = Array(embeddings.size) { i ->
+-        FloatArray(embeddings[i].size) { j -> embeddings[i][j].toFloat() }
+-      }
+-      manager.add(name, floatEmbeddings)
+-    }
+-
+-    AsyncFunction("speakerManagerRemove") { handle: Int, name: String ->
+-      val manager = speakerManagers[handle]
+-        ?: throw IllegalArgumentException("Invalid speaker manager handle: $handle")
+-      manager.remove(name)
+-    }
+-
+-    AsyncFunction("speakerManagerSearch") { handle: Int, embedding: List<Double>, threshold: Double ->
+-      val manager = speakerManagers[handle]
+-        ?: throw IllegalArgumentException("Invalid speaker manager handle: $handle")
+-      val floatEmbedding = FloatArray(embedding.size) { embedding[it].toFloat() }
+-      manager.search(floatEmbedding, threshold.toFloat())
+-    }
+-
+-    AsyncFunction("speakerManagerVerify") { handle: Int, name: String, embedding: List<Double>, threshold: Double ->
+-      val manager = speakerManagers[handle]
+-        ?: throw IllegalArgumentException("Invalid speaker manager handle: $handle")
+-      val floatEmbedding = FloatArray(embedding.size) { embedding[it].toFloat() }
+-      manager.verify(name, floatEmbedding, threshold.toFloat())
+-    }
+-
+-    AsyncFunction("speakerManagerContains") { handle: Int, name: String ->
+-      val manager = speakerManagers[handle]
+-        ?: throw IllegalArgumentException("Invalid speaker manager handle: $handle")
+-      manager.contains(name)
+-    }
+-
+-    AsyncFunction("speakerManagerNumSpeakers") { handle: Int ->
+-      val manager = speakerManagers[handle]
+-        ?: throw IllegalArgumentException("Invalid speaker manager handle: $handle")
+-      manager.numSpeakers()
+-    }
+-
+-    AsyncFunction("speakerManagerAllSpeakerNames") { handle: Int ->
+-      val manager = speakerManagers[handle]
+-        ?: throw IllegalArgumentException("Invalid speaker manager handle: $handle")
+-      manager.allSpeakerNames().toList()
+-    }
+-
+-    AsyncFunction("destroySpeakerEmbeddingManager") { handle: Int ->
+-      Log.i(TAG, "=== destroySpeakerEmbeddingManager handle=$handle ===")
+-      val manager = speakerManagers.remove(handle)
+-      if (manager != null) {
+-        try { manager.release() } catch (e: Exception) {
+-          Log.e(TAG, "  SpeakerEmbeddingManager release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    // =========================================================================
+-    // Offline Speaker Diarization
+-    // =========================================================================
+-
+-    AsyncFunction("createOfflineSpeakerDiarization") { config: Map<String, Any?> ->
+-      val diarizationConfig = buildOfflineSpeakerDiarizationConfig(config)
+-      Log.i(TAG, "=== createOfflineSpeakerDiarization START ===")
+-      val diarization = try {
+-        OfflineSpeakerDiarization(null, diarizationConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  OfflineSpeakerDiarization constructor threw: ${e.message}", e)
+-        throw Exception("Native OfflineSpeakerDiarization creation failed: ${e.message}")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      diarizationEngines[handle] = diarization
+-      Log.i(TAG, "=== createOfflineSpeakerDiarization DONE handle=$handle sampleRate=${diarization.sampleRate()} ===")
+-      handle
+-    }
+-
+-    AsyncFunction("offlineSpeakerDiarizationGetSampleRate") { handle: Int ->
+-      val diarization = diarizationEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid diarization handle: $handle")
+-      diarization.sampleRate()
+-    }
+-
+-    AsyncFunction("offlineSpeakerDiarizationProcess") { handle: Int, samples: List<Double> ->
+-      val diarization = diarizationEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid diarization handle: $handle")
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      val segments = diarization.process(floatSamples)
+-      segments.map { seg ->
+-        mapOf(
+-          "start" to seg.start.toDouble(),
+-          "end" to seg.end.toDouble(),
+-          "speaker" to seg.speaker,
+-        )
+-      }
+-    }
+-
+-    AsyncFunction("offlineSpeakerDiarizationProcessFile") { handle: Int, filePath: String ->
+-      val diarization = diarizationEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid diarization handle: $handle")
+-      Log.i(TAG, "=== offlineSpeakerDiarizationProcessFile START filePath=$filePath ===")
+-      val waveData = WaveReader.readWave(filePath)
+-      val segments = diarization.process(waveData.samples)
+-      Log.i(TAG, "=== offlineSpeakerDiarizationProcessFile DONE ${segments.size} segments ===")
+-      segments.map { seg ->
+-        mapOf(
+-          "start" to seg.start.toDouble(),
+-          "end" to seg.end.toDouble(),
+-          "speaker" to seg.speaker,
+-        )
+-      }
+-    }
+-
+-    AsyncFunction("transcribeAndDiarizeFile") { diarizationHandle: Int, asrHandle: Int, filePath: String ->
+-      val diarization = diarizationEngines[diarizationHandle]
+-        ?: throw IllegalArgumentException("Invalid diarization handle: $diarizationHandle")
+-      val recognizer = offlineRecognizers[asrHandle]
+-        ?: throw IllegalArgumentException("Invalid offline recognizer handle: $asrHandle")
+-      Log.i(TAG, "=== transcribeAndDiarizeFile START filePath=$filePath ===")
+-      val waveData = WaveReader.readWave(filePath)
+-      val segments = diarization.process(waveData.samples)
+-      Log.i(TAG, "  Diarization found ${segments.size} segments, transcribing each...")
+-      val results = segments.map { seg ->
+-        val startSample = (seg.start * waveData.sampleRate).toInt().coerceIn(0, waveData.samples.size)
+-        val endSample = (seg.end * waveData.sampleRate).toInt().coerceIn(0, waveData.samples.size)
+-        val segSamples = waveData.samples.copyOfRange(startSample, endSample)
+-        val stream = recognizer.createStream()
+-        stream.acceptWaveform(segSamples, waveData.sampleRate)
+-        recognizer.decode(stream)
+-        val result = recognizer.getResult(stream)
+-        stream.release()
+-        mapOf(
+-          "speaker" to seg.speaker,
+-          "start" to seg.start.toDouble(),
+-          "end" to seg.end.toDouble(),
+-          "text" to result.text,
+-        )
+-      }
+-      Log.i(TAG, "=== transcribeAndDiarizeFile DONE ${results.size} transcribed segments ===")
+-      results
+-    }
+-
+-    @Suppress("UNCHECKED_CAST")
+-    AsyncFunction("offlineSpeakerDiarizationSetConfig") { handle: Int, config: Map<String, Any?> ->
+-      val diarization = diarizationEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid diarization handle: $handle")
+-      val newConfig = buildOfflineSpeakerDiarizationConfig(config)
+-      diarization.setConfig(newConfig)
+-    }
+-
+-    AsyncFunction("destroyOfflineSpeakerDiarization") { handle: Int ->
+-      Log.i(TAG, "=== destroyOfflineSpeakerDiarization handle=$handle ===")
+-      val diarization = diarizationEngines.remove(handle)
+-      if (diarization != null) {
+-        try { diarization.release() } catch (e: Exception) {
+-          Log.e(TAG, "  OfflineSpeakerDiarization release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    // =========================================================================
+-    // Spoken Language Identification
+-    // =========================================================================
+-
+-    AsyncFunction("createSpokenLanguageIdentification") { config: Map<String, Any?> ->
+-      val whisperMap = config["whisper"] as? Map<String, Any?> ?: emptyMap()
+-      val slidConfig = SpokenLanguageIdentificationConfig(
+-        whisper = SpokenLanguageIdentificationWhisperConfig(
+-          encoder = whisperMap["encoder"] as? String ?: "",
+-          decoder = whisperMap["decoder"] as? String ?: "",
+-          tailPaddings = (whisperMap["tailPaddings"] as? Number)?.toInt() ?: -1,
+-        ),
+-        numThreads = (config["numThreads"] as? Number)?.toInt() ?: 1,
+-        debug = config["debug"] as? Boolean ?: false,
+-        provider = config["provider"] as? String ?: "cpu",
+-      )
+-      Log.i(TAG, "=== createSpokenLanguageIdentification START ===")
+-      val slid = try {
+-        SpokenLanguageIdentification(config = slidConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  SLID constructor threw: ${e.message}", e)
+-        throw Exception("Native SLID creation failed: ${e.message}")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      slidEngines[handle] = slid
+-      Log.i(TAG, "=== createSpokenLanguageIdentification DONE handle=$handle ===")
+-      handle
+-    }
+-
+-    AsyncFunction("spokenLanguageIdentificationCompute") { handle: Int, samples: List<Double>, sampleRate: Int ->
+-      val slid = slidEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid SLID handle: $handle")
+-      val stream = slid.createStream()
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      stream.acceptWaveform(floatSamples, sampleRate)
+-      val lang = slid.compute(stream)
+-      stream.release()
+-      lang
+-    }
+-
+-    AsyncFunction("spokenLanguageIdentificationComputeFromFile") { handle: Int, filePath: String ->
+-      val slid = slidEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid SLID handle: $handle")
+-      Log.i(TAG, "=== spokenLanguageIdentificationComputeFromFile START ===")
+-      val waveData = WaveReader.readWave(filePath)
+-      val stream = slid.createStream()
+-      stream.acceptWaveform(waveData.samples, waveData.sampleRate)
+-      val lang = slid.compute(stream)
+-      stream.release()
+-      Log.i(TAG, "=== spokenLanguageIdentificationComputeFromFile DONE lang=$lang ===")
+-      lang
+-    }
+-
+-    AsyncFunction("destroySpokenLanguageIdentification") { handle: Int ->
+-      Log.i(TAG, "=== destroySpokenLanguageIdentification handle=$handle ===")
+-      val slid = slidEngines.remove(handle)
+-      if (slid != null) {
+-        try { slid.release() } catch (e: Exception) {
+-          Log.e(TAG, "  SLID release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    // =========================================================================
+-    // Audio Tagging
+-    // =========================================================================
+-
+-    @Suppress("UNCHECKED_CAST")
+-    AsyncFunction("createAudioTagging") { config: Map<String, Any?> ->
+-      val modelMap = config["model"] as? Map<String, Any?> ?: emptyMap()
+-      val zipformerMap = modelMap["zipformer"] as? Map<String, Any?> ?: emptyMap()
+-      val taggingConfig = AudioTaggingConfig(
+-        model = AudioTaggingModelConfig(
+-          zipformer = OfflineZipformerAudioTaggingModelConfig(
+-            model = zipformerMap["model"] as? String ?: "",
+-          ),
+-          ced = modelMap["ced"] as? String ?: "",
+-          numThreads = (modelMap["numThreads"] as? Number)?.toInt() ?: 1,
+-          debug = modelMap["debug"] as? Boolean ?: false,
+-          provider = modelMap["provider"] as? String ?: "cpu",
+-        ),
+-        labels = config["labels"] as? String ?: "",
+-        topK = (config["topK"] as? Number)?.toInt() ?: 5,
+-      )
+-      Log.i(TAG, "=== createAudioTagging START ===")
+-      val tagger = try {
+-        AudioTagging(config = taggingConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  AudioTagging constructor threw: ${e.message}", e)
+-        throw Exception("Native AudioTagging creation failed: ${e.message}")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      audioTaggingEngines[handle] = tagger
+-      Log.i(TAG, "=== createAudioTagging DONE handle=$handle ===")
+-      handle
+-    }
+-
+-    AsyncFunction("audioTaggingCompute") { handle: Int, samples: List<Double>, sampleRate: Int, topK: Int ->
+-      val tagger = audioTaggingEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid AudioTagging handle: $handle")
+-      val stream = tagger.createStream()
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      stream.acceptWaveform(floatSamples, sampleRate)
+-      val events = tagger.compute(stream, topK)
+-      stream.release()
+-      events.map { ev ->
+-        mapOf("name" to ev.name, "index" to ev.index, "prob" to ev.prob.toDouble())
+-      }
+-    }
+-
+-    AsyncFunction("audioTaggingComputeFromFile") { handle: Int, filePath: String, topK: Int ->
+-      val tagger = audioTaggingEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid AudioTagging handle: $handle")
+-      Log.i(TAG, "=== audioTaggingComputeFromFile START ===")
+-      val waveData = WaveReader.readWave(filePath)
+-      val stream = tagger.createStream()
+-      stream.acceptWaveform(waveData.samples, waveData.sampleRate)
+-      val events = tagger.compute(stream, topK)
+-      stream.release()
+-      Log.i(TAG, "=== audioTaggingComputeFromFile DONE ${events.size} events ===")
+-      events.map { ev ->
+-        mapOf("name" to ev.name, "index" to ev.index, "prob" to ev.prob.toDouble())
+-      }
+-    }
+-
+-    AsyncFunction("destroyAudioTagging") { handle: Int ->
+-      Log.i(TAG, "=== destroyAudioTagging handle=$handle ===")
+-      val tagger = audioTaggingEngines.remove(handle)
+-      if (tagger != null) {
+-        try { tagger.release() } catch (e: Exception) {
+-          Log.e(TAG, "  AudioTagging release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    // =========================================================================
+-    // Punctuation (Offline + Online)
+-    // =========================================================================
+-
+-    AsyncFunction("createOfflinePunctuation") { config: Map<String, Any?> ->
+-      val modelMap = config["model"] as? Map<String, Any?> ?: emptyMap()
+-      val ctTransformer = modelMap["ctTransformer"] as? String ?: ""
+-      requireFile(ctTransformer, "offline punctuation ctTransformer model")
+-      val punctConfig = OfflinePunctuationConfig(
+-        model = OfflinePunctuationModelConfig(
+-          ctTransformer = ctTransformer,
+-          numThreads = (modelMap["numThreads"] as? Number)?.toInt() ?: 1,
+-          debug = modelMap["debug"] as? Boolean ?: false,
+-          provider = modelMap["provider"] as? String ?: "cpu",
+-        ),
+-      )
+-      Log.i(TAG, "=== createOfflinePunctuation START ===")
+-      val punct = try {
+-        OfflinePunctuation(config = punctConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  OfflinePunctuation constructor threw: ${e.message}", e)
+-        throw Exception("Native OfflinePunctuation creation failed: ${e.message}")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      offlinePunctuationEngines[handle] = punct
+-      Log.i(TAG, "=== createOfflinePunctuation DONE handle=$handle ===")
+-      handle
+-    }
+-
+-    AsyncFunction("offlinePunctuationAddPunct") { handle: Int, text: String ->
+-      val punct = offlinePunctuationEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid OfflinePunctuation handle: $handle")
+-      punct.addPunctuation(text)
+-    }
+-
+-    AsyncFunction("destroyOfflinePunctuation") { handle: Int ->
+-      Log.i(TAG, "=== destroyOfflinePunctuation handle=$handle ===")
+-      val punct = offlinePunctuationEngines.remove(handle)
+-      if (punct != null) {
+-        try { punct.release() } catch (e: Exception) {
+-          Log.e(TAG, "  OfflinePunctuation release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    AsyncFunction("createOnlinePunctuation") { config: Map<String, Any?> ->
+-      val modelMap = config["model"] as? Map<String, Any?> ?: emptyMap()
+-      val cnnBilstm = modelMap["cnnBilstm"] as? String ?: ""
+-      val bpeVocab = modelMap["bpeVocab"] as? String ?: ""
+-      requireFile(cnnBilstm, "online punctuation cnnBilstm model")
+-      requireFile(bpeVocab, "online punctuation bpeVocab")
+-      val punctConfig = OnlinePunctuationConfig(
+-        model = OnlinePunctuationModelConfig(
+-          cnnBilstm = cnnBilstm,
+-          bpeVocab = bpeVocab,
+-          numThreads = (modelMap["numThreads"] as? Number)?.toInt() ?: 1,
+-          debug = modelMap["debug"] as? Boolean ?: false,
+-          provider = modelMap["provider"] as? String ?: "cpu",
+-        ),
+-      )
+-      Log.i(TAG, "=== createOnlinePunctuation START ===")
+-      val punct = try {
+-        OnlinePunctuation(config = punctConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  OnlinePunctuation constructor threw: ${e.message}", e)
+-        throw Exception("Native OnlinePunctuation creation failed: ${e.message}")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      onlinePunctuationEngines[handle] = punct
+-      Log.i(TAG, "=== createOnlinePunctuation DONE handle=$handle ===")
+-      handle
+-    }
+-
+-    AsyncFunction("onlinePunctuationAddPunct") { handle: Int, text: String ->
+-      val punct = onlinePunctuationEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid OnlinePunctuation handle: $handle")
+-      punct.addPunctuation(text)
+-    }
+-
+-    AsyncFunction("destroyOnlinePunctuation") { handle: Int ->
+-      Log.i(TAG, "=== destroyOnlinePunctuation handle=$handle ===")
+-      val punct = onlinePunctuationEngines.remove(handle)
+-      if (punct != null) {
+-        try { punct.release() } catch (e: Exception) {
+-          Log.e(TAG, "  OnlinePunctuation release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    // =========================================================================
+-    // Speech Denoising (Offline + Online)
+-    // =========================================================================
+-
+-    @Suppress("UNCHECKED_CAST")
+-    AsyncFunction("createOfflineSpeechDenoiser") { config: Map<String, Any?> ->
+-      val modelMap = config["model"] as? Map<String, Any?> ?: emptyMap()
+-      val gtcrnMap = modelMap["gtcrn"] as? Map<String, Any?> ?: emptyMap()
+-      val dpdfnetMap = modelMap["dpdfnet"] as? Map<String, Any?> ?: emptyMap()
+-      val denoiserConfig = OfflineSpeechDenoiserConfig(
+-        model = OfflineSpeechDenoiserModelConfig(
+-          gtcrn = OfflineSpeechDenoiserGtcrnModelConfig(
+-            model = gtcrnMap["model"] as? String ?: "",
+-          ),
+-          dpdfnet = OfflineSpeechDenoiserDpdfNetModelConfig(
+-            model = dpdfnetMap["model"] as? String ?: "",
+-          ),
+-          numThreads = (modelMap["numThreads"] as? Number)?.toInt() ?: 1,
+-          debug = modelMap["debug"] as? Boolean ?: false,
+-          provider = modelMap["provider"] as? String ?: "cpu",
+-        ),
+-      )
+-      Log.i(TAG, "=== createOfflineSpeechDenoiser START ===")
+-      val denoiser = try {
+-        OfflineSpeechDenoiser(config = denoiserConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  OfflineSpeechDenoiser constructor threw: ${e.message}", e)
+-        throw Exception("Native OfflineSpeechDenoiser creation failed: ${e.message}")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      offlineSpeechDenoiserEngines[handle] = denoiser
+-      Log.i(TAG, "=== createOfflineSpeechDenoiser DONE handle=$handle sampleRate=${denoiser.sampleRate} ===")
+-      handle
+-    }
+-
+-    AsyncFunction("offlineSpeechDenoiserRun") { handle: Int, samples: List<Double>, sampleRate: Int ->
+-      val denoiser = offlineSpeechDenoiserEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid OfflineSpeechDenoiser handle: $handle")
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      val result = denoiser.run(floatSamples, sampleRate)
+-      mapOf(
+-        "samples" to result.samples.map { it.toDouble() },
+-        "sampleRate" to result.sampleRate,
+-      )
+-    }
+-
+-    AsyncFunction("offlineSpeechDenoiserRunFromFile") { handle: Int, filePath: String ->
+-      val denoiser = offlineSpeechDenoiserEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid OfflineSpeechDenoiser handle: $handle")
+-      Log.i(TAG, "=== offlineSpeechDenoiserRunFromFile START ===")
+-      val waveData = WaveReader.readWave(filePath)
+-      val result = denoiser.run(waveData.samples, waveData.sampleRate)
+-      Log.i(TAG, "=== offlineSpeechDenoiserRunFromFile DONE ${result.samples.size} samples ===")
+-      mapOf(
+-        "samples" to result.samples.map { it.toDouble() },
+-        "sampleRate" to result.sampleRate,
+-      )
+-    }
+-
+-    AsyncFunction("offlineSpeechDenoiserSaveToFile") { handle: Int, inputPath: String, outputPath: String ->
+-      val denoiser = offlineSpeechDenoiserEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid OfflineSpeechDenoiser handle: $handle")
+-      Log.i(TAG, "=== offlineSpeechDenoiserSaveToFile START ===")
+-      val waveData = WaveReader.readWave(inputPath)
+-      val result = denoiser.run(waveData.samples, waveData.sampleRate)
+-      val saved = result.save(outputPath)
+-      Log.i(TAG, "=== offlineSpeechDenoiserSaveToFile DONE saved=$saved ===")
+-      mapOf(
+-        "outputPath" to outputPath,
+-        "sampleRate" to result.sampleRate,
+-      )
+-    }
+-
+-    AsyncFunction("destroyOfflineSpeechDenoiser") { handle: Int ->
+-      Log.i(TAG, "=== destroyOfflineSpeechDenoiser handle=$handle ===")
+-      val denoiser = offlineSpeechDenoiserEngines.remove(handle)
+-      if (denoiser != null) {
+-        try { denoiser.release() } catch (e: Exception) {
+-          Log.e(TAG, "  OfflineSpeechDenoiser release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    @Suppress("UNCHECKED_CAST")
+-    AsyncFunction("createOnlineSpeechDenoiser") { config: Map<String, Any?> ->
+-      val modelMap = config["model"] as? Map<String, Any?> ?: emptyMap()
+-      val gtcrnMap = modelMap["gtcrn"] as? Map<String, Any?> ?: emptyMap()
+-      val dpdfnetMap = modelMap["dpdfnet"] as? Map<String, Any?> ?: emptyMap()
+-      val denoiserConfig = OnlineSpeechDenoiserConfig(
+-        model = OfflineSpeechDenoiserModelConfig(
+-          gtcrn = OfflineSpeechDenoiserGtcrnModelConfig(
+-            model = gtcrnMap["model"] as? String ?: "",
+-          ),
+-          dpdfnet = OfflineSpeechDenoiserDpdfNetModelConfig(
+-            model = dpdfnetMap["model"] as? String ?: "",
+-          ),
+-          numThreads = (modelMap["numThreads"] as? Number)?.toInt() ?: 1,
+-          debug = modelMap["debug"] as? Boolean ?: false,
+-          provider = modelMap["provider"] as? String ?: "cpu",
+-        ),
+-      )
+-      Log.i(TAG, "=== createOnlineSpeechDenoiser START ===")
+-      val denoiser = try {
+-        OnlineSpeechDenoiser(config = denoiserConfig)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "  OnlineSpeechDenoiser constructor threw: ${e.message}", e)
+-        throw Exception("Native OnlineSpeechDenoiser creation failed: ${e.message}")
+-      }
+-      val handle = handleCounter.incrementAndGet()
+-      onlineSpeechDenoiserEngines[handle] = denoiser
+-      Log.i(TAG, "=== createOnlineSpeechDenoiser DONE handle=$handle sampleRate=${denoiser.sampleRate} ===")
+-      handle
+-    }
+-
+-    AsyncFunction("onlineSpeechDenoiserRun") { handle: Int, samples: List<Double>, sampleRate: Int ->
+-      val denoiser = onlineSpeechDenoiserEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid OnlineSpeechDenoiser handle: $handle")
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      val result = denoiser.run(floatSamples, sampleRate)
+-      mapOf(
+-        "samples" to result.samples.map { it.toDouble() },
+-        "sampleRate" to result.sampleRate,
+-      )
+-    }
+-
+-    AsyncFunction("onlineSpeechDenoiserFlush") { handle: Int ->
+-      val denoiser = onlineSpeechDenoiserEngines[handle]
+-        ?: throw IllegalArgumentException("Invalid OnlineSpeechDenoiser handle: $handle")
+-      val result = denoiser.flush()
+-      mapOf(
+-        "samples" to result.samples.map { it.toDouble() },
+-        "sampleRate" to result.sampleRate,
+-      )
+-    }
+-
+-    AsyncFunction("destroyOnlineSpeechDenoiser") { handle: Int ->
+-      Log.i(TAG, "=== destroyOnlineSpeechDenoiser handle=$handle ===")
+-      val denoiser = onlineSpeechDenoiserEngines.remove(handle)
+-      if (denoiser != null) {
+-        try { denoiser.release() } catch (e: Exception) {
+-          Log.e(TAG, "  OnlineSpeechDenoiser release() threw: ${e.message}", e)
+-        }
+-      }
+-    }
+-
+-    // =========================================================================
+-    // Streaming Pipeline
+-    // =========================================================================
+-
+-    @Suppress("UNCHECKED_CAST")
+-    AsyncFunction("createStreamingPipeline") { config: Map<String, Any?> ->
+-      val asrConfig = config["asr"] as? Map<String, Any?> ?: emptyMap()
+-      val recognizerConfig = buildOnlineRecognizerConfig(asrConfig)
+-      val recognizer = OnlineRecognizer(null, recognizerConfig)
+-      if (!recognizer.isValid) {
+-        throw Exception("Failed to create pipeline ASR recognizer.")
+-      }
+-
+-      var denoiser: OnlineSpeechDenoiser? = null
+-      val denoiserMap = config["denoiser"] as? Map<String, Any?>
+-      if (denoiserMap != null) {
+-        val modelMap = denoiserMap["model"] as? Map<String, Any?> ?: emptyMap()
+-        val gtcrnMap = modelMap["gtcrn"] as? Map<String, Any?> ?: emptyMap()
+-        val dpdfnetMap = modelMap["dpdfnet"] as? Map<String, Any?> ?: emptyMap()
+-        val denoiserCfg = OnlineSpeechDenoiserConfig(
+-          model = OfflineSpeechDenoiserModelConfig(
+-            gtcrn = OfflineSpeechDenoiserGtcrnModelConfig(model = gtcrnMap["model"] as? String ?: ""),
+-            dpdfnet = OfflineSpeechDenoiserDpdfNetModelConfig(model = dpdfnetMap["model"] as? String ?: ""),
+-            numThreads = (modelMap["numThreads"] as? Number)?.toInt() ?: 1,
+-            debug = modelMap["debug"] as? Boolean ?: false,
+-            provider = modelMap["provider"] as? String ?: "cpu",
+-          ),
+-        )
+-        denoiser = OnlineSpeechDenoiser(config = denoiserCfg)
+-      }
+-
+-      var punctuator: OnlinePunctuation? = null
+-      val punctMap = config["punctuator"] as? Map<String, Any?>
+-      if (punctMap != null) {
+-        val modelMap = punctMap["model"] as? Map<String, Any?> ?: emptyMap()
+-        val cnnBilstm = modelMap["cnnBilstm"] as? String ?: ""
+-        val bpeVocab = modelMap["bpeVocab"] as? String ?: ""
+-        requireFile(cnnBilstm, "pipeline punctuator cnnBilstm model")
+-        requireFile(bpeVocab, "pipeline punctuator bpeVocab")
+-        val punctCfg = OnlinePunctuationConfig(
+-          model = OnlinePunctuationModelConfig(
+-            cnnBilstm = cnnBilstm,
+-            bpeVocab = bpeVocab,
+-            numThreads = (modelMap["numThreads"] as? Number)?.toInt() ?: 1,
+-            debug = modelMap["debug"] as? Boolean ?: false,
+-            provider = modelMap["provider"] as? String ?: "cpu",
+-          ),
+-        )
+-        punctuator = OnlinePunctuation(config = punctCfg)
+-      }
+-
+-      val handle = handleCounter.incrementAndGet()
+-      val pipeline = StreamingPipeline(handle, denoiser, recognizer, punctuator)
+-      pipeline.listener = pipelineListener
+-      streamingPipelines[handle] = pipeline
+-      handle
+-    }
+-
+-    AsyncFunction("startStreamingPipeline") { handle: Int ->
+-      val pipeline = streamingPipelines[handle]
+-        ?: throw IllegalArgumentException("Invalid StreamingPipeline handle: $handle")
+-      val ctx = appContext.reactContext ?: throw Exception("No react context available")
+-      pipeline.start(ctx)
+-    }
+-
+-    AsyncFunction("stopStreamingPipeline") { handle: Int ->
+-      val pipeline = streamingPipelines[handle]
+-        ?: throw IllegalArgumentException("Invalid StreamingPipeline handle: $handle")
+-      val segments = pipeline.stop()
+-      mapOf("segments" to segments)
+-    }
+-
+-    AsyncFunction("destroyStreamingPipeline") { handle: Int ->
+-      val pipeline = streamingPipelines.remove(handle)
+-      pipeline?.destroy()
+-    }
+-
+-    // =========================================================================
+-    // File Utilities
+-    // =========================================================================
+-
+-    AsyncFunction("saveAudioToFile") { samples: List<Double>, sampleRate: Int, filePath: String ->
+-      Log.i(TAG, "=== saveAudioToFile START filePath=$filePath ===")
+-      val floatSamples = FloatArray(samples.size) { samples[it].toFloat() }
+-      val audio = DenoisedAudio(floatSamples, sampleRate)
+-      val saved = audio.save(filePath)
+-      Log.i(TAG, "=== saveAudioToFile DONE saved=$saved ===")
+-      saved
+-    }
+-
+-    AsyncFunction("shareAudioFile") { filePath: String, mimeType: String ->
+-      Log.i(TAG, "=== shareAudioFile START filePath=$filePath ===")
+-      val context = appContext.reactContext ?: throw IllegalStateException("React context not available")
+-      val file = File(filePath)
+-      if (!file.exists()) throw IllegalArgumentException("File not found: $filePath")
+-      val uri = androidx.core.content.FileProvider.getUriForFile(
+-        context,
+-        "${context.packageName}.fileprovider",
+-        file
+-      )
+-      val intent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+-        type = mimeType.ifBlank { "audio/wav" }
+-        putExtra(android.content.Intent.EXTRA_STREAM, uri)
+-        addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+-        addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+-      }
+-      context.startActivity(android.content.Intent.createChooser(intent, "Share Audio").apply {
+-        addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+-      })
+-      Log.i(TAG, "=== shareAudioFile DONE ===")
+-    }
+-
+-    // =========================================================================
+-    // Download Manager Native Utilities
+-    // =========================================================================
+-
+-    AsyncFunction("extractZip") { sourcePath: String, targetPath: String ->
+-      Log.i(TAG, "=== extractZip START source=$sourcePath target=$targetPath ===")
+-      val sourceFile = File(sourcePath)
+-      if (!sourceFile.exists()) {
+-        return@AsyncFunction mapOf("success" to false, "reason" to "Source file not found: $sourcePath")
+-      }
+-      val targetDir = File(targetPath)
+-      targetDir.mkdirs()
+-
+-      try {
+-        ZipInputStream(BufferedInputStream(FileInputStream(sourceFile))).use { zis ->
+-          var entry = zis.nextEntry
+-          while (entry != null) {
+-            val outFile = File(targetDir, entry.name)
+-            val canonicalTarget = targetDir.canonicalPath
+-            val canonicalOut = outFile.canonicalPath
+-            if (!canonicalOut.startsWith(canonicalTarget + File.separator) && canonicalOut != canonicalTarget) {
+-              throw SecurityException("Zip entry path traversal detected: ${entry.name}")
+-            }
+-
+-            if (entry.isDirectory) {
+-              outFile.mkdirs()
+-            } else {
+-              outFile.parentFile?.mkdirs()
+-              FileOutputStream(outFile).use { fos ->
+-                val buf = ByteArray(8192)
+-                var len: Int
+-                while (zis.read(buf).also { len = it } > 0) {
+-                  fos.write(buf, 0, len)
+-                }
+-              }
+-            }
+-            zis.closeEntry()
+-            entry = zis.nextEntry
+-          }
+-        }
+-        Log.i(TAG, "=== extractZip DONE ===")
+-        mapOf("success" to true, "path" to targetDir.absolutePath)
+-      } catch (e: Exception) {
+-        Log.e(TAG, "extractZip failed: ${e.message}", e)
+-        mapOf("success" to false, "reason" to (e.message ?: "Unknown extraction error"))
+-      }
+-    }
+-
+-    AsyncFunction("computeFileSha256") { filePath: String ->
+-      Log.i(TAG, "=== computeFileSha256 START filePath=$filePath ===")
+-      val file = File(filePath)
+-      if (!file.exists()) throw IllegalArgumentException("File not found: $filePath")
+-
+-      val digest = MessageDigest.getInstance("SHA-256")
+-      FileInputStream(file).use { fis ->
+-        val buf = ByteArray(65536)
+-        var len: Int
+-        while (fis.read(buf).also { len = it } > 0) {
+-          digest.update(buf, 0, len)
+-        }
+-      }
+-      val hex = digest.digest().joinToString("") { "%02x".format(it) }
+-      Log.i(TAG, "=== computeFileSha256 DONE hash=$hex ===")
+-      hex
+-    }
+-
+-    Function("getFreeDiskSpace") {
+-      val context = appContext.reactContext ?: throw IllegalStateException("React context not available")
+-      val stat = StatFs(context.filesDir.path)
+-      stat.availableBytes.toDouble()
+-    }
+-
+-    AsyncFunction("excludeFromBackup") { path: String ->
+-      val dir = File(path)
+-      if (!dir.exists()) throw IllegalArgumentException("Path not found: $path")
+-      val nomedia = File(dir, ".nomedia")
+-      if (!nomedia.exists()) {
+-        nomedia.createNewFile()
+-      }
+-      Log.i(TAG, "=== excludeFromBackup DONE path=$path ===")
+-    }
+-
+-    AsyncFunction("extractTarBz2") { sourcePath: String, targetPath: String ->
+-      Log.i(TAG, "=== extractTarBz2 START source=$sourcePath target=$targetPath ===")
+-      try {
+-        val helper = ArchiveHelper()
+-        val result = helper.extractTarBz2(sourcePath, targetPath)
+-        Log.i(TAG, "=== extractTarBz2 DONE success=${result["success"]} ===")
+-        result
+-      } catch (e: Exception) {
+-        Log.e(TAG, "extractTarBz2 failed: ${e.message}", e)
+-        mapOf("success" to false, "reason" to (e.message ?: "Native archive library not available"))
+-      }
+-    }
+   }
+ 
++
+   private fun resolveAssetPath(path: String): String {
+     val context = appContext.reactContext ?: throw IllegalStateException("React context not available")
+ 

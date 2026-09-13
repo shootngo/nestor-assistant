@@ -117,10 +117,20 @@ assets_branding_hatchstartwide.png / hatchendwide.png / houseinnest.png
 
 Those files were **JPEGs named `.png`**. Android will not compile a JPEG as a drawable PNG.
 
+3. Then Kotlin dies compiling `expo-sherpa-onnx`:
+
+```
+:expo-sherpa-onnx:compileReleaseKotlin FAILED
+MethodTooLargeException: Method too large: ExpoSherpaOnnxModule.definition()
+```
+
+Upstream registers ASR/TTS/VAD/diarization in **one** `definition()` method. That exceeds the JVM 64KB bytecode limit. EAS reports it as “Internal compiler error” / “unknown error.” Nestor only needs keyword spotting.
+
 **Fix:**
 
 - `defaultConfig.versionName` / `versionCode` on both local Android modules
 - Rewrite the four fridge branding stills as real PNGs (same filenames, landscape 1280×720 / nest 1024²)
+- `patches/expo-sherpa-onnx+0.0.8.patch` keeps only the KWS native API (`postinstall` applies it)
 - PR #10 hardening still applies: `sherpaOnnxDisableLibarchive=true`, ARM-only ABIs, `minSdk` 24, `--no-configure-on-demand`
 
 Landscape is unchanged. Do not flip the fridge board to portrait.
