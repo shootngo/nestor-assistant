@@ -18,7 +18,7 @@ import type { WakePhase } from './wake/types';
  *     house = revealed cottage + large serif Nestor + greeting
  *   ?session=listen|exit|mic|talk|mute   Phase 4–5 preview (web)
  *   ?session=talk&demo=add|list|calendar   Phase 6 canned household replies
- *   ?session=talk&hold=1                   freeze the talking mouth open
+ *   ?session=talk&hold=1                   freeze the talking mouth open (Imagine still)
  *   ?wakeTap=1                           tap the dashboard to wake (web)
  *   ?night=1                             force overnight dim + faint clock (web)
  *   ?night=0                             force daytime (web)

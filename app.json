@@ -3,7 +3,7 @@
     "name": "Nestor",
     "slug": "nestor-assistant",
     "scheme": "nestor",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -70,7 +70,7 @@
     "android": {
       "package": "com.shootngo.nestorassistant",
       "minSdkVersion": 24,
-      "versionCode": 7,
+      "versionCode": 8,
       "permissions": ["android.permission.RECORD_AUDIO"],
       "softwareKeyboardLayoutMode": "pan",
       "predictiveBackGestureEnabled": false,

@@ -1,15 +1,11 @@
 import { StyleSheet, View } from 'react-native';
-import { colors } from '../../theme';
 
+/** Soft contact shadow under Nestor. No room set — works on the cream session and charcoal board. */
 export function NestGround() {
   return (
     <View style={styles.wrap} pointerEvents="none">
-      <View style={[styles.twig, styles.t1]} />
-      <View style={[styles.twig, styles.t2]} />
-      <View style={[styles.twig, styles.t3]} />
-      <View style={[styles.twig, styles.t4]} />
-      <View style={styles.leaf} />
-      <View style={[styles.leaf, styles.leafRight]} />
+      <View style={styles.shadowWide} />
+      <View style={styles.shadowCore} />
     </View>
   );
 }
@@ -17,56 +13,24 @@ export function NestGround() {
 const styles = StyleSheet.create({
   wrap: {
     position: 'absolute',
-    bottom: 78,
-    width: 280,
-    height: 70,
+    bottom: 54,
+    width: 220,
+    height: 36,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  twig: {
+  shadowWide: {
     position: 'absolute',
-    height: 7,
-    borderRadius: 4,
-    backgroundColor: colors.twig,
-    opacity: 0.7,
+    width: 168,
+    height: 22,
+    borderRadius: 12,
+    backgroundColor: 'rgba(63, 42, 29, 0.1)',
   },
-  t1: {
-    width: 210,
-    bottom: 18,
-    transform: [{ rotate: '-8deg' }],
-  },
-  t2: {
-    width: 190,
-    bottom: 28,
-    transform: [{ rotate: '7deg' }],
-  },
-  t3: {
-    width: 150,
-    bottom: 10,
-    transform: [{ rotate: '4deg' }],
-    opacity: 0.4,
-  },
-  t4: {
-    width: 120,
-    bottom: 36,
-    transform: [{ rotate: '-12deg' }],
-    opacity: 0.35,
-  },
-  leaf: {
+  shadowCore: {
     position: 'absolute',
-    left: 36,
-    bottom: 22,
-    width: 18,
-    height: 8,
+    width: 92,
+    height: 12,
     borderRadius: 8,
-    backgroundColor: colors.sage,
-    transform: [{ rotate: '-28deg' }],
-    opacity: 0.7,
-  },
-  leafRight: {
-    left: undefined,
-    right: 40,
-    transform: [{ rotate: '24deg' }],
-    backgroundColor: colors.sageDeep,
+    backgroundColor: 'rgba(63, 42, 29, 0.12)',
   },
 });
