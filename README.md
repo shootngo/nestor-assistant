@@ -94,15 +94,21 @@ If the Gemini key is missing, Nestor still wakes and listens. He will say he nee
 
 ### What broke on EAS Android (Gradle)
 
-EAS preview build `edaaab6f-98d8-466e-8173-77198fc14b71` died in **Run gradlew** with “Gradle build failed with unknown error.”
+EAS preview builds `edaaab6f-98d8-466e-8173-77198fc14b71` and `eb3b074e-df0c-45d9-afb2-57872027a6ff` died in **Run gradlew** with “Gradle build failed with unknown error.” Missing Gemini / tablet secrets do **not** fail Gradle.
 
-**Root cause:** `expo-sherpa-onnx@0.0.8` turns on a CMake/NDK `libarchive` helper and also ships those same `.so` files as `jniLibs`. AGP then fails while compiling/merging native libs (duplicate `libarchive.so` / `libc++_shared.so`, plus a four-ABI NDK compile we do not need). Nestor only uses keyword spotting with the vendored files in `assets/kws/` — it never extracts `.tar.bz2` models.
+**Root cause (from a local `assembleRelease`, same Gradle 9.3.1 / AGP / Expo 57 as EAS):**
 
-**Fix in this repo:**
+```
+A problem occurred configuring project ':nestor-mic'.
+> 'android.defaultConfig.versionName' is not defined
+```
 
-- `plugins/withSherpaOnnxAndroid.js` writes `sherpaOnnxDisableLibarchive=true` so that CMake step is skipped
-- `expo-build-properties` keeps `minSdkVersion` **24**, builds only **armeabi-v7a** + **arm64-v8a** (Samsung Tab A), and `pickFirst`s colliding JNI libs
-- `eas.json` preview/production run `assembleRelease --no-configure-on-demand` (EAS Gradle 8.14 can drop autolinked modules under configure-on-demand)
+Expo SDK 57’s `expo-module-gradle-plugin` publishes every local module and requires `android.defaultConfig.versionName`. `modules/nestor-mic` and `modules/nestor-voice` only set `namespace`, so configuration dies before compile. That also surfaces as `SoftwareComponent with name 'release' not found` on `:expo`.
+
+**Fix:**
+
+- `defaultConfig.versionName` / `versionCode` on both local Android modules
+- PR #10 hardening still applies: `sherpaOnnxDisableLibarchive=true`, ARM-only ABIs, `minSdk` 24, `--no-configure-on-demand`
 
 Landscape is unchanged. Do not flip the fridge board to portrait.
 
