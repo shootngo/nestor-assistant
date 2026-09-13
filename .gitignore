@@ -49,3 +49,6 @@ yarn-error.*
 *.apk
 *.aab
 *.ipa
+
+# local Expo module Gradle outputs
+modules/*/android/build/
