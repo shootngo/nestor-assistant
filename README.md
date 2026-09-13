@@ -31,7 +31,7 @@ Secrets, rules publish, and calendar scope: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD
 | Piece | What we use |
 | --- | --- |
 | Speech in | Local Expo module `modules/nestor-voice` wrapping Android `SpeechRecognizer`. Prefers on-device / `EXTRA_PREFER_OFFLINE`, then the free OS recognizer. No paid STT. |
-| Speech out | Same module, Android `TextToSpeech`, plus large on-screen text |
+| Speech out | Same module, Android `TextToSpeech`. Prefers Google / high-quality English (US) voices when installed; calmer rate/pitch. Large on-screen text. |
 | Mute / volume | **Mute** toggle and **–** / **+** on the egg screen (TTS volume and the tablet media stream) |
 | Talking egg | Mouth animation while TTS plays. Phase 4 blink / rest / chicken-legs exit unchanged |
 
