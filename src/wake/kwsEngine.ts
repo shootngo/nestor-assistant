@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import { KWS_KEYWORDS_SCORE, KWS_KEYWORDS_THRESHOLD } from '../config';
+import { markKwsLive } from '../listen/sttGate';
 import { normalizeKeyword } from './keywords';
 import type { PreparedKwsModel } from './prepareModel';
 import type { WakeKeywordId } from './types';
@@ -20,6 +21,10 @@ type KeywordSpotter = {
 
 let spotter: KeywordSpotter | null = null;
 let stream: KeywordStream | null = null;
+let lastModel: PreparedKwsModel | null = null;
+let acceptInFlight = false;
+let failCount = 0;
+let restarting = false;
 
 async function loadSherpa(): Promise<{
   createKeywordSpotter: (config: Record<string, unknown>) => Promise<KeywordSpotter>;
@@ -37,6 +42,7 @@ async function loadSherpa(): Promise<{
 
 export async function startKeywordSpotter(model: PreparedKwsModel): Promise<boolean> {
   await stopKeywordSpotter();
+  lastModel = model;
 
   const sherpa = await loadSherpa();
   if (!sherpa) {
@@ -64,10 +70,12 @@ export async function startKeywordSpotter(model: PreparedKwsModel): Promise<bool
       keywordsFile: model.keywords,
       keywordsScore: KWS_KEYWORDS_SCORE,
       keywordsThreshold: KWS_KEYWORDS_THRESHOLD,
-      maxActivePaths: 4,
+      maxActivePaths: 2,
       numTrailingBlanks: 2,
     });
     stream = await spotter.createStream();
+    failCount = 0;
+    markKwsLive();
     return true;
   } catch (error) {
     console.warn('Nestor: keyword spotter failed to start', error);
@@ -77,10 +85,11 @@ export async function startKeywordSpotter(model: PreparedKwsModel): Promise<bool
 }
 
 export async function acceptKwsSamples(samples: number[], sampleRate = 16000): Promise<WakeKeywordId | null> {
-  if (!stream) {
+  if (!stream || acceptInFlight) {
     return null;
   }
 
+  acceptInFlight = true;
   try {
     await stream.acceptWaveform(samples, sampleRate);
     let spotted: WakeKeywordId | null = null;
@@ -94,12 +103,20 @@ export async function acceptKwsSamples(samples: number[], sampleRate = 16000): P
         break;
       }
     }
+    failCount = 0;
     return spotted;
   } catch (error) {
-    if (__DEV__) {
-      console.warn('Nestor: KWS decode failed', error);
+    failCount += 1;
+    console.warn('Nestor: KWS decode failed', error);
+    if (failCount >= 3 && lastModel && !restarting) {
+      restarting = true;
+      void startKeywordSpotter(lastModel).finally(() => {
+        restarting = false;
+      });
     }
     return null;
+  } finally {
+    acceptInFlight = false;
   }
 }
 
@@ -122,4 +139,8 @@ export async function stopKeywordSpotter(): Promise<void> {
 
 export function keywordSpotterReady(): boolean {
   return stream != null;
+}
+
+export function lastPreparedModel(): PreparedKwsModel | null {
+  return lastModel;
 }

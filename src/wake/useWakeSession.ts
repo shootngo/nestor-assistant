@@ -1,18 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { InteractionManager, Platform } from 'react-native';
-import {
-  ALLOW_WAKE_SIMULATE,
-  LISTENING_SILENCE_MS,
-  LISTENING_VOICE_RMS,
-  WAKE_PHRASE,
-} from '../config';
+import { ALLOW_WAKE_SIMULATE, LISTENING_SILENCE_MS, LISTENING_VOICE_RMS, WAKE_PHRASE } from '../config';
+import { releaseWakeAudio } from '../listen/audioHandoff';
 import { useListenLoop } from '../listen/useListenLoop';
+import { armSttForWake, disarmStt, kwsAcceptsWake } from '../listen/sttGate';
 import { useOvernight } from '../overnight/useOvernight';
 import { getPreviewAnswer, getPreviewMuted, getPreviewSession, getPreviewTalking, getWakeTapEnabled } from '../preview';
-import { acceptKwsSamples, startKeywordSpotter, stopKeywordSpotter } from './kwsEngine';
+import { acceptKwsSamples, lastPreparedModel, startKeywordSpotter } from './kwsEngine';
 import { pcmRms, startMicrophone, stopMicrophone } from './microphone';
 import { getMicPermission, requestMicPermission } from './permissions';
-import { prepareKwsModel } from './prepareModel';
+import { prepareKwsModel, type PreparedKwsModel } from './prepareModel';
 import { phaseAfterWakeInitFailure } from './startupPolicy';
 import type { MicPermission, WakeKeywordId, WakePhase } from './types';
 
@@ -37,21 +34,31 @@ export function useWakeSession(options?: WakeSessionOptions) {
   const starting = useRef(false);
   const keepKwsMicRef = useRef(false);
   keepKwsMicRef.current = keepKwsMic;
+  const modelRef = useRef<PreparedKwsModel | null>(null);
+  const permissionRef = useRef<MicPermission>('unknown');
+  permissionRef.current = permission;
 
   const goIdle = useCallback(() => {
+    disarmStt();
     setKeepKwsMic(false);
     setPhase('idle');
   }, []);
 
   const goListening = useCallback(() => {
+    armSttForWake();
     silenceAt.current = Date.now() + LISTENING_SILENCE_MS;
     setKeepKwsMic(false);
+    engineReady.current = false;
     setPhase('listening');
+    void releaseWakeAudio();
   }, []);
 
   const goExiting = useCallback(() => {
+    disarmStt();
     setKeepKwsMic(false);
+    engineReady.current = false;
     setPhase('exiting');
+    void releaseWakeAudio();
   }, []);
 
   const bumpIdleTimer = useCallback(() => {
@@ -69,8 +76,11 @@ export function useWakeSession(options?: WakeSessionOptions) {
         goExiting();
         return;
       }
-      const wakeHit = keyword === WAKE_PHRASE || (WAKE_PHRASE === 'nestor' && keyword === 'hey_nestor');
-      if (wakeHit && current === 'idle') {
+      const wakeHit =
+        keyword === WAKE_PHRASE ||
+        keyword === 'nestor' ||
+        keyword === 'hey_nestor';
+      if (wakeHit && current === 'idle' && kwsAcceptsWake()) {
         goListening();
       }
     },
@@ -110,6 +120,7 @@ export function useWakeSession(options?: WakeSessionOptions) {
     try {
       const current = ask ? await requestMicPermission() : await getMicPermission();
       setPermission(current);
+      permissionRef.current = current;
       if (current !== 'granted') {
         if (current === 'denied' && phaseRef.current === 'idle') {
           setPhase(phaseAfterWakeInitFailure('mic-denied'));
@@ -125,6 +136,11 @@ export function useWakeSession(options?: WakeSessionOptions) {
         if (phaseRef.current === 'mic-needed') {
           setPhase(phaseAfterWakeInitFailure('model-missing'));
         }
+        return;
+      }
+      modelRef.current = model;
+      if (phaseRef.current !== 'idle') {
+        setKwsReady(true);
         return;
       }
       const kws = await startKeywordSpotter(model);
@@ -160,10 +176,38 @@ export function useWakeSession(options?: WakeSessionOptions) {
       task.cancel();
       engineReady.current = false;
       setKwsReady(false);
-      void stopMicrophone();
-      void stopKeywordSpotter();
+      void releaseWakeAudio();
     };
   }, [boardReady, preview, startEngine]);
+
+  useEffect(() => {
+    if (preview || Platform.OS !== 'android') {
+      return;
+    }
+    if (phase === 'listening' || phase === 'exiting') {
+      engineReady.current = false;
+      void releaseWakeAudio();
+      return;
+    }
+    if (phase !== 'idle' || permission !== 'granted') {
+      return;
+    }
+    const model = modelRef.current ?? lastPreparedModel();
+    if (!model || engineReady.current || starting.current) {
+      return;
+    }
+    let cancelled = false;
+    void startKeywordSpotter(model).then((ok) => {
+      if (cancelled) {
+        return;
+      }
+      engineReady.current = ok;
+      setKwsReady(ok);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [phase, permission, preview]);
 
   const wantKwsMic = phase === 'idle' || (phase === 'listening' && keepKwsMic);
 
@@ -230,17 +274,42 @@ export function useWakeSession(options?: WakeSessionOptions) {
     },
     onSpeechUnavailable: () => {
       setKeepKwsMic(true);
+      const model = modelRef.current ?? lastPreparedModel();
+      if (model) {
+        void startKeywordSpotter(model).then((ok) => {
+          engineReady.current = ok;
+        });
+      }
     },
   });
 
-  const simulateWake = useCallback(() => {
-    if (!ALLOW_WAKE_SIMULATE && !getWakeTapEnabled()) {
+  const tapToWake = useCallback(() => {
+    if (phaseRef.current !== 'idle' && phaseRef.current !== 'mic-needed') {
       return;
     }
-    if (phaseRef.current === 'idle') {
+    if (Platform.OS !== 'android') {
       goListening();
+      return;
     }
-  }, [goListening]);
+    if (permissionRef.current !== 'granted') {
+      setPhase('idle');
+      void startEngine(true).then(() => {
+        if (permissionRef.current === 'granted' && phaseRef.current === 'idle') {
+          goListening();
+        }
+      });
+      return;
+    }
+    goListening();
+  }, [goListening, startEngine]);
+
+  const simulateWake = useCallback(() => {
+    if (!ALLOW_WAKE_SIMULATE && !getWakeTapEnabled()) {
+      tapToWake();
+      return;
+    }
+    tapToWake();
+  }, [tapToWake]);
 
   const simulateSleep = useCallback(() => {
     if (!ALLOW_WAKE_SIMULATE && !getWakeTapEnabled()) {
@@ -263,6 +332,7 @@ export function useWakeSession(options?: WakeSessionOptions) {
   return {
     phase,
     permission,
+    tapToWake,
     simulateWake,
     simulateSleep,
     finishExit: goIdle,

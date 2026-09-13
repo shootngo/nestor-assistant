@@ -22,8 +22,9 @@ npm run fetch-kws-model
 One phrase per line, sherpa-onnx tokens (BPE pieces) plus optional score / threshold / id:
 
 ```
-▁NE S T OR :1.0 #0.42 @nestor
-▁GOOD B Y E ▁NE S T OR :1.5 #0.22 @goodbye_nestor
+▁NE S T OR :1.6 #0.24 @nestor
+▁HE Y ▁NE S T OR :1.8 #0.16 @hey_nestor
+▁GOOD B Y E ▁NE S T OR :1.5 #0.18 @goodbye_nestor
 ```
 
 | Marker | Meaning |

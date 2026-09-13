@@ -1,5 +1,61 @@
 # Test notes
 
+## Tab A — crash-on-answer + kill the mic beep loop
+
+Frank after PR #12 (and force-stop/reopen): say **Nestor** → session starts → **beep, beep, beep** and the listen window will not stay on. Then when it tries to **answer**, the app can die. Opening the app and waking immediately was enough to put `SpeechRecognizer` in a restart loop (KWS `AudioRecord` still held the mic, and every STT error restarted in ~320ms).
+
+### What this APK changes
+
+1. **Cold start is idle only.** SpeechRecognizer does **not** start until a confirmed wake or **Talk to Nestor**. A hard `sttGate` blocks STT on launch.
+2. **KWS / AudioRecord fully released** before STT. Stop-then-join-then-release on `nestor-mic` (the old join-then-stop path could SIGSEGV). Sherpa spotter is paused for the session.
+3. **No tight STT restart loop.** At most **2** SpeechRecognizer starts per wake, with backoff. Then the egg walks off and the kitchen board returns. Tap **Talk to Nestor** to try again.
+4. **Samsung recognition beep muted** (system/notification streams) only while a listen window is open, then restored.
+5. **Crash-on-answer:** TTS `UtteranceProgressListener` events are posted to the main thread; recognizer is destroyed before speak; listen-turn errors stay on the egg with text (no uncaught throw).
+6. **Talk to Nestor** — large always-visible button on the idle board (works at night above the veil). Voice wake stays. Identity stays **Nestor**. Landscape stays.
+
+### Tab A checks (sideload a rebuilt preview APK)
+
+Native STT/TTS/KWS — Expo Go will not work. Secrets still need to be baked in.
+
+| Check | Expected |
+| --- | --- |
+| Cold start | **Kitchen board** + **Talk to Nestor**. No mic beep. Cards cycle. Landscape. |
+| Force-stop → reopen | Same: idle board, **no** beep loop |
+| Talk to Nestor | Egg. **One** listen window (beep muted if the OS still tries). Ask a short question. Answer spoken + on screen. App stays up |
+| Say **Nestor** | Same as tap, after ~1.5s KWS grace on first engine start |
+| Beeps | Must **not** repeat. After two failed listens the board comes back |
+| Answer | Must not crash. Mute / **–** / **+** still work |
+| Night | Veil + clock; button still tappable; quieter TTS |
+| Mic deny | Cream card. **Allow the microphone** / **Continue to the kitchen board** |
+
+### Rebuild
+
+```sh
+npm install
+npx tsc --noEmit
+npm run check-listen-handoff
+npm run check-wake-startup
+npm run check-listen
+npm run check-overnight
+npm run check-household
+```
+
+EAS (fridge APK, no Metro):
+
+```sh
+npx eas-cli build -p android --profile preview --clear-cache
+```
+
+Local:
+
+```sh
+npx expo prebuild --platform android
+cd android && ./gradlew assembleDebug
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+`adb logcat` tags: `NestorVoice`, plus JS `Nestor:` warnings. Look for `STT blocked — not armed` on cold start (good) and `TTS speak` when answering.
+
 ## Tab A — warmer kitchen voice (less default-robot TTS)
 
 Frank’s complaint after PR #12: **voice is robotic / wrong voice.** This change only picks a warmer Android TTS voice and a calmer rate/pitch. Hatch / egg motion is unchanged. On-screen name stays **Nestor**. Do not name the model.
@@ -340,8 +396,8 @@ Still required. Web preview can show the egg UI but **cannot** run on-device KWS
 | Knob | Default | Notes |
 | --- | --- | --- |
 | `WAKE_PHRASE` | `nestor` | Switch to `hey_nestor` if the single word false-triggers |
-| `KWS_KEYWORDS_THRESHOLD` | `0.32` | Global default. Per-keyword `#` in `assets/kws/keywords.*.txt` wins |
-| `KWS_KEYWORDS_SCORE` | `1.2` | Boost. Prefer raising `#threshold` to quiet false wakes |
+| `KWS_KEYWORDS_THRESHOLD` | `0.18` | Global default. Per-keyword `#` in `keywords.ts` wins |
+| `KWS_KEYWORDS_SCORE` | `1.6` | Boost for a far-field Tab A |
 | `LISTENING_SILENCE_MS` | `300000` | 5 minutes |
 | `LISTENING_VOICE_RMS` | `0.018` | Fridge-hum filter for the silence timer |
 | `EGG_EXIT_MS` | `2800` | Unhurried walk-off |
@@ -351,9 +407,9 @@ Per-keyword thresholds already shipped:
 
 | Phrase | `#threshold` | Why |
 | --- | --- | --- |
-| `nestor` | `0.42` | Short word — higher bar |
-| `hey_nestor` | `0.28` | Two-word fallback |
-| `goodbye_nestor` | `0.22` | Longer dismiss phrase |
+| `nestor` | `0.24` | Short word, eased for the fridge |
+| `hey_nestor` | `0.16` | Also registered alongside `nestor` |
+| `goodbye_nestor` | `0.18` | Longer dismiss phrase |
 
 ### App checks
 

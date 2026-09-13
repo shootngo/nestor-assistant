@@ -18,7 +18,17 @@ function filePath(file: File): string {
   return raw.startsWith('file://') ? raw.slice('file://'.length) : raw;
 }
 
-async function copyAsset(moduleId: number, dest: File): Promise<void> {
+async function copyAsset(moduleId: number, dest: File, minBytes: number): Promise<void> {
+  if (dest.exists) {
+    try {
+      const size = dest.size;
+      if (typeof size === 'number' && size >= minBytes) {
+        return;
+      }
+    } catch {
+      // Recopy if size is unreadable.
+    }
+  }
   const asset = Asset.fromModule(moduleId);
   await asset.downloadAsync();
   const from = asset.localUri ?? asset.uri;
@@ -53,10 +63,10 @@ export async function prepareKwsModel(): Promise<PreparedKwsModel | null> {
     const tokens = new File(dir, 'tokens.txt');
     const keywords = new File(dir, 'keywords.txt');
 
-    await copyAsset(kwsModelAssets.encoder, encoder);
-    await copyAsset(kwsModelAssets.decoder, decoder);
-    await copyAsset(kwsModelAssets.joiner, joiner);
-    await copyAsset(kwsModelAssets.tokens, tokens);
+    await copyAsset(kwsModelAssets.encoder, encoder, 100_000);
+    await copyAsset(kwsModelAssets.decoder, decoder, 10_000);
+    await copyAsset(kwsModelAssets.joiner, joiner, 10_000);
+    await copyAsset(kwsModelAssets.tokens, tokens, 200);
 
     keywords.write(keywordsFileContents(WAKE_PHRASE));
 

@@ -150,9 +150,8 @@ internal object TtsVoicePicker {
     }
     val features = voice.features.orEmpty()
     val notInstalled = features.contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)
-    val network = features.contains(TextToSpeech.Engine.KEY_FEATURE_NETWORK_SYNTHESIS) ||
-      voice.name.contains("network", ignoreCase = true)
-    return !notInstalled || network
+    // A not-installed network pack can crash speak() on older Tabs.
+    return !notInstalled
   }
 
   private fun pickWarmVoice(engine: TextToSpeech): Voice? {

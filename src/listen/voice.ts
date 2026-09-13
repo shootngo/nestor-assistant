@@ -1,5 +1,7 @@
 import { Platform } from 'react-native';
 import { NestorVoice } from '../../modules/nestor-voice';
+import { kitchenSpeakText } from './audioHandoff';
+import { isSttArmed, noteSttStart } from './sttGate';
 
 export function kitchenVoiceAvailable(): boolean {
   return Platform.OS === 'android' && NestorVoice.available();
@@ -9,16 +11,29 @@ export function kitchenSpeechAvailable(): boolean {
   return kitchenVoiceAvailable() && NestorVoice.speechAvailable();
 }
 
-export async function startUtteranceCapture(preferOffline = true): Promise<boolean> {
+export function speechCaptureActive(): boolean {
+  return kitchenVoiceAvailable() && NestorVoice.isListening();
+}
+
+export async function startUtteranceCapture(preferOffline = false): Promise<boolean> {
   if (!kitchenVoiceAvailable()) {
+    return false;
+  }
+  if (!isSttArmed()) {
+    console.warn('Nestor: STT blocked — not armed (idle board / cold start)');
+    return false;
+  }
+  if (speechCaptureActive()) {
+    return true;
+  }
+  if (!noteSttStart()) {
+    console.warn('Nestor: STT blocked — max starts for this wake');
     return false;
   }
   try {
     return await NestorVoice.startListening(preferOffline);
   } catch (error) {
-    if (__DEV__) {
-      console.warn('Nestor: speech capture failed', error);
-    }
+    console.warn('Nestor: speech capture failed', error);
     return false;
   }
 }
@@ -31,16 +46,26 @@ export async function stopUtteranceCapture(): Promise<void> {
   }
 }
 
+export async function releaseSpeechRecognizer(): Promise<void> {
+  try {
+    await NestorVoice.releaseRecognizer();
+  } catch {
+    // already released
+  }
+}
+
 export async function speakAnswer(text: string, volume: number): Promise<boolean> {
-  if (!kitchenVoiceAvailable() || !text.trim()) {
+  if (!kitchenVoiceAvailable()) {
+    return false;
+  }
+  const spoken = kitchenSpeakText(text);
+  if (!spoken) {
     return false;
   }
   try {
-    return await NestorVoice.speak(text, volume);
+    return await NestorVoice.speak(spoken, volume);
   } catch (error) {
-    if (__DEV__) {
-      console.warn('Nestor: speech out failed', error);
-    }
+    console.warn('Nestor: speech out failed', error);
     return false;
   }
 }

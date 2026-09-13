@@ -162,11 +162,11 @@ Wake / sleep (Phase 4, still in force):
 | Knob | Default | Meaning |
 | --- | --- | --- |
 | `WAKE_PHRASE` | `nestor` | `nestor` or `hey_nestor` |
-| `KWS_KEYWORDS_THRESHOLD` | `0.32` | Global sherpa-onnx threshold. **Higher = less sensitive.** |
+| `KWS_KEYWORDS_THRESHOLD` | `0.18` | Global sherpa-onnx threshold. **Higher = less sensitive.** |
 | `LISTENING_SILENCE_MS` | `300000` | ~5 minutes of quiet → exit (resets on speech in, thinking, or talking) |
 | `LISTENING_VOICE_RMS` | `0.018` | Mic energy that resets the silence timer when the KWS mic is running |
 | `EGG_EXIT_MS` | `2800` | Unhurried walk-off |
-| `ALLOW_WAKE_SIMULATE` | `true` | Tap or long-press the wordmark / egg to preview without speaking |
+| `ALLOW_WAKE_SIMULATE` | `true` | Wordmark long-press still works. Idle board also has **Talk to Nestor** |
 
 Overnight (Phase 7):
 
@@ -194,18 +194,12 @@ Dashboard (unchanged from Phase 3):
 
 Sherpa-onnx does not take raw English. Each line is BPE pieces from `assets/kws/bpe.model`, then optional `:score`, `#threshold`, and `@id`.
 
-Default (`assets/kws/keywords.nestor.txt`):
+Both **Nestor** and **Hey Nestor** are registered (far-field kitchen). Written at run from `src/wake/keywords.ts`:
 
 ```
-▁NE S T OR :1.0 #0.42 @nestor
-▁GOOD B Y E ▁NE S T OR :1.5 #0.22 @goodbye_nestor
-```
-
-Fallback (`assets/kws/keywords.hey_nestor.txt`) when `WAKE_PHRASE = 'hey_nestor'`:
-
-```
-▁HE Y ▁NE S T OR :1.2 #0.28 @hey_nestor
-▁GOOD B Y E ▁NE S T OR :1.5 #0.22 @goodbye_nestor
+▁NE S T OR :1.6 #0.24 @nestor
+▁HE Y ▁NE S T OR :1.8 #0.16 @hey_nestor
+▁GOOD B Y E ▁NE S T OR :1.5 #0.18 @goodbye_nestor
 ```
 
 The active file is written to disk at first run from `src/wake/keywords.ts`, so changing `WAKE_PHRASE` or the `#threshold` numbers and rebuilding JS/APK is enough.
