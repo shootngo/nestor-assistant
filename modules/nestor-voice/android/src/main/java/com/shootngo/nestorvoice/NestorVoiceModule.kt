@@ -12,9 +12,9 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.util.Log
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
-import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -139,31 +139,78 @@ class NestorVoiceModule : Module() {
       return
     }
     val context = androidContext()?.applicationContext ?: return
-    tts = TextToSpeech(context) { status ->
-      ttsReady = status == TextToSpeech.SUCCESS
-      if (ttsReady) {
-        tts?.language = Locale.US
-        tts?.setSpeechRate(0.96f)
-        tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-          override fun onStart(utteranceId: String?) {
-            sendEvent("onTtsStart", mapOf("id" to (utteranceId ?: "")))
-          }
+    bindTts(context, TtsVoicePicker.preferredEnginePackage(context))
+  }
 
-          override fun onDone(utteranceId: String?) {
-            sendEvent("onTtsDone", mapOf("id" to (utteranceId ?: "")))
-          }
-
-          @Deprecated("Deprecated in Java")
-          override fun onError(utteranceId: String?) {
-            sendEvent("onTtsError", mapOf("id" to (utteranceId ?: "")))
-          }
-
-          override fun onError(utteranceId: String?, errorCode: Int) {
-            sendEvent("onTtsError", mapOf("id" to (utteranceId ?: "")))
-          }
-        })
+  private fun bindTts(context: Context, enginePackage: String?) {
+    val listener = TextToSpeech.OnInitListener { status ->
+      if (status != TextToSpeech.SUCCESS) {
+        val failed = tts
+        tts = null
+        ttsReady = false
+        try {
+          failed?.shutdown()
+        } catch (_: Exception) {
+          // already gone
+        }
+        if (!enginePackage.isNullOrBlank()) {
+          Log.w(
+            TtsVoicePicker.TAG,
+            "Preferred TTS engine $enginePackage failed; falling back to default",
+          )
+          main.post { bindTts(context, null) }
+        } else {
+          Log.e(TtsVoicePicker.TAG, "TTS engine failed to initialize")
+        }
+        return@OnInitListener
       }
+      val engine = tts
+      if (engine == null) {
+        ttsReady = false
+        return@OnInitListener
+      }
+      val voiceReady = TtsVoicePicker.applyKitchenVoice(engine)
+      if (!voiceReady && !enginePackage.isNullOrBlank()) {
+        Log.w(TtsVoicePicker.TAG, "Preferred TTS engine has no English data; falling back to default")
+        tts = null
+        ttsReady = false
+        try {
+          engine.shutdown()
+        } catch (_: Exception) {
+          // already gone
+        }
+        main.post { bindTts(context, null) }
+        return@OnInitListener
+      }
+      ttsReady = true
+      attachUtteranceListener(engine)
     }
+    tts = if (enginePackage.isNullOrBlank()) {
+      TextToSpeech(context, listener)
+    } else {
+      TextToSpeech(context, listener, enginePackage)
+    }
+  }
+
+  private fun attachUtteranceListener(engine: TextToSpeech) {
+    engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+      override fun onStart(utteranceId: String?) {
+        sendEvent("onTtsStart", mapOf("id" to (utteranceId ?: "")))
+      }
+
+      override fun onDone(utteranceId: String?) {
+        sendEvent("onTtsDone", mapOf("id" to (utteranceId ?: "")))
+      }
+
+      @Deprecated("Deprecated in Java")
+      override fun onError(utteranceId: String?) {
+        sendEvent("onTtsError", mapOf("id" to (utteranceId ?: "")))
+      }
+
+      override fun onError(utteranceId: String?, errorCode: Int) {
+        sendEvent("onTtsError", mapOf("id" to (utteranceId ?: "")))
+      }
+    })
   }
 
   private fun speakInternal(text: String): Boolean {
@@ -180,6 +227,10 @@ class NestorVoiceModule : Module() {
     val params = Bundle()
     params.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume)
     params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, id)
+    Log.i(
+      TtsVoicePicker.TAG,
+      "TTS speak volume=$volume voice=${engine.voice?.let { TtsVoicePicker.describe(it) } ?: "none"}",
+    )
     val result = engine.speak(text, TextToSpeech.QUEUE_FLUSH, params, id)
     return result == TextToSpeech.SUCCESS
   }

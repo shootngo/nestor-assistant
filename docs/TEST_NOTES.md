@@ -1,5 +1,77 @@
 # Test notes
 
+## Tab A — warmer kitchen voice (less default-robot TTS)
+
+Frank’s complaint after PR #12: **voice is robotic / wrong voice.** This change only picks a warmer Android TTS voice and a calmer rate/pitch. Hatch / egg motion is unchanged. On-screen name stays **Nestor**. Do not name the model.
+
+Speech out still lives in `modules/nestor-voice` (`NestorVoiceModule` + `TtsVoicePicker`). It now:
+
+1. Prefers **Speech Services by Google** (`com.google.android.tts`) when that engine is installed
+2. Picks the best installed English (US) voice — high-quality / neural / network when available; male or warm-neutral first; skips Pico / not-installed packs
+3. Falls back to the next non-Pico engine, then the system default
+4. Speaks at rate **0.90** / pitch **0.92** (calm kitchen butler, not cartoon)
+5. Logs the chosen engine, ranked candidates, and each speak on tag **`NestorVoice`**
+6. Leaves overnight quieter TTS, mute, **–** / **+**, and landscape alone
+
+### If the Tab still sounds like a robot — install Google voice data
+
+On the Samsung Tab A (Settings labels move a little by Android version):
+
+1. Play Store → install **Speech Services by Google** (also listed as Google Text-to-Speech).
+2. **Settings → General management → Language and input → Text-to-speech**  
+   or **Settings → Accessibility → Text-to-speech**.
+3. Preferred engine: **Speech Services by Google**. Nestor will prefer that engine even if Samsung is still the system default, but the Google voices must be on the tablet.
+4. Gear next to Google TTS → **Install voice data** → **English (United States)**. Download a high-quality US English voice (a male voice if the list offers one).
+5. Play the sample in that settings screen. It should sound human, not the old Pico / Samsung compact voice.
+6. Sideload the rebuilt Nestor APK from this PR. Expo Go will not pick this up.
+
+### Confirm on the fridge Tab
+
+| Check | Expected |
+| --- | --- |
+| Identity | **Nestor** only. No model name |
+| Landscape | Stays sideways on the fridge |
+| Wake → answer | Say **Nestor**, ask a short kitchen question. Voice should be warmer / less default-robot |
+| Mute | **Mute** still silences TTS; text still shows |
+| Night | ~10pm–6am Chicago: veil + clock; answers still **quieter**. Mute / **–** / **+** unchanged |
+| Hatch | Unchanged (no motion redesign in this PR) |
+
+`adb logcat` (USB debugging):
+
+```sh
+adb logcat -s NestorVoice:I
+```
+
+Look for `TTS engines installed`, `TTS preferring Google engine`, `TTS voice chosen: name=…`, and `TTS speak volume=…`. Night speaks should show a lower `volume=` than daytime (overnight scale / cap still apply). If logcat says Google engine missing, do the Play Store steps above.
+
+### Rebuild APK
+
+Native TTS lives in `nestor-voice` — rebuild after this PR. Secrets (Gemini key + tablet email/password) must still be baked in.
+
+```sh
+npm install
+npx tsc --noEmit
+npm run check-listen
+npm run check-overnight
+```
+
+EAS (fridge APK, no Metro):
+
+```sh
+npx eas-cli build -p android --profile preview --clear-cache
+```
+
+Local:
+
+```sh
+npx expo prebuild --platform android
+cd android && ./gradlew assembleDebug
+# or: ./gradlew assembleRelease --no-configure-on-demand
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+Release APK path: `android/app/build/outputs/apk/release/app-release.apk`. Full install notes: [README.md](../README.md).
+
 ## Tab A — splash → dashboard must survive wake-engine failure
 
 Frank’s Samsung Tab A (~2021, landscape, `minSdk` 24, ARM) showed **Kitchen board** then crashed. That label is the idle dashboard loading state in `src/dashboard/Dashboard.tsx`, not the Expo splash. After it paints, `useWakeSession` used to start `expo-sherpa-onnx` + `nestor-mic` on the same mount with no catch around `prepareKwsModel()`.
@@ -181,7 +253,7 @@ Still required under Phase 6. Confirm on the Samsung Tab after installing a rebu
 | Wake / sleep | Unchanged from Phase 4: `expo-sherpa-onnx` + `modules/nestor-mic` |
 | Speech in | `modules/nestor-voice` → Android `SpeechRecognizer` (prefer on-device / offline, then OS recognizer) |
 | Brain | Gemini API `generateContent` + `tools: [{ google_search: {} }]`. Key: `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` |
-| Speech out | Android `TextToSpeech` in `nestor-voice`, plus large on-screen text |
+| Speech out | Android `TextToSpeech` in `nestor-voice` (Google / high-quality en-US when installed), plus large on-screen text |
 | Mute / volume | On-screen **Mute** / **–** / **+** |
 | Abandoned | Picovoice / Porcupine; naming the model on UI |
 
