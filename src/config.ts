@@ -81,10 +81,10 @@ export const SLEEP_PHRASE = 'goodbye_nestor' as const;
  * Default sherpa-onnx trigger threshold when a keyword line has no `#value`.
  * Higher = less sensitive. Per-keyword `#` in `assets/kws/keywords.*.txt` wins.
  */
-export const KWS_KEYWORDS_THRESHOLD = 0.32;
+export const KWS_KEYWORDS_THRESHOLD = 0.18;
 
 /** Context-graph boost. Higher = easier to match. Prefer retuning `#threshold`. */
-export const KWS_KEYWORDS_SCORE = 1.2;
+export const KWS_KEYWORDS_SCORE = 1.6;
 
 /** How long the egg stays up with no speech before walking off. */
 export const LISTENING_SILENCE_MS = 5 * 60 * 1000;

@@ -7,7 +7,7 @@ export type AudioChunkEvent = {
 };
 
 type NativeMic = {
-  start: (sampleRate: number) => Promise<void>;
+  start: (sampleRate: number) => Promise<boolean | void>;
   stop: () => Promise<void>;
   addListener: (eventName: 'onAudio', listener: (event: AudioChunkEvent) => void) => {
     remove: () => void;
@@ -38,8 +38,8 @@ export const NestorMic = {
     if (!module) {
       return false;
     }
-    await module.start(sampleRate);
-    return true;
+    const started = await module.start(sampleRate);
+    return started !== false;
   },
 
   async stop(): Promise<void> {

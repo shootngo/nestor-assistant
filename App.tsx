@@ -10,7 +10,7 @@ import { applyKioskChrome } from './src/kiosk';
 import { EggSession } from './src/listen/EggSession';
 import { DimOverlay } from './src/overnight';
 import { colors } from './src/theme';
-import { EggExit, MicNeededCard, useWakeSession } from './src/wake';
+import { EggExit, MicNeededCard, TapToWakeButton, useWakeSession } from './src/wake';
 
 export default function App() {
   useKeepAwake();
@@ -39,6 +39,11 @@ export default function App() {
       <ErrorBoundary>
         <DimOverlay dimmed={session.overnight.dimmed} clock={session.overnight.clock} />
       </ErrorBoundary>
+      {session.phase === 'idle' ? (
+        <ErrorBoundary>
+          <TapToWakeButton onPress={session.tapToWake} />
+        </ErrorBoundary>
+      ) : null}
       <ErrorBoundary>
         {session.phase === 'listening' ? (
           <EggSession

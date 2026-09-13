@@ -3,45 +3,58 @@ import { NestorMic, type AudioChunkEvent } from '../../modules/nestor-mic';
 
 export type MicChunkHandler = (samples: number[], sampleRate: number) => void;
 
+let gate: Promise<unknown> = Promise.resolve();
+
+function enqueue<T>(work: () => Promise<T>): Promise<T> {
+  const run = gate.then(work, work);
+  gate = run.then(
+    () => undefined,
+    () => undefined,
+  );
+  return run;
+}
+
 export function microphoneAvailable(): boolean {
   return Platform.OS === 'android' && NestorMic.available();
 }
 
 export async function startMicrophone(onChunk: MicChunkHandler): Promise<boolean> {
-  if (!microphoneAvailable()) {
-    return false;
-  }
-
-  const subscription = NestorMic.addListener((event: AudioChunkEvent) => {
-    if (!event?.samples?.length) {
-      return;
-    }
-    onChunk(event.samples, event.sampleRate || 16000);
-  });
-
-  try {
-    const started = await NestorMic.start(16000);
-    if (!started) {
-      subscription.remove();
+  return enqueue(async () => {
+    if (!microphoneAvailable()) {
       return false;
     }
-    activeStop = async () => {
+
+    await stopMicrophoneUnlocked();
+
+    const subscription = NestorMic.addListener((event: AudioChunkEvent) => {
+      if (!event?.samples?.length) {
+        return;
+      }
+      onChunk(event.samples, event.sampleRate || 16000);
+    });
+
+    try {
+      const started = await NestorMic.start(16000);
+      if (!started) {
+        subscription.remove();
+        return false;
+      }
+      activeStop = async () => {
+        subscription.remove();
+        await NestorMic.stop();
+      };
+      return true;
+    } catch (error) {
       subscription.remove();
-      await NestorMic.stop();
-    };
-    return true;
-  } catch (error) {
-    subscription.remove();
-    if (__DEV__) {
       console.warn('Nestor: microphone failed to start', error);
+      return false;
     }
-    return false;
-  }
+  });
 }
 
 let activeStop: (() => Promise<void>) | null = null;
 
-export async function stopMicrophone(): Promise<void> {
+async function stopMicrophoneUnlocked(): Promise<void> {
   const stop = activeStop;
   activeStop = null;
   try {
@@ -51,10 +64,12 @@ export async function stopMicrophone(): Promise<void> {
       await NestorMic.stop();
     }
   } catch (error) {
-    if (__DEV__) {
-      console.warn('Nestor: microphone stop failed', error);
-    }
+    console.warn('Nestor: microphone stop failed', error);
   }
+}
+
+export async function stopMicrophone(): Promise<void> {
+  return enqueue(() => stopMicrophoneUnlocked());
 }
 
 export function pcmRms(samples: number[]): number {

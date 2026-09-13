@@ -19,6 +19,8 @@ export function persistVolume(next: number): void {
 
 export const TTS_VOLUME_STEP = 0.15;
 
-export const STT_RESTART_MS = 320;
-
-export const MIC_HANDOFF_MS = 220;
+export {
+  MIC_HANDOFF_MS,
+  STT_RESTART_MS,
+  TTS_HANDOFF_MS,
+} from './audioHandoff';

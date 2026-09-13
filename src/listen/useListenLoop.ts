@@ -5,19 +5,21 @@ import { isPrivateHouseholdAsk } from '../household/privacy';
 import { nightSpeakVolume } from '../overnight/window';
 import { askNestor } from './brain';
 import {
+  MIC_HANDOFF_MS,
+  TTS_HANDOFF_MS,
+  delay,
+  releaseWakeAudio,
+  shouldRetryStt,
+  sttRestartDelay,
+} from './audioHandoff';
+import { disarmStt, isSttArmed, sttStartsUsed } from './sttGate';
+import {
+  NETWORK_REPLY,
   PREVIEW_ANSWER,
   STT_MISSING_REPLY,
 } from './copy';
 import { isSleepUtterance, looksLikeRequest } from './request';
-import {
-  MIC_HANDOFF_MS,
-  STT_RESTART_MS,
-  TTS_VOLUME_STEP,
-  getSessionMuted,
-  getSessionVolume,
-  persistMuted,
-  persistVolume,
-} from './sessionState';
+import { TTS_VOLUME_STEP, getSessionMuted, getSessionVolume, persistMuted, persistVolume } from './sessionState';
 import type { ConversationTurn, ListenMode } from './types';
 import {
   NestorVoiceEvents,
@@ -25,8 +27,10 @@ import {
   kitchenVoiceAvailable,
   nudgeTabletVolume,
   readingMs,
+  releaseSpeechRecognizer,
   setNativeMuted,
   speakAnswer,
+  speechCaptureActive,
   startUtteranceCapture,
   stopSpeaking,
   stopUtteranceCapture,
@@ -77,8 +81,9 @@ export function useListenLoop({
   enabledRef.current = enabled;
   const turnRef = useRef(0);
   const historyRef = useRef<ConversationTurn[]>([]);
-  const preferOffline = useRef(true);
   const sttUsable = useRef(true);
+  const sttBusy = useRef(false);
+  const errorBurst = useRef(0);
   const restartTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const speakTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const onSleepRef = useRef(onSleep);
@@ -90,7 +95,7 @@ export function useListenLoop({
   const onSpeechUnavailableRef = useRef(onSpeechUnavailable);
   onSpeechUnavailableRef.current = onSpeechUnavailable;
   const presentAnswerRef = useRef<(text: string) => Promise<void>>(async () => {});
-  const listenSoonRef = useRef<(delay?: number) => void>(() => {});
+  const listenSoonRef = useRef<(delayMs?: number) => void>(() => {});
 
   const clearTimers = useCallback(() => {
     if (restartTimer.current) {
@@ -107,8 +112,17 @@ export function useListenLoop({
     onHeardRef.current();
   }, []);
 
+  const giveUpToIdle = useCallback(() => {
+    clearTimers();
+    sttBusy.current = false;
+    disarmStt();
+    void stopUtteranceCapture();
+    void releaseSpeechRecognizer();
+    onSleepRef.current();
+  }, [clearTimers]);
+
   const listenSoon = useCallback(
-    (delay = STT_RESTART_MS) => {
+    (delayMs = sttRestartDelay(0, sttStartsUsed())) => {
       if (restartTimer.current) {
         clearTimeout(restartTimer.current);
       }
@@ -117,10 +131,29 @@ export function useListenLoop({
         if (!enabledRef.current || modeRef.current !== 'listening' || preview || !sttUsable.current) {
           return;
         }
-        void startUtteranceCapture(preferOffline.current);
-      }, delay);
+        if (!isSttArmed() || !shouldRetryStt(0, sttStartsUsed())) {
+          giveUpToIdle();
+          return;
+        }
+        if (sttBusy.current || speechCaptureActive()) {
+          return;
+        }
+        sttBusy.current = true;
+        // Online first. Offline-prefer then fail was a guaranteed extra beep on this Tab.
+        void startUtteranceCapture(false)
+          .then((ok) => {
+            if (!ok) {
+              sttBusy.current = false;
+              giveUpToIdle();
+            }
+          })
+          .catch(() => {
+            sttBusy.current = false;
+            giveUpToIdle();
+          });
+      }, delayMs);
     },
-    [preview],
+    [giveUpToIdle, preview],
   );
   listenSoonRef.current = listenSoon;
 
@@ -130,7 +163,8 @@ export function useListenLoop({
     }
     onBusyRef.current(false);
     setMode('listening');
-    listenSoon(400);
+    errorBurst.current = 0;
+    listenSoon(MIC_HANDOFF_MS);
   }, [listenSoon]);
 
   const presentAnswer = useCallback(
@@ -141,11 +175,23 @@ export function useListenLoop({
       onBusyRef.current(true);
       bump();
 
+      try {
+        await stopUtteranceCapture();
+        await releaseSpeechRecognizer();
+        await delay(TTS_HANDOFF_MS);
+      } catch (error) {
+        console.warn('Nestor: STT release before TTS failed', error);
+      }
+
       const speakAloud = !mutedRef.current && kitchenVoiceAvailable();
       if (speakAloud) {
-        const started = await speakAnswer(text, nightSpeakVolume(volumeRef.current, quietNightRef.current));
-        if (started) {
-          return;
+        try {
+          const started = await speakAnswer(text, nightSpeakVolume(volumeRef.current, quietNightRef.current));
+          if (started) {
+            return;
+          }
+        } catch (error) {
+          console.warn('Nestor: speakAnswer threw; egg stays up with text', error);
         }
       }
 
@@ -163,6 +209,7 @@ export function useListenLoop({
   const handleUtterance = useCallback(
     async (raw: string) => {
       const text = raw.trim();
+      sttBusy.current = false;
       if (!text || !enabledRef.current) {
         listenSoon();
         return;
@@ -170,39 +217,47 @@ export function useListenLoop({
       bump();
       setHeard(text);
 
-      if (isSleepUtterance(text)) {
-        onSleepRef.current();
-        return;
-      }
-      if (isPrivateHouseholdAsk(text)) {
+      try {
+        if (isSleepUtterance(text)) {
+          onSleepRef.current();
+          return;
+        }
+        if (isPrivateHouseholdAsk(text)) {
+          const myTurn = ++turnRef.current;
+          setMode('thinking');
+          onBusyRef.current(true);
+          await stopUtteranceCapture();
+          if (myTurn !== turnRef.current || !enabledRef.current) {
+            return;
+          }
+          await presentAnswer(PRIVATE_REPLY);
+          return;
+        }
+        if (!looksLikeRequest(text)) {
+          listenSoon();
+          return;
+        }
+
         const myTurn = ++turnRef.current;
         setMode('thinking');
         onBusyRef.current(true);
         await stopUtteranceCapture();
+        await releaseSpeechRecognizer();
+
+        const nextTurns = [...historyRef.current, { role: 'user' as const, text }];
+        const reply = await askNestor(nextTurns);
         if (myTurn !== turnRef.current || !enabledRef.current) {
           return;
         }
-        await presentAnswer(PRIVATE_REPLY);
-        return;
-      }
-      if (!looksLikeRequest(text)) {
-        listenSoon();
-        return;
-      }
 
-      const myTurn = ++turnRef.current;
-      setMode('thinking');
-      onBusyRef.current(true);
-      await stopUtteranceCapture();
-
-      const nextTurns = [...historyRef.current, { role: 'user' as const, text }];
-      const reply = await askNestor(nextTurns);
-      if (myTurn !== turnRef.current || !enabledRef.current) {
-        return;
+        historyRef.current = [...nextTurns, { role: 'model' as const, text: reply }].slice(-8);
+        await presentAnswer(reply);
+      } catch (error) {
+        console.warn('Nestor: listen turn failed; kitchen session stays up', error);
+        if (enabledRef.current) {
+          await presentAnswer(NETWORK_REPLY);
+        }
       }
-
-      historyRef.current = [...nextTurns, { role: 'model' as const, text: reply }].slice(-8);
-      await presentAnswer(reply);
     },
     [bump, listenSoon, presentAnswer],
   );
@@ -220,8 +275,10 @@ export function useListenLoop({
       }),
       NestorVoiceEvents.addListener('onSpeechResult', (event) => {
         if (!enabledRef.current || modeRef.current !== 'listening') {
+          sttBusy.current = false;
           return;
         }
+        errorBurst.current = 0;
         void handleUtterance('text' in event ? event.text ?? '' : '');
       }),
       NestorVoiceEvents.addListener('onSpeechPartial', (event) => {
@@ -231,16 +288,17 @@ export function useListenLoop({
         }
       }),
       NestorVoiceEvents.addListener('onSpeechError', (event) => {
+        sttBusy.current = false;
         if (!enabledRef.current || modeRef.current !== 'listening') {
           return;
         }
         const code = 'code' in event ? event.code : 0;
-        if (preferOffline.current && (code === 2 || code === 4 || code === 5)) {
-          preferOffline.current = false;
-          listenSoon(500);
+        if (!isSttArmed() || !shouldRetryStt(code, sttStartsUsed())) {
+          giveUpToIdle();
           return;
         }
-        listenSoon(code === 8 ? 700 : STT_RESTART_MS);
+        errorBurst.current += 1;
+        listenSoon(sttRestartDelay(code, sttStartsUsed()));
       }),
       NestorVoiceEvents.addListener('onTtsDone', () => {
         if (enabledRef.current && modeRef.current === 'talking') {
@@ -259,13 +317,16 @@ export function useListenLoop({
         sub.remove();
       }
     };
-  }, [bump, finishSpeaking, handleUtterance, listenSoon, preview]);
+  }, [bump, finishSpeaking, giveUpToIdle, handleUtterance, listenSoon, preview]);
 
   useEffect(() => {
     if (!enabled) {
       turnRef.current += 1;
       clearTimers();
+      sttBusy.current = false;
+      errorBurst.current = 0;
       void stopUtteranceCapture();
+      void releaseSpeechRecognizer();
       void stopSpeaking();
       onBusyRef.current(false);
       if (!preview) {
@@ -282,18 +343,35 @@ export function useListenLoop({
     }
 
     sttUsable.current = true;
+    errorBurst.current = 0;
+    let cancelled = false;
     const start = setTimeout(() => {
-      if (!kitchenSpeechAvailable()) {
-        sttUsable.current = false;
-        onSpeechUnavailableRef.current?.();
-        void presentAnswerRef.current(STT_MISSING_REPLY);
-        return;
-      }
-      setMode('listening');
-      listenSoonRef.current(MIC_HANDOFF_MS);
+      void (async () => {
+        if (!isSttArmed()) {
+          return;
+        }
+        try {
+          await releaseWakeAudio();
+          await delay(MIC_HANDOFF_MS);
+        } catch (error) {
+          console.warn('Nestor: wake-audio release before STT failed', error);
+        }
+        if (cancelled || !enabledRef.current || !isSttArmed()) {
+          return;
+        }
+        if (!kitchenSpeechAvailable()) {
+          sttUsable.current = false;
+          onSpeechUnavailableRef.current?.();
+          void presentAnswerRef.current(STT_MISSING_REPLY);
+          return;
+        }
+        setMode('listening');
+        listenSoonRef.current(0);
+      })();
     }, MIC_HANDOFF_MS);
 
     return () => {
+      cancelled = true;
       clearTimeout(start);
       clearTimers();
       void stopUtteranceCapture();

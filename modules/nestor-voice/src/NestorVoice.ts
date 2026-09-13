@@ -18,7 +18,9 @@ type NativeVoice = {
   startListening: (preferOffline: boolean) => Promise<boolean>;
   stopListening: () => Promise<void>;
   cancelListening: () => Promise<void>;
+  releaseRecognizer: () => Promise<void>;
   isSpeechAvailable: () => boolean;
+  isListening: () => boolean;
   speak: (text: string, volume: number) => Promise<boolean>;
   stopSpeaking: () => Promise<void>;
   setMuted: (muted: boolean) => Promise<void>;
@@ -58,6 +60,18 @@ export const NestorVoice = {
 
   speechAvailable(): boolean {
     return loadNative()?.isSpeechAvailable() === true;
+  },
+
+  isListening(): boolean {
+    return loadNative()?.isListening() === true;
+  },
+
+  async releaseRecognizer(): Promise<void> {
+    try {
+      await loadNative()?.releaseRecognizer();
+    } catch {
+      // already released
+    }
   },
 
   async startListening(preferOffline = true): Promise<boolean> {
