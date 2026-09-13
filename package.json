@@ -14,6 +14,7 @@
     "check-listen": "node --experimental-strip-types --no-warnings scripts/check-listen.ts",
     "check-household": "tsx scripts/check-household.ts",
     "check-overnight": "tsx scripts/check-overnight.ts",
+    "check-wake-startup": "node --experimental-strip-types --no-warnings scripts/check-wake-startup.ts",
     "fetch-kws-model": "node scripts/fetch-kws-model.mjs",
     "postinstall": "patch-package"
   },

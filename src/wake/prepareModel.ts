@@ -34,35 +34,41 @@ async function copyAsset(moduleId: number, dest: File): Promise<void> {
 /**
  * Materialize bundled ONNX + tokens + the active keywords file onto disk.
  * Native sherpa-onnx reads filesystem paths, not Metro asset IDs.
+ * Never throws — a missing or unreadable model must leave the kitchen board idle.
  */
 export async function prepareKwsModel(): Promise<PreparedKwsModel | null> {
   if (Platform.OS !== 'android') {
     return null;
   }
 
-  const dir = new Directory(Paths.document, 'kws');
-  if (!dir.exists) {
-    dir.create();
+  try {
+    const dir = new Directory(Paths.document, 'kws');
+    if (!dir.exists) {
+      dir.create();
+    }
+
+    const encoder = new File(dir, 'encoder.int8.onnx');
+    const decoder = new File(dir, 'decoder.int8.onnx');
+    const joiner = new File(dir, 'joiner.int8.onnx');
+    const tokens = new File(dir, 'tokens.txt');
+    const keywords = new File(dir, 'keywords.txt');
+
+    await copyAsset(kwsModelAssets.encoder, encoder);
+    await copyAsset(kwsModelAssets.decoder, decoder);
+    await copyAsset(kwsModelAssets.joiner, joiner);
+    await copyAsset(kwsModelAssets.tokens, tokens);
+
+    keywords.write(keywordsFileContents(WAKE_PHRASE));
+
+    return {
+      encoder: filePath(encoder),
+      decoder: filePath(decoder),
+      joiner: filePath(joiner),
+      tokens: filePath(tokens),
+      keywords: filePath(keywords),
+    };
+  } catch (error) {
+    console.warn('Nestor: KWS model could not be prepared', error);
+    return null;
   }
-
-  const encoder = new File(dir, 'encoder.int8.onnx');
-  const decoder = new File(dir, 'decoder.int8.onnx');
-  const joiner = new File(dir, 'joiner.int8.onnx');
-  const tokens = new File(dir, 'tokens.txt');
-  const keywords = new File(dir, 'keywords.txt');
-
-  await copyAsset(kwsModelAssets.encoder, encoder);
-  await copyAsset(kwsModelAssets.decoder, decoder);
-  await copyAsset(kwsModelAssets.joiner, joiner);
-  await copyAsset(kwsModelAssets.tokens, tokens);
-
-  keywords.write(keywordsFileContents(WAKE_PHRASE));
-
-  return {
-    encoder: filePath(encoder),
-    decoder: filePath(decoder),
-    joiner: filePath(joiner),
-    tokens: filePath(tokens),
-    keywords: filePath(keywords),
-  };
 }

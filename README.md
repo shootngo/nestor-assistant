@@ -8,7 +8,7 @@ This repo is an Expo (React Native) Android app. It is **not** an Expo Go projec
 
 One pass before the Samsung Tab A lives on the fridge:
 
-1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle) on the **Samsung Tab A**. `minSdkVersion` stays **24**. Do not use Expo Go. The app stays **landscape**.
+1. **Prebuild / APK** — `npm install`, then `npx expo prebuild --platform android`. Install a **preview** APK (EAS or Gradle) on the **Samsung Tab A**. `minSdkVersion` stays **24**. Do not use Expo Go. The app stays **landscape**. If keyword spotting or the kitchen mic fails on this tablet, the idle dashboard must still load (see [docs/TEST_NOTES.md](./docs/TEST_NOTES.md)).
 2. **Gemini key** — set `GEMINI_API_KEY` or `EXPO_PUBLIC_GEMINI_API_KEY` in `.env` or as an **EAS preview secret**. Rebuild after setting or rotating it. Missing keys do **not** fail Gradle; Nestor just cannot answer until they are baked in.
 3. **Tablet email / password** — set `NESTOR_TABLET_EMAIL` + `NESTOR_TABLET_PASSWORD` as EAS preview secrets (household Email/Password, usually `shootngo@gmail.com`). Rebuild. Session persists on the tablet.
 4. **Shopping rules** — if “add milk to the list” comes back permission-denied, publish `firestore.rules` from [shootngo/Nestor](https://github.com/shootngo/Nestor) as the Firebase owner. The tablet cannot publish rules.
