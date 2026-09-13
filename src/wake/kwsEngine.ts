@@ -30,9 +30,7 @@ async function loadSherpa(): Promise<{
   try {
     return await import('expo-sherpa-onnx');
   } catch (error) {
-    if (__DEV__) {
-      console.warn('Nestor: expo-sherpa-onnx is not available', error);
-    }
+    console.warn('Nestor: expo-sherpa-onnx is not available', error);
     return null;
   }
 }
@@ -53,7 +51,8 @@ export async function startKeywordSpotter(model: PreparedKwsModel): Promise<bool
       },
       modelConfig: {
         tokens: model.tokens,
-        numThreads: 2,
+        // One thread on the Tab A — two plus a 4.6MB encoder can OOM / abort native.
+        numThreads: 1,
         provider: 'cpu',
         modelType: 'zipformer2',
         transducer: {
@@ -71,9 +70,7 @@ export async function startKeywordSpotter(model: PreparedKwsModel): Promise<bool
     stream = await spotter.createStream();
     return true;
   } catch (error) {
-    if (__DEV__) {
-      console.warn('Nestor: keyword spotter failed to start', error);
-    }
+    console.warn('Nestor: keyword spotter failed to start', error);
     await stopKeywordSpotter();
     return false;
   }

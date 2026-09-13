@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Platform } from 'react-native';
+import { InteractionManager, Platform } from 'react-native';
 import {
   ALLOW_WAKE_SIMULATE,
   LISTENING_SILENCE_MS,
@@ -13,9 +13,16 @@ import { acceptKwsSamples, startKeywordSpotter, stopKeywordSpotter } from './kws
 import { pcmRms, startMicrophone, stopMicrophone } from './microphone';
 import { getMicPermission, requestMicPermission } from './permissions';
 import { prepareKwsModel } from './prepareModel';
+import { phaseAfterWakeInitFailure } from './startupPolicy';
 import type { MicPermission, WakeKeywordId, WakePhase } from './types';
 
-export function useWakeSession() {
+type WakeSessionOptions = {
+  /** Wait until the kitchen board has painted before touching sherpa / AudioRecord. */
+  boardReady?: boolean;
+};
+
+export function useWakeSession(options?: WakeSessionOptions) {
+  const boardReady = options?.boardReady ?? true;
   const preview = getPreviewSession();
   const previewTalking = getPreviewTalking();
   const previewMuted = getPreviewMuted();
@@ -82,11 +89,15 @@ export function useWakeSession() {
       if (current !== 'idle' && !(current === 'listening' && keepKwsMicRef.current)) {
         return;
       }
-      void acceptKwsSamples(samples, sampleRate).then((keyword) => {
-        if (keyword) {
-          handleKeyword(keyword);
-        }
-      });
+      void acceptKwsSamples(samples, sampleRate)
+        .then((keyword) => {
+          if (keyword) {
+            handleKeyword(keyword);
+          }
+        })
+        .catch((error) => {
+          console.warn('Nestor: KWS accept failed', error);
+        });
     },
     [handleKeyword],
   );
@@ -101,35 +112,58 @@ export function useWakeSession() {
       setPermission(current);
       if (current !== 'granted') {
         if (current === 'denied' && phaseRef.current === 'idle') {
-          setPhase('mic-needed');
+          setPhase(phaseAfterWakeInitFailure('mic-denied'));
         }
         return;
       }
 
       const model = await prepareKwsModel();
       if (!model) {
+        console.warn('Nestor: KWS model missing; kitchen board stays idle without wake');
+        engineReady.current = false;
+        setKwsReady(false);
+        if (phaseRef.current === 'mic-needed') {
+          setPhase(phaseAfterWakeInitFailure('model-missing'));
+        }
         return;
       }
       const kws = await startKeywordSpotter(model);
       engineReady.current = kws;
       setKwsReady(kws);
+      if (!kws) {
+        console.warn('Nestor: keyword spotter failed; kitchen board stays idle');
+      }
+    } catch (error) {
+      engineReady.current = false;
+      setKwsReady(false);
+      console.warn('Nestor: wake engine failed; kitchen board stays idle', error);
+      if (phaseRef.current !== 'listening' && phaseRef.current !== 'exiting') {
+        setPhase(phaseAfterWakeInitFailure('exception'));
+      }
     } finally {
       starting.current = false;
     }
   }, []);
 
   useEffect(() => {
-    if (preview) {
+    if (preview || !boardReady) {
       return;
     }
-    void startEngine(true);
+    let cancelled = false;
+    const task = InteractionManager.runAfterInteractions(() => {
+      if (!cancelled) {
+        void startEngine(true);
+      }
+    });
     return () => {
+      cancelled = true;
+      task.cancel();
       engineReady.current = false;
       setKwsReady(false);
       void stopMicrophone();
       void stopKeywordSpotter();
     };
-  }, [preview, startEngine]);
+  }, [boardReady, preview, startEngine]);
 
   const wantKwsMic = phase === 'idle' || (phase === 'listening' && keepKwsMic);
 
@@ -142,15 +176,22 @@ export function useWakeSession() {
       return;
     }
     let cancelled = false;
-    void startMicrophone(onAudio).then((ok) => {
-      if (cancelled) {
-        void stopMicrophone();
-        return;
-      }
-      if (!ok && phaseRef.current === 'idle') {
-        setPhase('mic-needed');
-      }
-    });
+    void startMicrophone(onAudio)
+      .then((ok) => {
+        if (cancelled) {
+          void stopMicrophone();
+          return;
+        }
+        if (!ok && phaseRef.current === 'idle') {
+          setPhase(phaseAfterWakeInitFailure('mic-failed'));
+        }
+      })
+      .catch((error) => {
+        console.warn('Nestor: microphone start failed; kitchen board stays idle', error);
+        if (!cancelled && phaseRef.current === 'idle') {
+          setPhase(phaseAfterWakeInitFailure('mic-failed'));
+        }
+      });
     return () => {
       cancelled = true;
       void stopMicrophone();

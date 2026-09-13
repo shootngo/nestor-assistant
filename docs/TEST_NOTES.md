@@ -1,5 +1,34 @@
 # Test notes
 
+## Tab A — splash → dashboard must survive wake-engine failure
+
+Frank’s Samsung Tab A (~2021, landscape, `minSdk` 24, ARM) showed **Kitchen board** then crashed. That label is the idle dashboard loading state in `src/dashboard/Dashboard.tsx`, not the Expo splash. After it paints, `useWakeSession` used to start `expo-sherpa-onnx` + `nestor-mic` on the same mount with no catch around `prepareKwsModel()`.
+
+**Named crash path:** uncaught JS from KWS model copy / `createKeywordSpotter` (and a native abort on that old ARM SoC would still kill the process). Keep-awake, landscape lock, Firebase auth, hatch stills, and overnight dim already fail closed. Hatch is stills, not video.
+
+**Harden:** engine starts only after the board’s first `onReady` + `InteractionManager.runAfterInteractions`. Model / sherpa / unexpected errors stay **`idle`** (cards keep cycling). Mic denial still uses the existing **mic-needed** card (“Continue to the kitchen board”). Landscape stays locked.
+
+### Tab A checks (sideload a rebuilt preview APK)
+
+| Check | Expected |
+| --- | --- |
+| Splash → board | **Kitchen board** then cycling idle cards. App must not die if wake/mic init fails |
+| Landscape | Stays sideways (fridge). Do not rotate to portrait |
+| Mic deny | Cream mic-needed card. **Continue to the kitchen board** → idle cards |
+| Mic allow + engine OK | Idle cards. Say **Nestor** → egg |
+| Mic allow + engine fail | Idle cards, no crash. `adb logcat` may show `Nestor: … kitchen board stays idle` |
+| Night / keep-awake | Unchanged: screen stays on; overlay hours still apply |
+
+Rebuild: `npx eas-cli build -p android --profile preview --clear-cache` (or local `assembleRelease`). Native modules — Expo Go will not work.
+
+```sh
+npm run check-wake-startup
+npm run check-listen
+npm run check-overnight
+npm run check-household
+npx tsc --noEmit
+```
+
 ## Phase 7 — overnight dim + faint clock
 
 Confirm on the **Samsung Tab A** (small, ~2021, landscape) after installing a rebuilt APK. Web preview can show the veil, clock, and large type but cannot run STT/TTS.
@@ -36,6 +65,7 @@ Hours and overlay-first night look: [OVERNIGHT.md](./OVERNIGHT.md).
 npm run check-overnight
 npm run check-listen
 npm run check-household
+npm run check-wake-startup
 npx tsc --noEmit
 ```
 

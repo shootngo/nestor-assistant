@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { useKeepAwake } from 'expo-keep-awake';
 import { NavigationBar } from 'expo-navigation-bar';
 import { StatusBar } from 'expo-status-bar';
+import { ErrorBoundary } from './src/ErrorBoundary';
 import { Dashboard } from './src/dashboard/Dashboard';
 import { ensureTabletAuth } from './src/household/auth';
 import { applyKioskChrome } from './src/kiosk';
@@ -13,7 +14,8 @@ import { EggExit, MicNeededCard, useWakeSession } from './src/wake';
 
 export default function App() {
   useKeepAwake();
-  const session = useWakeSession();
+  const [boardReady, setBoardReady] = useState(false);
+  const session = useWakeSession({ boardReady });
   const paused = session.phase !== 'idle';
   const talkingMouth = session.mode === 'talking' && !session.muted;
 
@@ -29,24 +31,32 @@ export default function App() {
     <View style={styles.screen}>
       <StatusBar hidden style="light" />
       {Platform.OS === 'android' ? <NavigationBar hidden /> : null}
-      <Dashboard paused={paused} onSimulateWake={session.simulateWake} />
-      <DimOverlay dimmed={session.overnight.dimmed} clock={session.overnight.clock} />
-      {session.phase === 'listening' ? (
-        <EggSession
-          mode={session.mode}
-          answer={session.answer}
-          muted={session.muted}
-          talkingMouth={talkingMouth}
-          onSimulateSleep={session.simulateSleep}
-          onToggleMute={session.toggleMute}
-          onVolumeDown={session.volumeDown}
-          onVolumeUp={session.volumeUp}
-        />
-      ) : null}
-      {session.phase === 'exiting' ? <EggExit onDone={session.finishExit} /> : null}
-      {session.phase === 'mic-needed' ? (
-        <MicNeededCard onRetry={session.retryMic} onContinue={session.dismissMicCard} />
-      ) : null}
+      <Dashboard
+        paused={paused}
+        onSimulateWake={session.simulateWake}
+        onReady={() => setBoardReady(true)}
+      />
+      <ErrorBoundary>
+        <DimOverlay dimmed={session.overnight.dimmed} clock={session.overnight.clock} />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        {session.phase === 'listening' ? (
+          <EggSession
+            mode={session.mode}
+            answer={session.answer}
+            muted={session.muted}
+            talkingMouth={talkingMouth}
+            onSimulateSleep={session.simulateSleep}
+            onToggleMute={session.toggleMute}
+            onVolumeDown={session.volumeDown}
+            onVolumeUp={session.volumeUp}
+          />
+        ) : null}
+        {session.phase === 'exiting' ? <EggExit onDone={session.finishExit} /> : null}
+        {session.phase === 'mic-needed' ? (
+          <MicNeededCard onRetry={session.retryMic} onContinue={session.dismissMicCard} />
+        ) : null}
+      </ErrorBoundary>
     </View>
   );
 }

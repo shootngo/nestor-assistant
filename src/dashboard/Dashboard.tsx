@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { ErrorBoundary } from '../ErrorBoundary';
 import { HatchShowpiece } from './cards/HatchShowpiece';
 import { PLAYLIST_REFRESH_MS } from '../config';
 import { getShowpieceFrame, getStartAtBranding } from '../preview';
@@ -11,12 +12,24 @@ import { CardCarousel } from './CardCarousel';
 type Props = {
   paused?: boolean;
   onSimulateWake?: () => void;
+  onReady?: () => void;
 };
 
-export function Dashboard({ paused = false, onSimulateWake }: Props) {
+export function Dashboard({ paused = false, onSimulateWake, onReady }: Props) {
   const [cards, setCards] = useState<DashboardCard[]>([]);
   const [ready, setReady] = useState(false);
   const frozenFrame = getShowpieceFrame();
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
+  const notifiedReady = useRef(false);
+
+  const markReady = useCallback(() => {
+    setReady(true);
+    if (!notifiedReady.current) {
+      notifiedReady.current = true;
+      onReadyRef.current?.();
+    }
+  }, []);
 
   const refresh = useCallback(async () => {
     try {
@@ -31,13 +44,13 @@ export function Dashboard({ paused = false, onSimulateWake }: Props) {
         },
       ]);
     } finally {
-      setReady(true);
+      markReady();
     }
-  }, []);
+  }, [markReady]);
 
   useEffect(() => {
     if (frozenFrame) {
-      setReady(true);
+      markReady();
       return;
     }
     void refresh();
@@ -45,7 +58,7 @@ export function Dashboard({ paused = false, onSimulateWake }: Props) {
       void refresh();
     }, PLAYLIST_REFRESH_MS);
     return () => clearInterval(timer);
-  }, [frozenFrame, refresh]);
+  }, [frozenFrame, markReady, refresh]);
 
   if (frozenFrame) {
     return (
@@ -58,7 +71,15 @@ export function Dashboard({ paused = false, onSimulateWake }: Props) {
   return (
     <View style={styles.screen}>
       {ready ? (
-        <CardCarousel cards={cards} paused={paused} onSimulateWake={onSimulateWake} />
+        <ErrorBoundary
+          fallback={
+            <View style={styles.loading}>
+              <Text style={styles.loadingLabel}>Kitchen board</Text>
+            </View>
+          }
+        >
+          <CardCarousel cards={cards} paused={paused} onSimulateWake={onSimulateWake} />
+        </ErrorBoundary>
       ) : (
         <View style={styles.loading}>
           {getStartAtBranding() ? null : <Text style={styles.loadingLabel}>Kitchen board</Text>}

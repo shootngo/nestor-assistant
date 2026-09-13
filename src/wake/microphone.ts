@@ -44,10 +44,16 @@ let activeStop: (() => Promise<void>) | null = null;
 export async function stopMicrophone(): Promise<void> {
   const stop = activeStop;
   activeStop = null;
-  if (stop) {
-    await stop();
-  } else {
-    await NestorMic.stop();
+  try {
+    if (stop) {
+      await stop();
+    } else if (microphoneAvailable()) {
+      await NestorMic.stop();
+    }
+  } catch (error) {
+    if (__DEV__) {
+      console.warn('Nestor: microphone stop failed', error);
+    }
   }
 }
 
