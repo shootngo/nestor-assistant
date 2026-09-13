@@ -96,18 +96,31 @@ If the Gemini key is missing, Nestor still wakes and listens. He will say he nee
 
 EAS preview builds `edaaab6f-98d8-466e-8173-77198fc14b71` and `eb3b074e-df0c-45d9-afb2-57872027a6ff` died in **Run gradlew** with “Gradle build failed with unknown error.” Missing Gemini / tablet secrets do **not** fail Gradle.
 
-**Root cause (from a local `assembleRelease`, same Gradle 9.3.1 / AGP / Expo 57 as EAS):**
+**Root cause (local `assembleRelease` on Gradle 9.3.1 / compileSdk 36 / NDK 27.1 — same as Expo 57 / EAS):**
+
+1. Configure dies first:
 
 ```
 A problem occurred configuring project ':nestor-mic'.
 > 'android.defaultConfig.versionName' is not defined
 ```
 
-Expo SDK 57’s `expo-module-gradle-plugin` publishes every local module and requires `android.defaultConfig.versionName`. `modules/nestor-mic` and `modules/nestor-voice` only set `namespace`, so configuration dies before compile. That also surfaces as `SoftwareComponent with name 'release' not found` on `:expo`.
+SDK 57’s `expo-module-gradle-plugin` requires `android.defaultConfig.versionName` on every local module. `nestor-mic` / `nestor-voice` only set `namespace`. That also cascades to `SoftwareComponent with name 'release' not found` on `:expo`. EAS wraps this as “unknown error.”
+
+2. After that is set, AAPT2 dies on branding stills:
+
+```
+:app:mergeReleaseResources FAILED
+AAPT: error: file failed to compile.
+assets_branding_hatchstartwide.png / hatchendwide.png / houseinnest.png
+```
+
+Those files were **JPEGs named `.png`**. Android will not compile a JPEG as a drawable PNG.
 
 **Fix:**
 
 - `defaultConfig.versionName` / `versionCode` on both local Android modules
+- Rewrite the four fridge branding stills as real PNGs (same filenames, landscape 1280×720 / nest 1024²)
 - PR #10 hardening still applies: `sherpaOnnxDisableLibarchive=true`, ARM-only ABIs, `minSdk` 24, `--no-configure-on-demand`
 
 Landscape is unchanged. Do not flip the fridge board to portrait.
