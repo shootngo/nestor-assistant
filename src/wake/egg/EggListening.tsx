@@ -25,7 +25,7 @@ export function EggListening({ onSimulateSleep }: Props) {
     >
       <View style={styles.stage}>
         <NestGround />
-        <EggFace walk={walk} />
+        <EggFace walk={walk} attentive />
       </View>
       <Text style={styles.mark}>Nestor</Text>
       <Text style={styles.line}>{LISTENING_LINE}</Text>
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     zIndex: 20,
   },
   stage: {
-    width: 320,
-    height: 300,
+    width: 340,
+    height: 320,
     alignItems: 'center',
     justifyContent: 'flex-end',
     marginBottom: 8,

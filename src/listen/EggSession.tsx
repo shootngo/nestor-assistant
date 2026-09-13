@@ -55,7 +55,12 @@ export function EggSession({
         <View style={styles.persona}>
           <View style={[styles.stage, split ? styles.stageSplit : null]}>
             <NestGround />
-            <EggFace walk={walk} talking={talkingMouth} holdTalking={talkingMouth && getHoldTalking()} />
+            <EggFace
+              walk={walk}
+              talking={talkingMouth}
+              holdTalking={talkingMouth && getHoldTalking()}
+              attentive={mode === 'listening'}
+            />
           </View>
           <Text style={styles.mark}>Nestor</Text>
           {showStatus ? <Text style={styles.line}>{status}</Text> : null}
@@ -103,15 +108,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   stage: {
-    width: 320,
-    height: 300,
+    width: 340,
+    height: 320,
     alignItems: 'center',
     justifyContent: 'flex-end',
     marginBottom: 8,
   },
   stageSplit: {
-    width: 280,
-    transform: [{ scale: 0.92 }],
+    width: 300,
+    transform: [{ scale: 0.9 }],
     marginBottom: 0,
   },
   answerWrap: {

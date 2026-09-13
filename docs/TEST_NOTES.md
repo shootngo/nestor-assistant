@@ -1,5 +1,79 @@
 # Test notes
 
+## Tab A — talking egg toward the Imagine 3D look
+
+Frank’s Grok Imagine reference: a cute clay / Pixar-style off-white egg with **feet**, **big brown eyes**, **thin brows**, **small smile**, **stubby arms**, and a mouth that moves while he talks. The clip has a warm room; the fridge app keeps the cream listen/talk sheet so it stays readable on the charcoal kitchen board. Do **not** force the whole living-room set.
+
+Identity stays **Nestor**. Landscape stays. Hatch stills are unchanged. **PR #14 mic / STT / TTS handoff is untouched** (`sttGate`, `audioHandoff`, `nestor-mic`, `nestor-voice`).
+
+### What this APK changes
+
+1. **Listen + talk egg** is a clay-style character: off-white shell, highlight/shade, brown irises with catchlights, thin brows, blush, stubby arms, cream feet.
+2. **Idle / listen** uses a small closed smile. **Talking** (TTS, not muted) opens the mouth and chatters on the same `talkingMouth` flag as before.
+3. **Mute** still rests the mouth. **`?session=talk&hold=1`** still freezes it open for stills.
+4. **Walk-off** keeps the same timing; legs are now matching cream feet instead of brown sticks.
+5. Nest twigs under the egg are a soft contact shadow so they do not read as extra arms.
+
+### Tab A checks (sideload a rebuilt preview APK)
+
+JS-only visual change. Native wake / STT / TTS from PR #14 is the same, but the fridge APK does not pick up Metro — rebuild and sideload.
+
+| Check | Expected |
+| --- | --- |
+| Identity | **Nestor** only. No model name |
+| Landscape | Stays sideways on the fridge |
+| Talk to Nestor / say **Nestor** | Clay egg, feet, brown eyes, smile, stubby arms. **Listening…** |
+| Ask a short question | Spoken + large text. Mouth moves while TTS plays |
+| Mute | Text stays. Mouth rests as a smile. **–** / **+** still work |
+| Sleep | **Goodbye Nestor** → cream feet walk off → kitchen board |
+| Night | Veil lifts for the egg; quieter TTS; handoff unchanged |
+| Hatch | Unchanged stills in the idle loop |
+| Cold start | Board + **Talk to Nestor**. **No** mic beep loop (PR #14) |
+
+Web preview stills (1280×800):
+
+- [Listening egg](./imagine-egg-listening.png)
+- [Talking egg + answer](./imagine-egg-talking.png)
+- [Talking mouth held open](./imagine-egg-talking-hold.png)
+- [Muted](./imagine-egg-mute.png)
+- [Walk-off](./imagine-egg-exit.png)
+
+```
+?session=listen
+?session=talk
+?session=talk&hold=1
+?session=mute
+?session=exit&hold=1
+```
+
+### Rebuild
+
+```sh
+npm install
+npx tsc --noEmit
+npm run check-listen-handoff
+npm run check-wake-startup
+npm run check-listen
+npm run check-overnight
+npm run check-household
+```
+
+EAS (fridge APK, no Metro). Native modules did not change; a preview rebuild is still required so the new egg ships:
+
+```sh
+npx eas-cli build -p android --profile preview
+```
+
+Local:
+
+```sh
+npx expo prebuild --platform android
+cd android && ./gradlew assembleDebug
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+`adb logcat` tags unchanged: `NestorVoice`, JS `Nestor:`. Cold start must not arm STT. Answering should still log `TTS speak`.
+
 ## Tab A — crash-on-answer + kill the mic beep loop
 
 Frank after PR #12 (and force-stop/reopen): say **Nestor** → session starts → **beep, beep, beep** and the listen window will not stay on. Then when it tries to **answer**, the app can die. Opening the app and waking immediately was enough to put `SpeechRecognizer` in a restart loop (KWS `AudioRecord` still held the mic, and every STT error restarted in ~320ms).

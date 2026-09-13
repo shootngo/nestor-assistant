@@ -33,7 +33,7 @@ Secrets, rules publish, and calendar scope: [docs/HOUSEHOLD.md](./docs/HOUSEHOLD
 | Speech in | Local Expo module `modules/nestor-voice` wrapping Android `SpeechRecognizer`. Prefers on-device / `EXTRA_PREFER_OFFLINE`, then the free OS recognizer. No paid STT. |
 | Speech out | Same module, Android `TextToSpeech`. Prefers Google / high-quality English (US) voices when installed; calmer rate/pitch. Large on-screen text. |
 | Mute / volume | **Mute** toggle and **–** / **+** on the egg screen (TTS volume and the tablet media stream) |
-| Talking egg | Mouth animation while TTS plays. Phase 4 blink / rest / chicken-legs exit unchanged |
+| Talking egg | Clay / Pixar-style off-white egg (brown eyes, brows, smile, stubby arms, feet). Mouth moves while TTS plays. Walk-off uses the same timing. |
 
 The Phase 4 `AudioRecord` mic is released while SpeechRecognizer owns the microphone, then restored for wake spotting after the egg walks off. If this tablet has no recognizer, Nestor says so (without naming vendors) and keeps the Phase 4 mic so **Goodbye Nestor** still works.
 
@@ -236,9 +236,10 @@ Phases 1–7 are listed as done in [PHASES.md](./PHASES.md).
 Landscape web preview (fridge install path is still the Android APK):
 
 - Phase 7 overnight: [daytime dashboard](./docs/phase-7-day.png), [overnight dim + clock](./docs/phase-7-night.png), [night wake](./docs/phase-7-wake.png), [dim after wake](./docs/phase-7-dim-after-wake.png)
-- [Egg listening](./docs/phase-5-listening.png)
-- [Talking egg + answer](./docs/phase-5-talking.png)
-- [Muted](./docs/phase-5-mute.png)
+- Imagine talking egg: [listening](./docs/imagine-egg-listening.png), [talking](./docs/imagine-egg-talking.png), [mouth held open](./docs/imagine-egg-talking-hold.png), [muted](./docs/imagine-egg-mute.png), [walk-off](./docs/imagine-egg-exit.png)
+- [Egg listening (Phase 5)](./docs/phase-5-listening.png)
+- [Talking egg + answer (Phase 5)](./docs/phase-5-talking.png)
+- [Muted (Phase 5)](./docs/phase-5-mute.png)
 - Phase 6 household stills: [added to list](./docs/phase-6-added.png), [shopping list](./docs/phase-6-list.png), [calendar](./docs/phase-6-calendar.png)
 
 Phase 4 wake/sleep: [idle dashboard](./docs/phase-4-dashboard.png), [listening](./docs/phase-4-listening.png), [exit](./docs/phase-4-exit.png), [mic needed](./docs/phase-4-mic.png).
